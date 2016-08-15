@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.EmpRelateDao">
+    <resultMap id="empRelate" type="com.liangxunwang.unimanager.model.EmpRelateObj">
+        <id column="emp_relate_id" property="emp_relate_id"/>
+        <result column="mm_emp_id1" property="mm_emp_id1"/>
+        <result column="mm_emp_id2" property="mm_emp_id2"/>
+        <result column="state" property="state"/>
+    </resultMap>
+
+    <resultMap id="empRelateVO" type="com.liangxunwang.unimanager.mvc.vo.EmpRelateObjVO">
+        <id column="emp_relate_id" property="emp_relate_id"/>
+        <result column="mm_emp_id1" property="mm_emp_id1"/>
+        <result column="mm_emp_id2" property="mm_emp_id2"/>
+        <result column="state" property="state"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+        <result column="mm_emp_cover" property="mm_emp_cover"/>
+        <result column="hxusername" property="hxusername"/>
+    </resultMap>
+
+    <select id="lists" resultMap="empRelateVO">
+        SELECT er.*,le.mm_emp_id as mm_emp_id, le.mm_emp_nickname as mm_emp_nickname, le.mm_emp_cover as mm_emp_cover, le.hxusername as hxusername from emp_relate er
+        LEFT JOIN mm_emp le ON er.mm_emp_id2=le.mm_emp_id
+        WHERE 1=1
+        <if test="mm_emp_id1 != null and mm_emp_id1 != ''">
+            AND er.mm_emp_id1 = #{mm_emp_id1}
+        </if>
+        <if test="mm_emp_id2 != null and mm_emp_id2 != ''">
+            AND er.mm_emp_id2 = #{mm_emp_id2}
+        </if>
+        <if test="state != null and state != ''">
+            AND er.state = #{state}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.EmpRelateObj">
+        INSERT INTO emp_relate(emp_relate_id, mm_emp_id1, mm_emp_id2, state)
+        VALUES (#{emp_relate_id}, #{mm_emp_id1}, #{mm_emp_id2}, #{state})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM emp_relate where emp_relate_id = #{emp_relate_id}
+    </delete>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.EmpRelateObj">
+        UPDATE emp_relate SET state=#{state}
+         WHERE emp_relate_id=#{emp_relate_id}
+    </update>
+
+    <select id="find" parameterType="com.liangxunwang.unimanager.model.EmpRelateObj" resultMap="empRelateVO">
+        SELECT * from emp_relate
+        WHERE 1=1
+        <if test="mm_emp_id1 != null and mm_emp_id1 != ''">
+            AND mm_emp_id1 = #{mm_emp_id1}
+        </if>
+        <if test="mm_emp_id2 != null and mm_emp_id2 != ''">
+            AND mm_emp_id2 = #{mm_emp_id2}
+        </if>
+    </select>
+
+
+    <select id="listsRelateOne" resultMap="empRelateVO">
+        SELECT er.* from emp_relate er
+        WHERE 1=1
+        <if test="mm_emp_id1 != null and mm_emp_id1 != ''">
+            AND er.mm_emp_id1 = #{mm_emp_id1}
+        </if>
+        <if test="state != null and state != ''">
+            AND er.state = #{state}
+        </if>
+    </select>
+
+    <select id="listsRelateTwo" resultMap="empRelateVO">
+        SELECT er.* from emp_relate er
+        WHERE 1=1
+        <if test="mm_emp_id2 != null and mm_emp_id2 != ''">
+            AND er.mm_emp_id2 = #{mm_emp_id2}
+        </if>
+        <if test="state != null and state != ''">
+            AND er.state = #{state}
+        </if>
+    </select>
+
+</mapper>

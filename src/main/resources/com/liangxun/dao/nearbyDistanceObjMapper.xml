@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.NearbyDistanceObjDao">
+    <resultMap id="nearbyDistance" type="com.liangxunwang.unimanager.model.NearbyDistanceObj">
+        <id column="mm_nearby_distance_id" property="mm_nearby_distance_id"/>
+        <result column="mm_distance" property="mm_distance"/>
+    </resultMap>
+
+    <select id="lists" resultMap="nearbyDistance">
+        SELECT * from mm_nearbv_distance
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.NearbyDistanceObj">
+        INSERT INTO mm_nearbv_distance(mm_nearby_distance_id, mm_distance)
+        VALUES (#{mm_nearby_distance_id}, #{mm_distance})
+    </insert>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.NearbyDistanceObj">
+        UPDATE mm_nearbv_distance SET mm_distance=#{mm_distance} WHERE mm_nearby_distance_id=#{mm_nearby_distance_id}
+    </update>
+
+</mapper>

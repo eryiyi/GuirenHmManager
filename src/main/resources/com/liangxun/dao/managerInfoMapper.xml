@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.ManagerInfoDao">
+    <resultMap id="my_manager_info" type="com.liangxunwang.unimanager.model.ManagerInfo">
+        <id column="info_id" property="id"/>
+        <result column="manager_id" property="managerId"/>
+        <result column="emp_id" property="emp_id"/>
+        <result column="real_name" property="realName"/>
+        <result column="idcard" property="idcard"/>
+        <result column="idcard_url" property="idcardUrl"/>
+        <result column="pay_number" property="payNumber"/>
+        <result column="check_name" property="checkName"/>
+        <result column="bank_card" property="bankCard"/>
+        <result column="bank_type" property="bankType"/>
+        <result column="bank_address" property="bankAddress"/>
+        <result column="bank_name" property="bankName"/>
+        <result column="mobile" property="mobile"/>
+
+        <result column="lat_company" property="lat_company"/>
+        <result column="lng_company" property="lng_company"/>
+        <result column="company_address" property="company_address"/>
+        <result column="company_person" property="company_person"/>
+        <result column="company_tel" property="company_tel"/>
+        <result column="company_detail" property="company_detail"/>
+        <result column="company_name" property="company_name"/>
+
+        <result column="yingye_time_start" property="yingye_time_start"/>
+        <result column="yingye_time_end" property="yingye_time_end"/>
+        <result column="shouhui" property="shouhui"/>
+        <result column="company_pic" property="company_pic"/>
+    </resultMap>
+
+    <resultMap id="my_manager_info_vo" type="com.liangxunwang.unimanager.mvc.vo.ManagerInfoVo">
+        <id column="info_id" property="id"/>
+        <result column="manager_id" property="managerId"/>
+        <result column="emp_id" property="emp_id"/>
+        <result column="real_name" property="realName"/>
+        <result column="idcard" property="idcard"/>
+        <result column="idcard_url" property="idcardUrl"/>
+        <result column="pay_number" property="payNumber"/>
+        <result column="check_name" property="checkName"/>
+        <result column="bank_card" property="bankCard"/>
+        <result column="bank_type" property="bankType"/>
+        <result column="bank_address" property="bankAddress"/>
+        <result column="bank_name" property="bankName"/>
+        <result column="mobile" property="mobile"/>
+
+        <result column="lat_company" property="lat_company"/>
+        <result column="lng_company" property="lng_company"/>
+        <result column="company_address" property="company_address"/>
+        <result column="company_person" property="company_person"/>
+        <result column="company_tel" property="company_tel"/>
+        <result column="company_detail" property="company_detail"/>
+        <result column="company_name" property="company_name"/>
+
+        <result column="yingye_time_start" property="yingye_time_start"/>
+        <result column="yingye_time_end" property="yingye_time_end"/>
+        <result column="shouhui" property="shouhui"/>
+        <result column="company_pic" property="company_pic"/>
+
+        <result column="emp_cover" property="emp_cover"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.ManagerInfo">
+        INSERT INTO MANAGER_INFO (INFO_ID, MANAGER_ID,emp_id, REAL_NAME, IDCARD, IDCARD_URL, lat_company, lng_company, company_address, company_person, company_tel, company_detail, company_name, yingye_time_start, yingye_time_end, shouhui, company_pic)
+        VALUES (#{id}, #{managerId, jdbcType=VARCHAR}, #{emp_id}, #{realName, jdbcType=VARCHAR}, #{idcard, jdbcType=VARCHAR}, #{idcardUrl, jdbcType=VARCHAR}, #{lat_company, jdbcType=VARCHAR}, #{lng_company, jdbcType=VARCHAR}, #{company_address, jdbcType=VARCHAR}, #{company_person, jdbcType=VARCHAR}, #{company_tel, jdbcType=VARCHAR}, #{company_detail, jdbcType=VARCHAR}, #{company_name, jdbcType=VARCHAR}, #{yingye_time_start, jdbcType=VARCHAR}, #{yingye_time_end, jdbcType=VARCHAR}, #{shouhui, jdbcType=VARCHAR}, #{company_pic, jdbcType=VARCHAR})
+    </insert>
+
+    <select id="findById" parameterType="String" resultMap="my_manager_info">
+        SELECT * FROM MANAGER_INFO WHERE MANAGER_ID=#{id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.ManagerInfo">
+        UPDATE MANAGER_INFO SET REAL_NAME=#{realName}, IDCARD=#{idcard}, IDCARD_URL=#{idcardUrl}, lat_company=#{lat_company},lng_company=#{lng_company},company_address=#{company_address},
+        company_person=#{company_person}, company_tel=#{company_tel},
+        company_detail=#{company_detail},company_name=#{company_name},
+        yingye_time_start=#{yingye_time_start, jdbcType=VARCHAR},yingye_time_end=#{yingye_time_end, jdbcType=VARCHAR},
+        shouhui=#{shouhui, jdbcType=VARCHAR},company_pic=#{company_pic, jdbcType=VARCHAR}
+         WHERE INFO_ID=#{id}
+    </update>
+
+    <select id="getEmpMsg" parameterType="String" resultMap="my_manager_info_vo">
+        SELECT sn.*,le.emp_cover as emp_cover FROM MANAGER_INFO  sn
+          LEFT JOIN lx_emp le ON sn.emp_id=le.emp_id
+         WHERE sn.emp_id=#{id}
+    </select>
+
+    <select id="findByEmpId" parameterType="String" resultMap="my_manager_info">
+        SELECT * FROM MANAGER_INFO WHERE emp_id=#{emp_id}
+    </select>
+</mapper>

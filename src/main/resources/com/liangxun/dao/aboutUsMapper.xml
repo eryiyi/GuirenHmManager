@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.AboutUsDao">
+    <resultMap id="aboutUs" type="com.liangxunwang.unimanager.model.AboutUs">
+        <id column="mm_about_id" property="mm_about_id"/>
+        <result column="mm_about_cont" property="mm_about_cont"/>
+        <result column="mm_about_tel" property="mm_about_tel"/>
+        <result column="mm_abou_address" property="mm_abou_address"/>
+    </resultMap>
+
+    <select id="lists" resultMap="aboutUs">
+        SELECT * from mm_aboutus
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.AboutUs">
+        INSERT INTO mm_aboutus(mm_about_id, mm_about_cont,mm_abou_address,mm_about_tel)
+        VALUES (#{mm_about_id}, #{mm_about_cont}, #{mm_abou_address}, #{mm_about_tel})
+    </insert>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.AboutUs">
+        UPDATE mm_aboutus SET mm_about_cont=#{mm_about_cont},mm_abou_address=#{mm_abou_address},mm_about_tel=#{mm_about_tel} WHERE mm_about_id=#{mm_about_id}
+    </update>
+
+</mapper>

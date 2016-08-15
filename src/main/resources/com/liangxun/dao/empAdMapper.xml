@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.EmpAdDao">
+    <resultMap id="empAd" type="com.liangxunwang.unimanager.model.EmpAdObj">
+        <id column="mm_emp_ad_id" property="mm_emp_ad_id"/>
+        <result column="mm_emp_ad_pic" property="mm_emp_ad_pic"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="mm_emp_ad_url" property="mm_emp_ad_url"/>
+        <result column="mm_emp_ad_num" property="mm_emp_ad_num"/>
+    </resultMap>
+    <resultMap id="empAd_vo" type="com.liangxunwang.unimanager.mvc.vo.EmpAdVO">
+        <id column="mm_emp_ad_id" property="mm_emp_ad_id"/>
+        <result column="mm_emp_ad_pic" property="mm_emp_ad_pic"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="mm_emp_ad_url" property="mm_emp_ad_url"/>
+        <result column="mm_emp_ad_num" property="mm_emp_ad_num"/>
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+    </resultMap>
+
+    <select id="lists" resultMap="empAd_vo">
+        SELECT sn.* , lemp.mm_emp_nickname as mm_emp_nickname from mm_emp_ad sn
+         LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+         WHERE  1=1
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+         ORDER BY sn.mm_emp_ad_num DESC
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.EmpAdObj">
+        INSERT INTO mm_emp_ad(mm_emp_ad_id, mm_emp_ad_pic, mm_emp_id, mm_emp_ad_url, mm_emp_ad_num)
+        VALUES (#{mm_emp_ad_id}, #{mm_emp_ad_pic}, #{mm_emp_id}, #{mm_emp_ad_url}, #{mm_emp_ad_num,jdbcType=VARCHAR})
+    </insert>
+
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM mm_emp_ad where mm_emp_ad_id = #{mm_emp_ad_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="empAd">
+        SELECT * FROM mm_emp_ad where mm_emp_ad_id=#{mm_emp_ad_id}
+    </select>
+
+
+</mapper>

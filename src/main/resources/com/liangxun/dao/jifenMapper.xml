@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.JifenDao">
+    <resultMap id="jifen" type="com.liangxunwang.unimanager.model.EmpCount">
+        <id column="mm_emp_id" property="mm_emp_id"/>
+        <result column="emp_count_number" property="emp_count_number"/>
+    </resultMap>
+
+    <select id="lists" resultMap="jifen">
+        SELECT * from emp_count
+        WHERE 1=1
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND mm_emp_id = #{mm_emp_id}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.EmpCount">
+        INSERT INTO emp_count(mm_emp_id, emp_count_number)
+        VALUES (#{mm_emp_id}, #{emp_count_number})
+    </insert>
+
+    <select id="findById" parameterType="String" resultMap="jifen">
+        SELECT * FROM emp_count where mm_emp_id=#{mm_emp_id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.EmpCount">
+        UPDATE emp_count SET emp_count_number = emp_count_number+1
+         WHERE mm_emp_id=#{mm_emp_id}
+    </update>
+</mapper>

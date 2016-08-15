@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.CountryDao">
+    <resultMap id="country" type="com.liangxunwang.unimanager.model.CountryObj">
+        <id column="id" property="id"/>
+        <result column="areaID" property="areaID"/>
+        <result column="area" property="area"/>
+        <result column="father" property="father"/>
+        <result column="is_use" property="is_use"/>
+        <result column="topnum" property="topnum"/>
+    </resultMap>
+    <resultMap id="country_vo" type="com.liangxunwang.unimanager.mvc.vo.CountryVO">
+        <id column="id" property="id"/>
+        <result column="areaID" property="areaID"/>
+        <result column="area" property="area"/>
+        <result column="father" property="father"/>
+        <result column="cityName" property="cityName"/>
+        <result column="is_use" property="is_use"/>
+        <result column="topnum" property="topnum"/>
+    </resultMap>
+
+    <select id="lists" resultMap="country">
+        SELECT sn.* from hat_area sn WHERE 1=1
+        <if test="father != null and father != ''">
+            AND sn.father = #{father}
+        </if>
+    </select>
+
+    <select id="listsVo" resultMap="country_vo">
+        SELECT sn.*,lcity.city as cityName from hat_area sn
+        LEFT JOIN hat_city lcity ON sn.father=lcity.cityID
+        WHERE 1=1
+        <if test="father != null and father != ''">
+            AND sn.father = #{father}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.CountryObj">
+        INSERT INTO hat_area(id, areaID, area, father)
+        VALUES (#{id}, #{areaID}, #{area} , #{father})
+    </insert>
+
+    <select id="findById" resultMap="country" parameterType="String">
+        SELECT * from hat_area
+        WHERE 1= '1'
+        <if test="id != null and id != ''">
+            AND id = #{id}
+        </if>
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.CountryObj">
+        UPDATE hat_area SET topnum=#{topnum}, is_use=#{is_use} WHERE id=#{id}
+    </update>
+
+</mapper>

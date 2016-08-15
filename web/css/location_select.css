@@ -1,0 +1,42 @@
+body {
+  background-color: #efefef !important;
+}
+.location-list > li {
+  float: left;
+  display: block;
+  margin: 8px 0;
+}
+.location-list > li > a {
+  background-color: #ffffff;
+  box-sizing: border-box;
+  display: block;
+  padding: 10px 20px;
+  color: #272822;
+  border: 1px solid #ccc;
+}
+.location-list > li > a:active {
+  background-color: #cccccc;
+}
+.location-list > li > a .list-num {
+  float: right;
+}
+@media screen and (min-width: 768px) {
+  .location-list > li {
+    width: 48%;
+    margin-left: 1%;
+    margin-right: 1%;
+  }
+  .location-list > li > a {
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .location-list > li {
+    width: 100%;
+  }
+  .location-list > li > a {
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+}

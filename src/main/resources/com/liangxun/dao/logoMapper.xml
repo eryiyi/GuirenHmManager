@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.LogoDao">
+    <resultMap id="logo" type="com.liangxunwang.unimanager.model.LogoObj">
+        <id column="mm_logo_id" property="mm_logo_id"/>
+        <result column="mm_logo_content" property="mm_logo_content"/>
+        <result column="mm_manager_id" property="mm_manager_id"/>
+        <result column="dateline" property="dateline"/>
+    </resultMap>
+    <resultMap id="logo_vo" type="com.liangxunwang.unimanager.mvc.vo.LogoVO">
+        <id column="mm_logo_id" property="mm_logo_id"/>
+        <result column="mm_logo_content" property="mm_logo_content"/>
+        <result column="mm_manager_id" property="mm_manager_id"/>
+        <result column="dateline" property="dateline"/>
+        <result column="mm_manager_nickname" property="mm_manager_nickname"/>
+    </resultMap>
+
+    <select id="listRecordVo" resultMap="logo_vo">
+        SELECT  sn.* ,lemp.mm_manager_nickname as mm_manager_nickname from mm_logo sn
+        LEFT JOIN mm_manager lemp ON sn.mm_manager_id=lemp.mm_manager_id
+        WHERE 1=1
+        <if test="keyword != null and keyword != ''">
+            AND  (sn.mm_logo_content like CONCAT('%',#{keyword},'%') OR  lemp.mm_manager_nickname like CONCAT('%',#{keyword},'%'))
+        </if>
+        <if test="mm_manager_id != null and mm_manager_id != ''">
+            AND sn.mm_manager_id = #{mm_manager_id}
+        </if>
+        ORDER BY sn.dateline DESC limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.mm_logo_id) FROM mm_logo sn
+        LEFT JOIN mm_manager lemp ON sn.mm_manager_id=lemp.mm_manager_id
+        WHERE 1 = 1
+        <if test="keyword != null and keyword != ''">
+            AND  (sn.mm_logo_content like CONCAT('%',#{keyword},'%') OR  lemp.mm_manager_nickname like CONCAT('%',#{keyword},'%'))
+        </if>
+
+        <if test="mm_manager_id != null and mm_manager_id != ''">
+            AND sn.mm_manager_id = #{mm_manager_id}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.LogoObj">
+        INSERT INTO mm_logo(mm_logo_id, mm_logo_content, mm_manager_id, dateline)
+        VALUES (#{mm_logo_id}, #{mm_logo_content}, #{mm_manager_id}, #{dateline})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM mm_logo where mm_logo_id = #{mm_logo_id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.ReportDao">
+    <resultMap id="report" type="com.liangxunwang.unimanager.model.ReportObj">
+        <id column="mm_report_id" property="mm_report_id"/>
+        <result column="mm_msg_id" property="mm_msg_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="mm_emp_id_t" property="mm_emp_id_t"/>
+        <result column="mm_report_content" property="mm_report_content"/>
+        <result column="dateline" property="dateline"/>
+        <result column="is_use" property="is_use"/>
+        <result column="mm_manager_id" property="mm_manager_id"/>
+        <result column="end_dateline" property="end_dateline"/>
+    </resultMap>
+
+    <resultMap id="report_vo" type="com.liangxunwang.unimanager.mvc.vo.ReportVO">
+        <id column="mm_report_id" property="mm_report_id"/>
+        <result column="mm_msg_id" property="mm_msg_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="mm_emp_id_t" property="mm_emp_id_t"/>
+        <result column="mm_report_content" property="mm_report_content"/>
+        <result column="dateline" property="dateline"/>
+        <result column="is_use" property="is_use"/>
+        <result column="mm_manager_id" property="mm_manager_id"/>
+        <result column="end_dateline" property="end_dateline"/>
+        <result column="msgCont" property="msgCont"/>
+        <result column="empName" property="empName"/>
+        <result column="empNameReport" property="empNameReport"/>
+        <result column="managerName" property="managerName"/>
+    </resultMap>
+
+
+    <select id="lists" resultMap="report_vo">
+        SELECT sn.* ,lemp.mm_emp_nickname as empName,lempR.mm_emp_nickname as empNameReport ,lmsg.mm_msg_content as msgCont,lmanager.mm_manager_nickname as managerName  from mm_report sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+        LEFT JOIN mm_emp lempR ON sn.mm_emp_id_t=lempR.mm_emp_id
+        LEFT JOIN mm_msg lmsg ON sn.mm_msg_id=lmsg.mm_msg_id
+        LEFT JOIN mm_manager lmanager ON sn.mm_manager_id=lmanager.mm_manager_id
+        WHERE 1=1
+        <if test="is_use != null and is_use != ''">
+        AND sn.is_use = #{is_use}
+        </if>
+
+        ORDER BY sn.dateline DESC limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.mm_report_id) FROM mm_report sn
+        WHERE 1=1
+        <if test="is_use != null and is_use != ''">
+            AND sn.is_use = #{is_use}
+        </if>
+    </select>
+
+    <select id="countAll" resultType="Long">
+        SELECT count(sn.mm_report_id) FROM mm_report sn
+        WHERE 1=1 AND sn.is_use='0'
+    </select>
+
+    <select id="findById" parameterType="String" resultMap="report_vo">
+        SELECT sn.*,lemp.mm_emp_nickname as empName,lempR.mm_emp_nickname as empNameReport ,lmsg.mm_msg_content as msgCont,lmanager.mm_manager_nickname as managerName  from mm_report sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+        LEFT JOIN mm_emp lempR ON sn.mm_emp_id_t=lempR.mm_emp_id
+        LEFT JOIN mm_msg lmsg ON sn.mm_msg_id=lmsg.mm_msg_id
+        LEFT JOIN mm_manager lmanager ON sn.mm_manager_id=lmanager.mm_manager_id
+
+         where mm_report_id=#{mm_report_id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.ReportObj">
+        UPDATE mm_report SET is_use=#{is_use}, mm_manager_id=#{mm_manager_id}, end_dateline=#{end_dateline} WHERE mm_report_id=#{mm_report_id}
+    </update>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.ReportObj">
+        INSERT INTO mm_report(mm_report_id, mm_msg_id, mm_emp_id, mm_emp_id_t, mm_report_content, dateline, is_use)
+        VALUES (#{mm_report_id}, #{mm_msg_id}, #{mm_emp_id}, #{mm_emp_id_t}, #{mm_report_content}, #{dateline}, #{is_use})
+    </insert>
+
+</mapper>

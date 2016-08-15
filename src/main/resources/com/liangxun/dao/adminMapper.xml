@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.AdminDao">
+    <resultMap id="my_admin" type="com.liangxunwang.unimanager.model.Admin">
+        <id column="mm_manager_id" property="mm_manager_id"/>
+        <result column="mm_manager_mobile" property="mm_manager_mobile"/>
+        <result column="mm_manager_nickname" property="mm_manager_nickname"/>
+        <result column="mm_manager_password" property="mm_manager_password"/>
+        <result column="mm_manager_is_use" property="mm_manager_is_use"/>
+        <result column="permissions" property="permissions"/>
+        <result column="mm_manager_type" property="mm_manager_type"/>
+        <result column="mm_manager_area_uuid" property="mm_manager_area_uuid"/>
+        <result column="goodsCount" property="goodsCount"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+    </resultMap>
+    <resultMap id="my_admin_vo" type="com.liangxunwang.unimanager.mvc.vo.AdminVO">
+        <id column="mm_manager_id" property="mm_manager_id"/>
+        <result column="mm_manager_mobile" property="mm_manager_mobile"/>
+        <result column="mm_manager_nickname" property="mm_manager_nickname"/>
+        <result column="mm_manager_password" property="mm_manager_password"/>
+        <result column="mm_manager_is_use" property="mm_manager_is_use"/>
+        <result column="permissions" property="permissions"/>
+        <result column="mm_manager_type" property="mm_manager_type"/>
+        <result column="mm_manager_area_uuid" property="mm_manager_area_uuid"/>
+        <result column="areaName" property="areaName"/>
+        <result column="goodsCount" property="goodsCount"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+    </resultMap>
+
+    <select id="findById" resultMap="my_admin_vo" parameterType="String">
+        SELECT sn.*
+         ,larea.area as countryName
+         ,lcity.city as cityName
+         ,lpro.province as provinceName
+        from mm_manager sn
+            LEFT JOIN hat_area larea ON sn.mm_manager_area_uuid=larea.areaID
+            LEFT JOIN hat_city lcity ON sn.mm_manager_area_uuid=lcity.cityID
+            LEFT JOIN hat_province lpro ON sn.mm_manager_area_uuid=lpro.provinceID
+         WHERE sn.mm_manager_id=#{mm_manager_id}
+    </select>
+
+    <select id="findByUsername" resultMap="my_admin" parameterType="String">
+        SELECT * from mm_manager WHERE mm_manager_mobile=#{mm_manager_mobile}
+    </select>
+
+    <select id="findByEmpId" resultMap="my_admin" parameterType="String">
+        SELECT * from mm_manager WHERE mm_manager_id=#{mm_manager_id}
+    </select>
+
+    <insert id="add" parameterType="com.liangxunwang.unimanager.model.Admin">
+        INSERT INTO mm_manager(mm_manager_id, mm_manager_mobile, mm_manager_nickname, mm_manager_password, mm_manager_is_use,mm_manager_type,mm_manager_area_uuid,permissions,goodsCount,mm_emp_id)
+         VALUES (#{mm_manager_id}, #{mm_manager_mobile}, #{mm_manager_nickname}, #{mm_manager_password}, #{mm_manager_is_use}, #{mm_manager_type}, #{mm_manager_area_uuid}, #{permissions}, #{goodsCount}, #{mm_emp_id})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM mm_manager WHERE mm_manager_id=#{mm_manager_id}
+    </delete>
+
+    <update id="updatePass" parameterType="String">
+        UPDATE mm_manager SET mm_manager_password=#{pass} WHERE mm_manager_id=#{id}
+    </update>
+
+    <update id="updateStatus" parameterType="String">
+        UPDATE mm_manager SET mm_manager_is_use=#{mm_manager_is_use} WHERE mm_manager_id=#{mm_manager_id}
+    </update>
+
+
+    <select id="lists" resultMap="my_admin_vo">
+        SELECT sn.*
+         ,larea.area as countryName
+         ,lcity.city as cityName
+         ,lpro.province as provinceName
+        from mm_manager sn
+            LEFT JOIN hat_area larea ON sn.mm_manager_area_uuid=larea.areaID
+            LEFT JOIN hat_city lcity ON sn.mm_manager_area_uuid=lcity.cityID
+            LEFT JOIN hat_province lpro ON sn.mm_manager_area_uuid=lpro.provinceID
+        WHERE 1=1
+        <if test="mm_manager_is_use != null and mm_manager_is_use != ''">
+            AND sn.mm_manager_is_use = #{mm_manager_is_use}
+        </if>
+        limit #{index},#{size}
+    </select>
+
+    <select id="listsAll" resultMap="my_admin_vo">
+        SELECT sn.*
+         ,larea.area as countryName
+         ,lcity.city as cityName
+         ,lpro.province as provinceName
+        from mm_manager sn
+            LEFT JOIN hat_area larea ON sn.mm_manager_area_uuid=larea.areaID
+            LEFT JOIN hat_city lcity ON sn.mm_manager_area_uuid=lcity.cityID
+            LEFT JOIN hat_province lpro ON sn.mm_manager_area_uuid=lpro.provinceID
+        WHERE 1=1
+        <if test="mm_manager_is_use != null and mm_manager_is_use != ''">
+            AND sn.mm_manager_is_use = #{mm_manager_is_use}
+        </if>
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.mm_manager_id) FROM mm_manager sn
+        WHERE 1=1
+        <if test="mm_manager_is_use != null and mm_manager_is_use != ''">
+            AND sn.mm_manager_is_use = #{mm_manager_is_use}
+        </if>
+    </select>
+
+    <select id="findByMobile" resultMap="my_admin" parameterType="String">
+        SELECT * from mm_manager WHERE mm_manager_mobile=#{mm_manager_mobile}
+    </select>
+
+</mapper>

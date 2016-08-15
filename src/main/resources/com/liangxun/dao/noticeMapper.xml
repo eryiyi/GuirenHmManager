@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.NoticeDao">
+    <resultMap id="notice" type="com.liangxunwang.unimanager.model.Notice">
+        <id column="mm_notice_id" property="mm_notice_id"/>
+        <result column="mm_manager_id" property="mm_manager_id"/>
+        <result column="mm_notice_title" property="mm_notice_title"/>
+        <result column="mm_notice_content" property="mm_notice_content"/>
+        <result column="dateline" property="dateline"/>
+        <result column="is_del" property="is_del"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+    </resultMap>
+
+    <select id="lists" resultMap="notice">
+        SELECT * from mm_notice WHERE mm_emp_id is NULL or mm_emp_id = ''
+        ORDER BY dateline DESC limit #{index},#{size}
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.Notice">
+        INSERT INTO mm_notice(mm_notice_id, mm_manager_id, mm_notice_title, mm_notice_content, dateline, is_del, mm_emp_id)
+        VALUES (#{mm_notice_id}, #{mm_manager_id}, #{mm_notice_title}, #{mm_notice_content}, #{dateline}, #{is_del}, #{mm_emp_id,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="findById" parameterType="String" resultMap="notice">
+        SELECT * FROM mm_notice where mm_notice_id=#{mm_notice_id}
+    </select>
+
+    <select id="count" resultType="Long">
+      SELECT count(sn.mm_notice_id) FROM mm_notice sn
+   </select>
+
+</mapper>

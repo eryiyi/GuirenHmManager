@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.FeiyongDao">
+    <resultMap id="feiyong" type="com.liangxunwang.unimanager.model.FeiyongObj">
+        <id column="mm_feiyong_id" property="mm_feiyong_id"/>
+        <result column="mm_feiyong_name" property="mm_feiyong_name"/>
+        <result column="mm_feiyong_jine" property="mm_feiyong_jine"/>
+        <result column="mm_feiyong_num" property="mm_feiyong_num"/>
+        <result column="mm_level_id" property="mm_level_id"/>
+        <result column="mm_feiyong_time" property="mm_feiyong_time"/>
+    </resultMap>
+    <resultMap id="feiyong_vo" type="com.liangxunwang.unimanager.mvc.vo.FeiyongVO">
+        <id column="mm_feiyong_id" property="mm_feiyong_id"/>
+        <result column="mm_feiyong_name" property="mm_feiyong_name"/>
+        <result column="mm_feiyong_jine" property="mm_feiyong_jine"/>
+        <result column="mm_feiyong_num" property="mm_feiyong_num"/>
+        <result column="mm_level_id" property="mm_level_id"/>
+        <result column="mm_level_name" property="mm_level_name"/>
+        <result column="mm_feiyong_time" property="mm_feiyong_time"/>
+    </resultMap>
+
+    <select id="lists" resultMap="feiyong_vo">
+        SELECT sn.*,lev.mm_level_name as mm_level_name from mm_feiyong sn
+         LEFT JOIN mm_level lev ON sn.mm_level_id=lev.mm_level_id
+         ORDER by sn.mm_feiyong_num ASC
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.FeiyongObj">
+        INSERT INTO mm_feiyong(mm_feiyong_id, mm_feiyong_name, mm_feiyong_jine,mm_feiyong_num,mm_level_id,mm_feiyong_time)
+        VALUES (#{mm_feiyong_id}, #{mm_feiyong_name}, #{mm_feiyong_jine}, #{mm_feiyong_num,jdbcType=VARCHAR}, #{mm_level_id}, #{mm_feiyong_time,jdbcType=VARCHAR})
+    </insert>
+
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM mm_feiyong where mm_feiyong_id = #{mm_feiyong_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="feiyong">
+        SELECT * FROM mm_feiyong where mm_feiyong_id=#{mm_feiyong_id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.FeiyongObj">
+        UPDATE mm_feiyong SET mm_feiyong_name=#{mm_feiyong_name}, mm_feiyong_jine=#{mm_feiyong_jine}, mm_level_id=#{mm_level_id}, mm_feiyong_num=#{mm_feiyong_num}, mm_feiyong_time=#{mm_feiyong_time} WHERE mm_feiyong_id=#{mm_feiyong_id}
+    </update>
+
+</mapper>

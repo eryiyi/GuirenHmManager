@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.ProvinceDao">
+    <resultMap id="province" type="com.liangxunwang.unimanager.model.ProvinceObj">
+        <id column="id" property="id"/>
+        <result column="provinceID" property="provinceID"/>
+        <result column="province" property="province"/>
+        <result column="pronum" property="pronum"/>
+        <result column="is_use" property="is_use"/>
+    </resultMap>
+
+    <select id="lists" resultMap="province">
+        SELECT sn.* from hat_province sn
+        ORDER by sn.pronum DESC
+    </select>
+
+    <select id="listsApp" resultMap="province">
+        SELECT sn.* from hat_province sn
+        ORDER by sn.pronum DESC
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.ProvinceObj">
+        INSERT INTO hat_province(id, provinceID, province)
+        VALUES (#{id}, #{provinceID}, #{province})
+    </insert>
+
+    <select id="findById" resultMap="province" parameterType="String">
+        SELECT * from hat_province
+        WHERE 1= '1'
+        <if test="id != null and id != ''">
+            AND id = #{id}
+        </if>
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.ProvinceObj">
+        UPDATE hat_province SET pronum=#{pronum}, is_use=#{is_use} WHERE id=#{id}
+    </update>
+
+</mapper>

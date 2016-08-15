@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.PaihangObjDao">
+    <resultMap id="paihang" type="com.liangxunwang.unimanager.model.PaihangObj">
+        <id column="mm_paihang_id" property="mm_paihang_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="top_num" property="top_num"/>
+        <result column="is_del" property="is_del"/>
+        <result column="end_time" property="end_time"/>
+    </resultMap>
+    <resultMap id="paihang_vo" type="com.liangxunwang.unimanager.mvc.vo.PaihangObjVO">
+        <id column="mm_paihang_id" property="mm_paihang_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="top_num" property="top_num"/>
+        <result column="is_del" property="is_del"/>
+        <result column="end_time" property="end_time"/>
+        <result column="levelName" property="levelName"/>
+        <result column="mm_level_num" property="mm_level_num"/>
+        <result column="mm_emp_mobile" property="mm_emp_mobile"/>
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+        <result column="mm_emp_cover" property="mm_emp_cover"/>
+        <result column="mm_emp_type" property="mm_emp_type"/>
+        <result column="mm_emp_company" property="mm_emp_company"/>
+        <result column="mm_emp_company_type" property="mm_emp_company_type"/>
+        <result column="mm_emp_company_address" property="mm_emp_company_address"/>
+        <result column="mm_emp_company_detail" property="mm_emp_company_detail"/>
+        <result column="mm_emp_company_url" property="mm_emp_company_url"/>
+        <result column="mm_level_id" property="mm_level_id"/>
+        <result column="is_chengxin" property="is_chengxin"/>
+        <result column="is_miaomu" property="is_miaomu"/>
+    </resultMap>
+
+    <select id="listRecordVo" resultMap="paihang_vo">
+        SELECT m.*,
+        (SELECT mm_level_num FROM mm_level ll WHERE m.mm_level_id = ll.mm_level_id ) as mm_level_num
+        FROM (
+        SELECT sn.* ,lemp.mm_emp_mobile as mm_emp_mobile, lemp.mm_emp_nickname as mm_emp_nickname,
+        lemp.mm_emp_type as mm_emp_type,lemp.mm_emp_cover as mm_emp_cover, lemp.mm_emp_company_type as mm_emp_company_type
+        , lemp.mm_emp_company as mm_emp_company, lemp.mm_emp_company_address as mm_emp_company_address,
+        lemp.mm_emp_company_detail as mm_emp_company_detail, lemp.mm_level_id as mm_level_id, lemp.is_chengxin as is_chengxin ,
+        lemp.is_miaomu as is_miaomu  from mm_paihang sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+        WHERE 1=1
+        <if test="is_del != null and is_del != ''">
+            AND sn.is_del = #{is_del}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND  (mm_emp_nickname like CONCAT('%',#{keyword},'%') OR  mm_emp_mobile = #{keyword} OR mm_emp_company like CONCAT('%',#{keyword},'%'))
+        </if>
+        ) m
+        ORDER  BY  m.top_num DESC limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.mm_paihang_id) FROM mm_paihang sn
+        WHERE 1=1
+        <if test="is_del != null and is_del != ''">
+            AND sn.is_del = #{is_del}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.PaihangObj">
+        INSERT INTO mm_paihang( mm_paihang_id, mm_emp_id, top_num, is_del, end_time)
+        VALUES ( #{mm_paihang_id},#{mm_emp_id}, #{top_num}, #{is_del}, #{end_time, jdbcType=VARCHAR})
+    </insert>
+
+    <update id="deleteById" parameterType="String">
+        UPDATE mm_paihang SET is_del=1 WHERE mm_paihang_id=#{mm_paihang_id}
+    </update>
+
+    <update id="updateTop"  parameterType="com.liangxunwang.unimanager.model.PaihangObj">
+        UPDATE mm_paihang SET top_num = #{top_num}, is_del = #{is_del}, end_time = #{end_time}
+        WHERE mm_paihang_id=#{mm_paihang_id}
+    </update>
+
+
+    <select id="findById" parameterType="String" resultMap="paihang_vo">
+        SELECT sn.*,lemp.mm_emp_mobile as mm_emp_mobile, lemp.mm_emp_nickname as mm_emp_nickname,
+        lemp.mm_emp_type as mm_emp_type,lemp.mm_emp_cover as mm_emp_cover, lemp.mm_emp_company_type as mm_emp_company_type
+        , lemp.mm_emp_company as mm_emp_company, lemp.mm_emp_company_address as mm_emp_company_address,
+        lemp.mm_emp_company_detail as mm_emp_company_detail, lemp.mm_level_id as mm_level_id, lemp.is_chengxin as is_chengxin ,
+        lemp.is_miaomu as is_miaomu from mm_paihang sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+         where sn.mm_paihang_id=#{mm_paihang_id}
+    </select>
+    <select id="findByEmpId" parameterType="String" resultMap="paihang_vo">
+        SELECT sn.*,lemp.mm_emp_mobile as mm_emp_mobile, lemp.mm_emp_nickname as mm_emp_nickname,
+        lemp.mm_emp_type as mm_emp_type,lemp.mm_emp_cover as mm_emp_cover, lemp.mm_emp_company_type as mm_emp_company_type
+        , lemp.mm_emp_company as mm_emp_company, lemp.mm_emp_company_address as mm_emp_company_address,
+        lemp.mm_emp_company_detail as mm_emp_company_detail, lemp.mm_level_id as mm_level_id, lemp.is_chengxin as is_chengxin ,
+        lemp.is_miaomu as is_miaomu from mm_paihang sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+         where sn.mm_emp_id=#{mm_emp_id}
+    </select>
+
+    <update id="updateOverTime">
+        UPDATE mm_paihang SET is_del='1' WHERE end_time &lt; #{nowTime}
+    </update>
+
+</mapper>

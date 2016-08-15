@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.WeixinDao">
+    <resultMap id="weixin" type="com.liangxunwang.unimanager.model.WeixinObj">
+        <id column="mm_weixin_id" property="mm_weixin_id"/>
+        <result column="mm_weixin" property="mm_weixin"/>
+        <result column="mm_weixin_name" property="mm_weixin_name"/>
+        <result column="mm_weixin_type" property="mm_weixin_type"/>
+    </resultMap>
+
+    <select id="lists" resultMap="weixin">
+        SELECT sn.* from mm_weixin sn
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.WeixinObj">
+        INSERT INTO mm_weixin(mm_weixin_id, mm_weixin, mm_weixin_name, mm_weixin_type)
+        VALUES (#{mm_weixin_id}, #{mm_weixin}, #{mm_weixin_name}, #{mm_weixin_type})
+    </insert>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.WeixinObj">
+        UPDATE mm_weixin SET mm_weixin=#{mm_weixin}, mm_weixin_name=#{mm_weixin_name}
+         WHERE mm_weixin_id=#{mm_weixin_id}
+    </update>
+
+    <select id="findById" parameterType="String" resultMap="weixin">
+        SELECT sn.* FROM mm_weixin sn
+          where sn.mm_weixin_id=#{mm_weixin_id}
+    </select>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM mm_weixin where mm_weixin_id = #{mm_weixin_id}
+    </delete>
+
+</mapper>

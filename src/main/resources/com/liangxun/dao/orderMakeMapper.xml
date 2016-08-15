@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.AppOrderMakeDao">
+    <resultMap id="order" type="com.liangxunwang.unimanager.model.Order">
+        <id column="order_no" property="order_no"/>
+        <result column="emp_id" property="emp_id"/>
+        <result column="goods_count" property="goods_count"/>
+        <result column="payable_amount" property="payable_amount"/>
+        <result column="create_time" property="create_time"/>
+        <result column="pay_time" property="pay_time"/>
+        <result column="status" property="status"/>
+        <result column="pay_status" property="pay_status"/>
+        <result column="postscript" property="postscript"/>
+        <result column="trade_no" property="trade_no"/>
+        <result column="trade_type" property="trade_type"/>
+        <result column="invoice" property="invoice"/>
+        <result column="invoice_title" property="invoice_title"/>
+        <result column="taxes" property="taxes"/>
+    </resultMap>
+
+    <resultMap id="orderVO" type="com.liangxunwang.unimanager.mvc.vo.OrderVO">
+        <id column="order_no" property="order_no"/>
+        <result column="emp_id" property="emp_id"/>
+        <result column="goods_count" property="goods_count"/>
+        <result column="payable_amount" property="payable_amount"/>
+        <result column="create_time" property="create_time"/>
+        <result column="pay_time" property="pay_time"/>
+        <result column="status" property="status"/>
+        <result column="pay_status" property="pay_status"/>
+        <result column="postscript" property="postscript"/>
+        <result column="trade_no" property="trade_no"/>
+        <result column="trade_type" property="trade_type"/>
+        <result column="invoice" property="invoice"/>
+        <result column="invoice_title" property="invoice_title"/>
+        <result column="taxes" property="taxes"/>
+
+        <result column="mm_emp_mobile" property="mm_emp_mobile"/>
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+    </resultMap>
+
+
+    <select id="listOrders" resultMap="orderVO">
+        SELECT ord.*, le.mm_emp_nickname as mm_emp_nickname,le.mm_emp_mobile as mm_emp_mobile FROM mm_order ord
+        LEFT JOIN mm_emp le ON ord.emp_id=le.mm_emp_id
+        WHERE 1=1 AND ord.emp_id = #{emp_id} AND ord.status !='4'
+        <if test="status != null and status != ''">
+            AND ord.status=#{status}
+        </if>
+        ORDER BY ord.create_time DESC
+        limit #{index},#{size}
+    </select>
+
+    <resultMap id="order_trade" type="com.liangxunwang.unimanager.model.ShoppingTrade">
+        <id column="out_trade_no" property="out_trade_no"/>
+        <result column="trade_prices" property="trade_prices"/>
+        <result column="pay_status" property="pay_status"/>
+        <result column="dateline" property="dateline"/>
+    </resultMap>
+
+    <insert id="saveTrade" parameterType="com.liangxunwang.unimanager.model.ShoppingTrade">
+        INSERT INTO mm_trade(out_trade_no, trade_prices, pay_status, dateline)
+        VALUES (#{out_trade_no},#{trade_prices},#{pay_status},#{dateline})
+    </insert>
+
+    <insert id="saveList" parameterType="java.util.List">
+        insert into mm_order (order_no, emp_id, goods_count, payable_amount, create_time, pay_time, status, pay_status, postscript,trade_no, trade_type, invoice, invoice_title,taxes)
+        VALUE (#{order_no,jdbcType=VARCHAR},
+                #{emp_id,jdbcType=VARCHAR},
+                #{goods_count,jdbcType=VARCHAR},
+                #{payable_amount,jdbcType=VARCHAR},
+                #{create_time,jdbcType=VARCHAR},
+                #{pay_time,jdbcType=VARCHAR},
+                #{status,jdbcType=VARCHAR},
+                #{pay_status,jdbcType=VARCHAR},
+                #{postscript,jdbcType=VARCHAR},
+                #{trade_no,jdbcType=VARCHAR},
+                #{trade_type,jdbcType=VARCHAR},
+                #{invoice,jdbcType=VARCHAR},
+                #{invoice_title,jdbcType=VARCHAR},
+                #{taxes,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateOrderById" parameterType="com.liangxunwang.unimanager.model.Order">
+        UPDATE mm_order SET pay_time=#{pay_time}, status=#{status}, pay_status=#{pay_status} WHERE trade_no=#{trade_no}
+    </update>
+
+    <update id="updateTradeById" parameterType="String">
+        UPDATE mm_trade SET pay_status='1' WHERE out_trade_no=#{out_trade_no}
+    </update>
+
+    <update id="cancelOrderById" parameterType="String">
+        UPDATE  mm_order SET  status='3'  WHERE order_no=#{order_no}
+    </update>
+
+
+    <select id="findOrderByTradeNo" resultMap="order">
+       SELECT  * from  mm_order  WHERE  trade_no = #{trade_no}
+    </select>
+
+
+    <update id="updateOrderBySingle" parameterType="String">
+        UPDATE mm_order SET pay_time=#{pay_time}, status='2', pay_status='1' WHERE order_no=#{order_no}
+    </update>
+
+    <select id="selectOrderNum" resultType="long">
+        SELECT COUNT(*) from mm_order WHERE 1='1'
+        <if test="emp_id != null and emp_id != ''">
+            AND emp_id = #{emp_id}
+        </if>
+    </select>
+
+    <select id="selectOrderNumByDay" resultType="long">
+        SELECT COUNT(*) from mm_order WHERE 1='1'
+        <if test="emp_id != null and emp_id != ''">
+            AND emp_id = #{emp_id}
+        </if>
+        <if test="start != null and start != ''">
+            AND pay_time &gt;= #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND pay_time &lt;= #{end}
+        </if>
+    </select>
+
+    <select id="selectSum" resultType="String">
+        SELECT sum(payable_amount) from mm_order WHERE 1='1'
+        <if test="emp_id != null and emp_id != ''">
+            AND emp_id = #{emp_id}
+        </if>
+        <if test="start != null and start != ''">
+            AND pay_time &gt;= #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND pay_time &lt;= #{end}
+        </if>
+        AND pay_status = '1'
+    </select>
+
+    <update id="deleteOrderById" parameterType="String">
+        UPDATE  mm_order SET  status='4'  WHERE order_no=#{order_no}
+    </update>
+
+</mapper>

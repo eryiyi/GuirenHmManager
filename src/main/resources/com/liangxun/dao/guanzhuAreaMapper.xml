@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.GuanzhuAreaDao">
+    <resultMap id="guanzhuObj" type="com.liangxunwang.unimanager.model.GuanzhuAreaObj">
+        <id column="mm_guanzhu_id" property="mm_guanzhu_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="areaid" property="areaid"/>
+        <result column="area_name" property="area_name"/>
+        <result column="reg_time" property="reg_time"/>
+        <result column="ischeck" property="ischeck"/>
+    </resultMap>
+
+    <resultMap id="guanzhuObj_vo" type="com.liangxunwang.unimanager.mvc.vo.GuanzhuAreaObjVO">
+        <id column="mm_guanzhu_id" property="mm_guanzhu_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="areaid" property="areaid"/>
+        <result column="area_name" property="area_name"/>
+        <result column="reg_time" property="reg_time"/>
+        <result column="ischeck" property="ischeck"/>
+
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+    </resultMap>
+
+    <select id="lists" resultMap="guanzhuObj_vo">
+        SELECT sn.*,lemp.mm_emp_nickname as mm_emp_nickname from mm_guanzhu sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id = lemp.mm_emp_id
+        WHERE 1=1
+        <if test="ischeck != null and ischeck != ''">
+            AND sn.ischeck = #{ischeck}
+        </if>
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND lemp.mm_emp_nickname like CONCAT('%',#{keyword},'%')
+        </if>
+        ORDER BY sn.reg_time DESC limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.mm_guanzhu_id) FROM mm_guanzhu sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id = lemp.mm_emp_id
+        WHERE 1=1
+        <if test="ischeck != null and ischeck != ''">
+            AND sn.ischeck = #{ischeck}
+        </if>
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND lemp.mm_emp_nickname like CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.GuanzhuAreaObj">
+        INSERT INTO mm_guanzhu(mm_guanzhu_id, mm_emp_id, areaid, area_name, reg_time)
+        VALUES (#{mm_guanzhu_id}, #{mm_emp_id}, #{areaid}, #{area_name}, #{reg_time, jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM mm_guanzhu where mm_guanzhu_id = #{mm_guanzhu_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="guanzhuObj_vo">
+        SELECT sn.* ,lemp.mm_emp_nickname as mm_emp_nickname FROM mm_guanzhu sn
+         LEFT JOIN mm_emp lemp ON sn.mm_emp_id = lemp.mm_emp_id
+        where sn.mm_guanzhu_id=#{mm_guanzhu_id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.GuanzhuAreaObj">
+        UPDATE mm_guanzhu SET ischeck=#{ischeck} WHERE mm_guanzhu_id=#{mm_guanzhu_id}
+    </update>
+
+    <select id="findByEmpId" parameterType="String" resultMap="guanzhuObj_vo">
+        SELECT * FROM mm_guanzhu where mm_emp_id=#{mm_emp_id}
+    </select>
+
+</mapper>

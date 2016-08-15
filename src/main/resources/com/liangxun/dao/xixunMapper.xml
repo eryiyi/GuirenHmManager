@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.XixunDao">
+    <resultMap id="xixun" type="com.liangxunwang.unimanager.model.XixunObj">
+        <id column="guiren_xixun_id" property="guiren_xixun_id"/>
+        <result column="guiren_xixun_title" property="guiren_xixun_title"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="dateline" property="dateline"/>
+    </resultMap>
+    <resultMap id="xixun_vo" type="com.liangxunwang.unimanager.mvc.vo.XixunObjVO">
+        <id column="guiren_xixun_id" property="guiren_xixun_id"/>
+        <result column="guiren_xixun_title" property="guiren_xixun_title"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="dateline" property="dateline"/>
+
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+        <result column="mm_emp_cover" property="mm_emp_cover"/>
+        <result column="mm_hangye_name" property="mm_hangye_name"/>
+        <result column="mm_emp_sex" property="mm_emp_sex"/>
+        <result column="mm_emp_mobile" property="mm_emp_mobile"/>
+        <result column="lng" property="lng"/>
+        <result column="lat" property="lat"/>
+    </resultMap>
+
+    <select id="listRecordVo" resultMap="xixun_vo">
+        SELECT m.*
+        FROM (
+        SELECT sn.*
+        ,lemp.mm_emp_nickname as mm_emp_nickname
+        ,lemp.mm_emp_cover as mm_emp_cover
+        ,lemp.mm_emp_sex as mm_emp_sex
+        ,lemp.mm_emp_mobile as mm_emp_mobile
+        ,lemp.lng as lng
+        ,lemp.lat as lat
+        ,lh.mm_hangye_name as mm_hangye_name
+        from guiren_xixun sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+        LEFT JOIN guiren_hangye lh ON lemp.mm_hangye_id=lh.mm_hangye_id
+        ) m
+        ORDER  BY  m.dateline DESC  limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.guiren_xixun_id) FROM guiren_xixun sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.XixunObj">
+        INSERT INTO guiren_xixun( guiren_xixun_id, guiren_xixun_title, mm_emp_id, dateline)
+        VALUES ( #{guiren_xixun_id}, #{guiren_xixun_title}, #{mm_emp_id}, #{dateline})
+    </insert>
+
+
+
+
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.EmpLoginNumDao">
+    <resultMap id="empLoginNum" type="com.liangxunwang.unimanager.model.EmpLoginNum">
+        <id column="mm_emp_login_num_id" property="mm_emp_login_num_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="mm_emp_login_time" property="mm_emp_login_time"/>
+    </resultMap>
+    <resultMap id="empLoginNum_vo" type="com.liangxunwang.unimanager.mvc.vo.EmpLoginNumVO">
+        <id column="mm_emp_login_num_id" property="mm_emp_login_num_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="mm_emp_login_time" property="mm_emp_login_time"/>
+        <result column="mm_emp_mobile" property="mm_emp_mobile"/>
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+    </resultMap>
+
+    <select id="listRecordVo" resultMap="empLoginNum_vo">
+        SELECT  sn.* ,lemp.mm_emp_mobile as mm_emp_mobile,lemp.mm_emp_nickname as mm_emp_nickname from mm_emp_login_num sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+        WHERE 1=1
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+        ORDER BY sn.mm_emp_login_time DESC limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.mm_emp_login_num_id) FROM mm_emp_login_num sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+        WHERE 1=1
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.EmpLoginNum">
+        INSERT INTO mm_emp_login_num(mm_emp_login_num_id, mm_emp_id, mm_emp_login_time)
+        VALUES (#{mm_emp_login_num_id}, #{mm_emp_id}, #{mm_emp_login_time})
+    </insert>
+
+
+</mapper>

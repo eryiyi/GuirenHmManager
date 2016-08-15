@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.GoodsTypeDao">
+    <resultMap id="my_goods_type" type="com.liangxunwang.unimanager.model.GoodsType">
+        <id column="type_id" property="typeId"/>
+        <result column="type_name" property="typeName"/>
+        <result column="type_cont" property="typeContent"/>
+        <result column="type_isuse" property="typeIsUse"/>
+        <result column="type_cover" property="typeCover"/>
+        <result column="type_is_business" property="typeIsBusiness"/>
+
+        <result column="lx_goods_type_type" property="lx_goods_type_type"/>
+        <result column="lx_goods_type_url" property="lx_goods_type_url"/>
+        <result column="school_id" property="school_id"/>
+        <result column="emp_id" property="emp_id"/>
+        <result column="schoolName" property="schoolName"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.GoodsType">
+        INSERT INTO lx_goods_type(type_id, type_name, type_cont, type_isuse, type_cover , type_is_business, lx_goods_type_type,lx_goods_type_url,school_id,emp_id )
+         VALUES (#{typeId}, #{typeName},#{typeContent},#{typeIsUse},#{typeCover}, #{typeIsBusiness},#{lx_goods_type_type, jdbcType=VARCHAR}, #{lx_goods_type_url, jdbcType=VARCHAR}, #{school_id, jdbcType=VARCHAR}, #{emp_id, jdbcType=VARCHAR})
+    </insert>
+
+    <select id="list" resultMap="my_goods_type">
+        SELECT sn.*,nt.name as schoolName FROM lx_goods_type sn
+        LEFT JOIN college nt ON sn.school_id=nt.coid
+        WHERE 1=1
+        <if test="isUse != null and isUse != ''">
+            AND sn.type_isuse=#{isUse}
+        </if>
+        <if test="lx_goods_type_type != null and lx_goods_type_type != ''">
+            AND sn.lx_goods_type_type=#{lx_goods_type_type}
+        </if>
+        <if test="school_id != null and school_id != ''">
+            AND sn.school_id=#{school_id}
+        </if>
+        <if test="emp_id != null and emp_id != ''">
+            AND sn.emp_id=#{emp_id}
+        </if>
+    </select>
+
+    <select id="findById" parameterType="String" resultMap="my_goods_type">
+        SELECT * FROM lx_goods_type where type_id=#{typeId}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.GoodsType">
+        UPDATE lx_goods_type SET type_name=#{typeName}, type_cont=#{typeContent},
+         type_isuse=#{typeIsUse}, type_cover=#{typeCover}, type_is_business=#{typeIsBusiness}, lx_goods_type_type=#{lx_goods_type_type, jdbcType=VARCHAR}, lx_goods_type_url=#{lx_goods_type_url, jdbcType=VARCHAR} WHERE type_id=#{typeId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM lx_goods_type WHERE type_id=#{typeId}
+    </delete>
+</mapper>

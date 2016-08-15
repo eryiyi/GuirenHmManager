@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.YaoqingCardDao">
+    <resultMap id="yaoqingCard" type="com.liangxunwang.unimanager.model.YaoqingCard">
+        <id column="guiren_card_id" property="guiren_card_id"/>
+        <result column="guiren_card_num" property="guiren_card_num"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="is_use" property="is_use"/>
+        <result column="y_mm_emp_id" property="y_mm_emp_id"/>
+        <result column="createtime" property="createtime"/>
+    </resultMap>
+
+    <resultMap id="yaoqingCardVO" type="com.liangxunwang.unimanager.mvc.vo.YaoqingCardVO">
+        <id column="guiren_card_id" property="guiren_card_id"/>
+        <result column="guiren_card_num" property="guiren_card_num"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="is_use" property="is_use"/>
+        <result column="y_mm_emp_id" property="y_mm_emp_id"/>
+        <result column="createtime" property="createtime"/>
+
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+        <result column="mm_emp_mobile" property="mm_emp_mobile"/>
+        <result column="mm_emp_nickname_y" property="mm_emp_nickname_y"/>
+        <result column="mm_emp_mobile_y" property="mm_emp_mobile_y"/>
+    </resultMap>
+
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.YaoqingCard">
+        INSERT INTO guiren_yq_card(guiren_card_id, guiren_card_num, mm_emp_id, is_use, createtime)
+        VALUES (#{guiren_card_id}, #{guiren_card_num}, #{mm_emp_id}, #{is_use}, #{createtime ,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="findById"  resultMap="yaoqingCard">
+        SELECT * FROM guiren_yq_card
+         where 1 = 1
+        <if test="guiren_card_id != null and guiren_card_id != ''">
+            AND guiren_card_id = #{guiren_card_id}
+        </if>
+        <if test="guiren_card_num != null and guiren_card_num != ''">
+            AND guiren_card_num = #{guiren_card_num}
+        </if>
+    </select>
+
+    <select id="list" resultMap="yaoqingCardVO">
+        SELECT sn.*,
+        lemp.mm_emp_nickname as mm_emp_nickname ,lemp.mm_emp_mobile as mm_emp_mobile,
+        lempy.mm_emp_nickname as mm_emp_nickname_y ,lempy.mm_emp_mobile as mm_emp_mobile_y
+        from guiren_yq_card sn
+        LEFT JOIN mm_emp lemp ON lemp.mm_emp_id = sn.mm_emp_id
+        LEFT JOIN mm_emp lempy ON lempy.mm_emp_id = sn.y_mm_emp_id
+        where 1 = 1
+        <if test="guiren_card_id != null and guiren_card_id != ''">
+            AND sn.guiren_card_id = #{guiren_card_id}
+        </if>
+        <if test="guiren_card_num != null and guiren_card_num != ''">
+            AND sn.guiren_card_num = #{guiren_card_num}
+        </if>
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+        <if test="y_mm_emp_id != null and y_mm_emp_id != ''">
+            AND sn.y_mm_emp_id = #{y_mm_emp_id}
+        </if>
+        <if test="is_use != null and is_use != ''">
+            AND sn.is_use = #{is_use}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND  (lemp.mm_emp_nickname = #{keyword} OR lemp.mm_emp_mobile like CONCAT('%',#{keyword},'%') OR lemp.mm_emp_nickname = #{keyword} OR lemp.mm_emp_mobile like CONCAT('%',#{keyword},'%'))
+        </if>
+
+        ORDER  by sn.createtime DESC  limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.guiren_card_id) FROM guiren_yq_card sn
+        LEFT JOIN mm_emp lemp ON lemp.mm_emp_id = sn.mm_emp_id
+        where 1 = 1
+        <if test="guiren_card_id != null and guiren_card_id != ''">
+            AND sn.guiren_card_id = #{guiren_card_id}
+        </if>
+        <if test="guiren_card_num != null and guiren_card_num != ''">
+            AND sn.guiren_card_num = #{guiren_card_num}
+        </if>
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+        <if test="is_use != null and is_use != ''">
+            AND sn.is_use = #{is_use}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND  (lemp.mm_emp_nickname = #{keyword} OR lemp.mm_emp_mobile like CONCAT('%',#{keyword},'%'))
+        </if>
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.YaoqingCard">
+        UPDATE guiren_yq_card SET is_use=#{is_use},y_mm_emp_id=#{y_mm_emp_id}  WHERE guiren_card_num=#{guiren_card_num}
+    </update>
+
+    <select id="findByEmp" resultMap="yaoqingCardVO">
+        SELECT sn.*,
+        lemp.mm_emp_nickname as mm_emp_nickname ,lemp.mm_emp_mobile as mm_emp_mobile,
+        lempy.mm_emp_nickname as mm_emp_nickname_y ,lempy.mm_emp_mobile as mm_emp_mobile_y
+        from guiren_yq_card sn
+        LEFT JOIN mm_emp lemp ON lemp.mm_emp_id = sn.mm_emp_id
+        LEFT JOIN mm_emp lempy ON lempy.mm_emp_id = sn.y_mm_emp_id
+        where 1 = 1
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+        ORDER  by sn.createtime DESC
+    </select>
+</mapper>

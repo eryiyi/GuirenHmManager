@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.AdDao">
+    <resultMap id="adObj" type="com.liangxunwang.unimanager.model.AdObj">
+        <id column="mm_ad_id" property="mm_ad_id"/>
+        <result column="mm_ad_url" property="mm_ad_url"/>
+        <result column="mm_ad_pic" property="mm_ad_pic"/>
+        <result column="mm_ad_type" property="mm_ad_type"/>
+        <result column="mm_ad_num" property="mm_ad_num"/>
+        <result column="mm_emp_provinceId" property="mm_emp_provinceId"/>
+        <result column="mm_emp_cityId" property="mm_emp_cityId"/>
+        <result column="mm_emp_countryId" property="mm_emp_countryId"/>
+    </resultMap>
+
+    <select id="lists" resultMap="adObj">
+        SELECT * from mm_ad
+        WHERE 1=1
+        <if test="mm_ad_type != null and mm_ad_type != ''">
+            AND mm_ad_type = #{mm_ad_type}
+        </if>
+        <if test="mm_emp_provinceId != null and mm_emp_provinceId != ''">
+            AND mm_emp_provinceId = #{mm_emp_provinceId}
+        </if>
+        <if test="mm_emp_cityId != null and mm_emp_cityId != ''">
+            AND mm_emp_cityId = #{mm_emp_cityId}
+        </if>
+        <if test="mm_emp_countryId != null and mm_emp_countryId != ''">
+            AND mm_emp_countryId = #{mm_emp_countryId}
+        </if>
+        ORDER BY mm_ad_num asc
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.AdObj">
+        INSERT INTO mm_ad(mm_ad_id, mm_ad_url, mm_ad_pic, mm_ad_type, mm_ad_num, mm_emp_provinceId, mm_emp_cityId, mm_emp_countryId)
+        VALUES (#{mm_ad_id}, #{mm_ad_url}, #{mm_ad_pic}, #{mm_ad_type,jdbcType=VARCHAR}, #{mm_ad_num,jdbcType=VARCHAR}, #{mm_emp_provinceId,jdbcType=VARCHAR}, #{mm_emp_cityId,jdbcType=VARCHAR}, #{mm_emp_countryId,jdbcType=VARCHAR})
+    </insert>
+
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM mm_ad where mm_ad_id = #{mm_ad_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="adObj">
+        SELECT * FROM mm_ad where mm_ad_id=#{mm_ad_id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.AdObj">
+        UPDATE mm_ad SET mm_ad_url=#{mm_ad_url},
+        mm_ad_pic=#{mm_ad_pic} ,
+         mm_ad_num=#{mm_ad_num,jdbcType=VARCHAR},
+         mm_ad_type=#{mm_ad_type,jdbcType=VARCHAR}
+         WHERE mm_ad_id=#{mm_ad_id}
+    </update>
+</mapper>

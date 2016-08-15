@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.VipEndTimeDao">
+    <resultMap id="vipEndTime" type="com.liangxunwang.unimanager.model.VipEndTime">
+        <id column="mm_endtime_vip_id" property="mm_endtime_vip_id"/>
+        <result column="mm_endtime_vip_title" property="mm_endtime_vip_title"/>
+        <result column="mm_endtime_vip_content" property="mm_endtime_vip_content"/>
+    </resultMap>
+
+    <select id="lists" resultMap="vipEndTime">
+         SELECT sn.* from mm_endtime_vip sn
+    </select>
+
+    <!--<insert id="save" parameterType="com.liangxunwang.unimanager.model.VipEndTime">-->
+        <!--INSERT INTO mm_endtime_vip(mm_endtime_vip_id, mm_endtime_vip_title, mm_endtime_vip_content)-->
+        <!--VALUES (#{mm_endtime_vip_id}, #{mm_endtime_vip_title}, #{mm_endtime_vip_content})-->
+    <!--</insert>-->
+
+    <select id="findById" parameterType="String" resultMap="vipEndTime">
+        SELECT * FROM mm_endtime_vip where mm_endtime_vip_id=#{mm_endtime_vip_id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.VipEndTime">
+        UPDATE mm_endtime_vip SET
+        mm_endtime_vip_title=#{mm_endtime_vip_title},
+        mm_endtime_vip_content=#{mm_endtime_vip_content}
+        WHERE mm_endtime_vip_id=#{mm_endtime_vip_id}
+    </update>
+
+</mapper>

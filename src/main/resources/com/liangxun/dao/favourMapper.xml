@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.FavourDao">
+    <resultMap id="favour" type="com.liangxunwang.unimanager.model.Favour">
+        <id column="mm_record_favour_id" property="mm_record_favour_id"/>
+        <result column="mm_msg_id" property="mm_msg_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="dateline" property="dateline"/>
+    </resultMap>
+
+    <resultMap id="favour_vo" type="com.liangxunwang.unimanager.mvc.vo.FavourVO">
+        <id column="mm_record_favour_id" property="mm_record_favour_id"/>
+        <result column="mm_msg_id" property="mm_msg_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="dateline" property="dateline"/>
+        <result column="mm_msg_type" property="mm_msg_type"/>
+        <result column="mm_msg_title" property="mm_msg_title"/>
+        <result column="mm_msg_content" property="mm_msg_content"/>
+        <result column="mm_msg_picurl" property="mm_msg_picurl"/>
+        <result column="provinceid" property="provinceid"/>
+        <result column="cityid" property="cityid"/>
+        <result column="countryid" property="countryid"/>
+        <result column="mm_emp_mobile" property="mm_emp_mobile"/>
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+        <result column="mm_emp_type" property="mm_emp_type"/>
+        <result column="mm_emp_cover" property="mm_emp_cover"/>
+        <result column="mm_emp_company_type" property="mm_emp_company_type"/>
+        <result column="mm_emp_company" property="mm_emp_company"/>
+        <result column="mm_level_id" property="mm_level_id"/>
+        <result column="is_chengxin" property="is_chengxin"/>
+        <result column="is_miaomu" property="is_miaomu"/>
+        <result column="mm_level_num" property="mm_level_num"/>
+        <result column="area" property="area"/>
+        <result column="datelineRecord" property="datelineRecord"/>
+    </resultMap>
+
+    <select id="lists" resultMap="favour_vo">
+        SELECT m.*
+        FROM (
+        SELECT sn.* ,lmsg.mm_msg_type as mm_msg_type,
+        lmsg.mm_msg_title as mm_msg_title,
+        lmsg.mm_msg_content as mm_msg_content,
+        lmsg.mm_msg_picurl as mm_msg_picurl,
+        lmsg.provinceid as provinceid,
+        lmsg.cityid as cityid,
+        lmsg.dateline as datelineRecord,
+        (SELECT mm_emp_mobile FROM mm_emp lemp WHERE lemp.mm_emp_id = lmsg.mm_emp_id) as mm_emp_mobile,
+        (SELECT mm_emp_nickname  FROM mm_emp lemp WHERE lemp.mm_emp_id = lmsg.mm_emp_id) as mm_emp_nickname ,
+        (SELECT mm_emp_type  FROM mm_emp lemp WHERE lemp.mm_emp_id = lmsg.mm_emp_id) as mm_emp_type ,
+        (SELECT mm_emp_cover  FROM mm_emp lemp WHERE lemp.mm_emp_id = lmsg.mm_emp_id) as mm_emp_cover ,
+        (SELECT mm_emp_company_type  FROM mm_emp lemp WHERE lemp.mm_emp_id = lmsg.mm_emp_id) as mm_emp_company_type ,
+        (SELECT mm_emp_company FROM mm_emp lemp WHERE lemp.mm_emp_id = lmsg.mm_emp_id) as mm_emp_company ,
+        (SELECT mm_level_id  FROM mm_emp lemp WHERE lemp.mm_emp_id = lmsg.mm_emp_id) as mm_level_id ,
+        (SELECT is_chengxin  FROM mm_emp lemp WHERE lemp.mm_emp_id = lmsg.mm_emp_id) as is_chengxin ,
+        (SELECT is_miaomu  FROM mm_emp lemp WHERE lemp.mm_emp_id = lmsg.mm_emp_id) as is_miaomu
+        from mm_record_favour sn
+        LEFT JOIN mm_msg lmsg ON sn.mm_msg_id=lmsg.mm_msg_id
+        WHERE 1=1
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+
+        ) m
+        ORDER  BY  m.dateline DESC
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.Level">
+        INSERT INTO mm_record_favour(mm_record_favour_id,mm_msg_id, mm_emp_id, dateline)
+        VALUES (#{mm_record_favour_id},#{mm_msg_id}, #{mm_emp_id}, #{dateline})
+    </insert>
+
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM mm_record_favour where mm_record_favour_id = #{mm_record_favour_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="favour">
+        SELECT * FROM mm_record_favour where mm_record_favour_id=#{mm_record_favour_id}
+    </select>
+    <select id="findOne" resultMap="favour">
+        SELECT * FROM mm_record_favour where
+        mm_msg_id=#{mm_msg_id} AND
+        mm_emp_id=#{mm_emp_id}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.mm_emp_id) FROM mm_record_favour sn
+        WHERE 1=1
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+    </select>
+
+
+</mapper>

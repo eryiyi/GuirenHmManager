@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.HangYeTypeDao">
+    <resultMap id="hangYeType" type="com.liangxunwang.unimanager.model.HangYeType">
+        <id column="mm_hangye_id" property="mm_hangye_id"/>
+        <result column="mm_hangye_name" property="mm_hangye_name"/>
+        <result column="mm_hangye_fid" property="mm_hangye_fid"/>
+        <result column="top_num" property="top_num"/>
+    </resultMap>
+    <resultMap id="hangYeTypeVO" type="com.liangxunwang.unimanager.mvc.vo.HangYeTypeVO">
+        <id column="mm_hangye_id" property="mm_hangye_id"/>
+        <result column="mm_hangye_name" property="mm_hangye_name"/>
+        <result column="mm_hangye_fid" property="mm_hangye_fid"/>
+        <result column="top_num" property="top_num"/>
+
+        <result column="fName" property="fName"/>
+    </resultMap>
+
+    <select id="lists" resultMap="hangYeTypeVO">
+        SELECT sn.*,cr.mm_hangye_name as fName  from guiren_hangye sn
+         LEFT JOIN guiren_hangye cr ON sn.mm_hangye_fid=cr.mm_hangye_id
+         WHERE 1=1
+        <if test="mm_hangye_fid != null and mm_hangye_fid != ''">
+            AND sn.mm_hangye_fid=#{mm_hangye_fid}
+        </if>
+        <if test="keywords != null and keywords != ''">
+            AND  (sn.mm_hangye_name like CONCAT('%',#{keywords},'%') OR cr.mm_hangye_name like CONCAT('%',#{keywords},'%'))
+        </if>
+
+        ORDER BY sn.top_num desc
+    </select>
+
+    <select id="listsTop" resultMap="hangYeTypeVO">
+        SELECT sn.*,cr.mm_hangye_name as fName  from guiren_hangye sn
+        LEFT JOIN guiren_hangye cr ON sn.mm_hangye_fid=cr.mm_hangye_id
+        WHERE 1=1  AND  sn.mm_hangye_fid = ''
+        ORDER BY sn.top_num desc
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.HangYeType">
+        INSERT INTO guiren_hangye(mm_hangye_id, mm_hangye_name, mm_hangye_fid, top_num)
+        VALUES (#{mm_hangye_id}, #{mm_hangye_name}, #{mm_hangye_fid}, #{top_num})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM guiren_hangye where mm_hangye_id = #{mm_hangye_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="hangYeType">
+        SELECT * FROM guiren_hangye where mm_hangye_id=#{mm_hangye_id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.HangYeType">
+        UPDATE guiren_hangye SET mm_hangye_name=#{mm_hangye_name}, mm_hangye_fid=#{mm_hangye_fid}, top_num=#{top_num} WHERE mm_hangye_id=#{mm_hangye_id}
+    </update>
+</mapper>

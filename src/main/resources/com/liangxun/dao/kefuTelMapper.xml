@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.KefuTelDao">
+    <resultMap id="kefu" type="com.liangxunwang.unimanager.model.KefuTel">
+        <id column="mm_tel_id" property="mm_tel_id"/>
+        <result column="mm_tel" property="mm_tel"/>
+        <result column="mm_emp_provinceId" property="mm_emp_provinceId"/>
+        <result column="mm_emp_cityId" property="mm_emp_cityId"/>
+        <result column="mm_emp_countryId" property="mm_emp_countryId"/>
+        <result column="mm_tel_type" property="mm_tel_type"/>
+    </resultMap>
+    <resultMap id="kefu_vo" type="com.liangxunwang.unimanager.mvc.vo.KefuVO">
+        <id column="mm_tel_id" property="mm_tel_id"/>
+        <result column="mm_tel" property="mm_tel"/>
+        <result column="mm_emp_provinceId" property="mm_emp_provinceId"/>
+        <result column="mm_emp_cityId" property="mm_emp_cityId"/>
+        <result column="mm_emp_countryId" property="mm_emp_countryId"/>
+        <result column="mm_tel_type" property="mm_tel_type"/>
+        <result column="provinceName" property="provinceName"/>
+        <result column="cityName" property="cityName"/>
+        <result column="areaName" property="areaName"/>
+    </resultMap>
+
+    <select id="lists" resultMap="kefu_vo">
+        SELECT sn.*,hatp.province as provinceName, hatc.city as cityName, hata.area as areaName from mm_tel sn
+        LEFT JOIN hat_province hatp ON sn.mm_emp_provinceId=hatp.provinceID
+        LEFT JOIN hat_city hatc ON sn.mm_emp_cityId=hatc.cityID
+        LEFT JOIN hat_area hata ON sn.mm_emp_countryId=hata.areaID
+        WHERE  1=1
+        <if test="mm_emp_countryId != null and mm_emp_countryId != ''">
+            AND mm_emp_countryId = #{mm_emp_countryId}
+        </if>
+        <if test="mm_tel_type != null and mm_tel_type != ''">
+            AND mm_tel_type = #{mm_tel_type}
+        </if>
+    </select>
+
+    <select id="listsAll" resultMap="kefu_vo">
+        SELECT sn.* from mm_tel sn
+        WHERE  1=1
+        <if test="mm_tel_type != null and mm_tel_type != ''">
+            AND sn.mm_tel_type = #{mm_tel_type}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.KefuTel">
+        INSERT INTO mm_tel(mm_tel_id, mm_tel,mm_emp_provinceId,mm_emp_cityId,mm_emp_countryId,mm_tel_type)
+        VALUES (#{mm_tel_id}, #{mm_tel}, #{mm_emp_provinceId,jdbcType=VARCHAR}, #{mm_emp_cityId,jdbcType=VARCHAR}, #{mm_emp_countryId,jdbcType=VARCHAR}, #{mm_tel_type,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.KefuTel">
+        UPDATE mm_tel SET mm_emp_provinceId=#{mm_emp_provinceId,jdbcType=VARCHAR},mm_emp_cityId=#{mm_emp_cityId,jdbcType=VARCHAR},mm_emp_countryId=#{mm_emp_countryId,jdbcType=VARCHAR},mm_tel=#{mm_tel}
+         WHERE mm_tel_id=#{mm_tel_id}
+    </update>
+
+    <select id="findById" parameterType="String" resultMap="kefu_vo">
+        SELECT sn.*,hatp.province as provinceName, hatc.city as cityName, hata.area as areaName
+         FROM mm_tel sn
+           LEFT JOIN hat_province hatp ON sn.mm_emp_provinceId=hatp.provinceID
+           LEFT JOIN hat_city hatc ON sn.mm_emp_cityId=hatc.cityID
+           LEFT JOIN hat_area hata ON sn.mm_emp_countryId=hata.areaID
+          where sn.mm_tel_id=#{mm_tel_id}
+    </select>
+
+</mapper>

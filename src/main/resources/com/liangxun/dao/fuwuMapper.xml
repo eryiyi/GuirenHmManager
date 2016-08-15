@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.FuwuDao">
+    <resultMap id="fuwu" type="com.liangxunwang.unimanager.model.FuwuObj">
+        <id column="mm_fuwu_id" property="mm_fuwu_id"/>
+        <result column="mm_fuwu_nickname" property="mm_fuwu_nickname"/>
+        <result column="mm_fuwu_tel" property="mm_fuwu_tel"/>
+        <result column="mm_fuwu_content" property="mm_fuwu_content"/>
+        <result column="mm_fuwu_type" property="mm_fuwu_type"/>
+        <result column="dateline" property="dateline"/>
+        <result column="lat" property="lat"/>
+        <result column="lng" property="lng"/>
+        <result column="mm_fuwu_url" property="mm_fuwu_url"/>
+    </resultMap>
+
+    <select id="lists" resultMap="fuwu">
+        SELECT * from mm_fuwu WHERE  1=1
+        <if test="mm_fuwu_type != null and mm_fuwu_type != ''">
+            AND mm_fuwu_type = #{mm_fuwu_type}
+        </if>
+    </select>
+
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.FuwuObj">
+        INSERT INTO mm_fuwu(mm_fuwu_id, mm_fuwu_nickname, mm_fuwu_tel, mm_fuwu_content, mm_fuwu_type,dateline,lat,lng,mm_fuwu_url)
+        VALUES (#{mm_fuwu_id}, #{mm_fuwu_nickname}, #{mm_fuwu_tel}, #{mm_fuwu_content,jdbcType=VARCHAR}, #{mm_fuwu_type}, #{dateline}, #{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, #{mm_fuwu_url,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM mm_fuwu where mm_fuwu_id = #{mm_fuwu_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="fuwu">
+        SELECT * FROM mm_fuwu where mm_fuwu_id=#{mm_fuwu_id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.FuwuObj">
+        UPDATE mm_fuwu SET mm_fuwu_nickname=#{mm_fuwu_nickname}, mm_fuwu_tel=#{mm_fuwu_tel}, mm_fuwu_content=#{mm_fuwu_content}, mm_fuwu_type=#{mm_fuwu_type}, lat=#{lat}, lng=#{lng}, mm_fuwu_url=#{mm_fuwu_url}
+         WHERE mm_fuwu_id=#{mm_fuwu_id}
+    </update>
+</mapper>

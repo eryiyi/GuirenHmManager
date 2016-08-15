@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.CityDao">
+    <resultMap id="city" type="com.liangxunwang.unimanager.model.CityObj">
+        <id column="id" property="id"/>
+        <result column="cityID" property="cityID"/>
+        <result column="city" property="city"/>
+        <result column="father" property="father"/>
+        <result column="citynum" property="citynum"/>
+        <result column="is_use" property="is_use"/>
+        <result column="topnum" property="topnum"/>
+    </resultMap>
+
+    <resultMap id="city_vo" type="com.liangxunwang.unimanager.mvc.vo.CityVO">
+        <id column="id" property="id"/>
+        <result column="cityID" property="cityID"/>
+        <result column="city" property="city"/>
+        <result column="father" property="father"/>
+        <result column="citynum" property="citynum"/>
+        <result column="provinceName" property="provinceName"/>
+        <result column="is_use" property="is_use"/>
+        <result column="topnum" property="topnum"/>
+    </resultMap>
+
+    <select id="lists" resultMap="city">
+        SELECT sn.* from  hat_city sn WHERE 1=1
+        <if test="father != null and father != ''">
+            AND sn.father = #{father}
+        </if>
+    </select>
+
+    <select id="listsVo" resultMap="city_vo">
+        SELECT sn.*,lprovince.province as provinceName from hat_city sn
+        LEFT JOIN hat_province lprovince ON sn.father=lprovince.provinceID
+        WHERE 1=1
+        <if test="father != null and father != ''">
+            AND sn.father = #{father}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.CityObj">
+        INSERT INTO hat_city(id, cityID, city, father)
+        VALUES (#{id}, #{cityID}, #{city} , #{father})
+    </insert>
+
+    <select id="findById" resultMap="city" parameterType="String">
+        SELECT * from hat_city
+        WHERE 1= '1'
+        <if test="id != null and id != ''">
+            AND id = #{id}
+        </if>
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.CityObj">
+        UPDATE hat_city SET topnum=#{topnum}, is_use=#{is_use} WHERE id=#{id}
+    </update>
+
+
+</mapper>

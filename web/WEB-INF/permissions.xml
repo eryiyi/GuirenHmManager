@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<permissions id="ALL" name="所有权限">
+    <group id="ROLE_MANAGE" name="角色管理">
+        <permission id="LIST_ROLE" name="角色列表"/>
+        <permission id="ADD_ROLE" name="添加角色"/>
+    </group>
+    <group id="MANAGER_MANAGE" name="管理员">
+        <permission id="MANAGER_ADD_MANAGE" name="管理员列表"/>
+        <permission id="MANAGER_LIST_MANAGE" name="管理员列表"/>
+    </group>
+    <group id="EMPLOYEE_MANAGE" name="会员管理">
+        <permission id="LIST_EMPLOYEE_EMP" name="会员"/>
+    </group>
+    <group id="MESSAGE_MANAGE" name="信息管理">
+        <permission id="GONGYING_MSG" name="信息"/>
+    </group>
+    <group id="NOTICE_MANAGE" name="公告管理">
+        <permission id="ADD_NOTICE" name="添加公告"/>
+        <permission id="NOTICE_LIST" name="公告列表"/>
+    </group>
+    <group id="LOGO_MANAGE" name="日志管理">
+        <permission id="LOGO_LIST" name="日志列表"/>
+    </group>
+    <group id="REPORT_MANAGE" name="举报管理">
+        <permission id="REPORT_LIST" name="举报列表"/>
+    </group>
+    <group id="ABOUT_US_MANAGE" name="关于我们">
+        <permission id="ABOUT_US_MANA" name="关于我们"/>
+    </group>
+    <group id="SUGGEST_MANAGE" name="意见反馈">
+        <permission id="SUGGEST_MANAGE" name="意见反馈"/>
+    </group>
+    <group id="AD_MANAGE" name="广告管理">
+        <permission id="ADD_AD_MANAGE" name="添加广告"/>
+        <permission id="AD_LISTMANAGE" name="广告列表"/>
+    </group>
+    <group id="HangyeType_MANAGE" name="行业管理">
+        <permission id="ADD_HangyeType_MANAGE" name="添加行业"/>
+        <permission id="HangyeType_LISTMANAGE" name="行业列表"/>
+    </group>
+    <group id="Yaoqing_Card_MANAGE" name="邀请码">
+        <permission id="ADD_YAOQING_CARD_MANA" name="生成邀请码"/>
+        <permission id="LIST_YAOQING_CARD_MANA" name="邀请码列表"/>
+    </group>
+    <group id="ORDER_MINE_MANAGE" name="订单列表">
+        <permission id="ORDER_LIST_MANA" name="订单列表"/>
+    </group>
+    <group id="MARKET_CLASS" name="商城管理">
+        <permission id="LIST_CLASS" name="商城分类列表"/>
+        <permission id="ADD_CLASS" name="添加商城分类"/>
+        <permission id="GOODS_LIST_CLASS" name="商品列表"/>
+        <permission id="ADD_GOODS_SHOP_THREE" name="添加商城第三方网址（承）"/>
+        <permission id="LIST_GOODS_SHOP_THREE" name="商城第三方网址列表（承）"/>
+    </group>
+    <group id="MINE_SCHOOL" name="我是承包商">
+        <permission id="SCHOOL_LIST" name="学校列表"/>
+        <permission id="MINE_MERCHANT" name="我的商家"/>
+        <permission id="OPEN_MERCHANT" name="开通商家"/>
+    </group>
+    <group id="SYSTEM_MANAGE" name="系统管理">
+        <permission id="MODIFY_PASS" name="修改密码"/>
+        <permission id="MANAGER_INFO" name="信息维护"/>
+        <permission id="MANAGER_DIANPU_INFO" name="店铺广告图(商)"/>
+        <permission id="MANAGER_DIANPU_PT_INFO" name="绑定第三方平台(商)"/>
+    </group>
+    <group id="REMIT_MANAGER" name="汇款结算">
+        <permission id="REMIT_SELLERLIST" name="商家结算"/>
+        <permission id="REMIT_CONTRACTLIST" name="承包商结算"/>
+    </group>
+    <group id="RATE_MANAGER" name="费率管理">
+        <permission id="MODIFY_RATE" name="修改费率"/>
+    </group>
+    <group id="MONEY_JIAGE_MANAGER" name="价格管理">
+        <permission id="MONEY_JIAGE" name="价格列表"/>
+    </group>
+    <group id="MAANGER_VERSION_CODE_MANAGER" name="版本管理">
+        <permission id="UPDATE_VERSION_CODE_MAANGER_AD_LIST" name="版本管理"/>
+    </group>
+
+</permissions>

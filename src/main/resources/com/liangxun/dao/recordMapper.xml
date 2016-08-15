@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.RecordDao">
+    <resultMap id="record" type="com.liangxunwang.unimanager.model.Record">
+        <id column="mm_msg_id" property="mm_msg_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="mm_msg_type" property="mm_msg_type"/>
+        <result column="mm_msg_content" property="mm_msg_content"/>
+        <result column="mm_msg_picurl" property="mm_msg_picurl"/>
+        <result column="dateline" property="dateline"/>
+        <result column="is_del" property="is_del"/>
+        <result column="is_top" property="is_top"/>
+        <result column="top_num" property="top_num"/>
+
+    </resultMap>
+    <resultMap id="record_vo" type="com.liangxunwang.unimanager.mvc.vo.RecordVO">
+        <id column="mm_msg_id" property="mm_msg_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="mm_msg_type" property="mm_msg_type"/>
+        <result column="mm_msg_content" property="mm_msg_content"/>
+        <result column="mm_msg_picurl" property="mm_msg_picurl"/>
+        <result column="dateline" property="dateline"/>
+        <result column="is_del" property="is_del"/>
+        <result column="is_top" property="is_top"/>
+        <result column="top_num" property="top_num"/>
+
+        <result column="mm_emp_mobile" property="mm_emp_mobile"/>
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+        <result column="mm_emp_cover" property="mm_emp_cover"/>
+        <result column="mm_hangye_id" property="mm_hangye_id"/>
+        <result column="deviceType" property="deviceType"/>
+        <result column="mm_emp_sex" property="mm_emp_sex"/>
+        <result column="mm_emp_birthday" property="mm_emp_birthday"/>
+        <result column="mm_emp_company" property="mm_emp_company"/>
+        <result column="mm_emp_motto" property="mm_emp_motto"/>
+
+        <result column="zanNum" property="zanNum"/>
+        <result column="plNum" property="plNum"/>
+        <result column="hangye" property="hangye"/>
+
+    </resultMap>
+
+    <select id="listRecordVo" resultMap="record_vo">
+        SELECT m.*
+        FROM (
+        SELECT sn.*
+        ,lemp.mm_emp_mobile as mm_emp_mobile
+        ,lemp.mm_emp_motto as mm_emp_motto
+        , lemp.mm_emp_nickname as mm_emp_nickname
+        ,lemp.mm_emp_cover as mm_emp_cover
+        ,lemp.mm_hangye_id as mm_hangye_id
+        ,lemp.deviceType as deviceType
+        ,lemp.mm_emp_sex as mm_emp_sex
+        ,lemp.mm_emp_birthday as mm_emp_birthday
+        ,lemp.mm_emp_company as mm_emp_company,
+        (select count(zan_record_id) from school_record_zan zan where  zan.zan_record_id = sn.mm_msg_id) as zanNum,
+        (select count(record_id) from school_record_comment pl where  pl.record_id = sn.mm_msg_id) as plNum
+        from mm_msg sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+        WHERE 1=1 AND sn.is_del = 0
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+        <if test="mm_msg_type != null and mm_msg_type != ''">
+            AND sn.mm_msg_type = #{mm_msg_type}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND  (lemp.mm_emp_mobile = #{keyword} OR lemp.mm_emp_nickname like CONCAT('%',#{keyword},'%') OR  lemp.mm_emp_company like CONCAT('%',#{keyword},'%'))
+        </if>
+        ) m
+        ORDER  BY  m.dateline DESC  limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.mm_msg_id) FROM mm_msg sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+        WHERE 1=1 AND sn.is_del = 0
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+        <if test="mm_msg_type != null and mm_msg_type != ''">
+            AND sn.mm_msg_type = #{mm_msg_type}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND  (lemp.mm_emp_mobile = #{keyword} OR lemp.mm_emp_nickname like CONCAT('%',#{keyword},'%') OR  lemp.mm_emp_company like CONCAT('%',#{keyword},'%'))
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.Record">
+        INSERT INTO mm_msg( mm_msg_id, mm_emp_id, mm_msg_type, mm_msg_content, mm_msg_picurl, dateline,is_del, is_top, top_num)
+        VALUES ( #{mm_msg_id}, #{mm_emp_id}, #{mm_msg_type},  #{mm_msg_content, jdbcType=VARCHAR}, #{mm_msg_picurl, jdbcType=VARCHAR}, #{dateline}, #{is_del}, #{is_top}, #{top_num})
+    </insert>
+
+    <select id="findById" resultMap="record_vo" parameterType="String">
+        SELECT m.*
+        FROM (
+        SELECT sn.* ,lemp.mm_emp_mobile as mm_emp_mobile,lemp.mm_emp_motto as mm_emp_motto, lemp.mm_emp_nickname as mm_emp_nickname, lemp.mm_emp_cover as mm_emp_cover
+        , lemp.mm_emp_company as mm_emp_company from mm_msg sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+         WHERE sn.mm_msg_id = #{id}
+        ) m
+    </select>
+
+    <update id="deleteById" parameterType="String">
+        UPDATE mm_msg SET is_del=1 WHERE mm_msg_id=#{mm_msg_id}
+    </update>
+
+    <update id="updateTop" parameterType="String">
+        UPDATE mm_msg SET is_top = #{is_top}, top_num = #{top_num}  WHERE mm_msg_id=#{mm_msg_id}
+    </update>
+
+    <select id="listRecordVoTop" resultMap="record_vo">
+        SELECT m.*
+        FROM (
+        SELECT sn.*, lemp.mm_emp_mobile as mm_emp_mobile, lemp.mm_emp_motto as mm_emp_motto, lemp.mm_emp_nickname as mm_emp_nickname, lemp.mm_emp_cover as mm_emp_cover
+        , lemp.mm_emp_company as mm_emp_company  from mm_msg sn
+         LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+        WHERE sn.is_del = 0 AND sn.is_top = 1
+        ) m
+        ORDER  BY  m.top_num DESC  limit #{index},#{size}
+    </select>
+
+    <select id="countbyEmpId" resultType="Long">
+        SELECT count(sn.mm_msg_id) FROM mm_msg sn
+        LEFT JOIN mm_emp lemp ON sn.mm_emp_id=lemp.mm_emp_id
+        WHERE 1=1 AND sn.is_del = 0
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+        <if test="start != null and start != ''">
+            AND sn.dateline &gt;= #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND sn.dateline &lt;= #{end}
+        </if>
+    </select>
+
+
+</mapper>

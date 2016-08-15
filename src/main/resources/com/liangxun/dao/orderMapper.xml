@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.OrderDao">
+    <resultMap id="order" type="com.liangxunwang.unimanager.model.Order">
+        <id column="order_no" property="order_no"/>
+        <result column="emp_id" property="emp_id"/>
+        <result column="goods_count" property="goods_count"/>
+        <result column="payable_amount" property="payable_amount"/>
+        <result column="create_time" property="create_time"/>
+        <result column="pay_time" property="pay_time"/>
+        <result column="status" property="status"/>
+        <result column="pay_status" property="pay_status"/>
+        <result column="postscript" property="postscript"/>
+        <result column="trade_no" property="trade_no"/>
+        <result column="trade_type" property="trade_type"/>
+        <result column="invoice" property="invoice"/>
+        <result column="invoice_title" property="invoice_title"/>
+        <result column="taxes" property="taxes"/>
+    </resultMap>
+
+    <resultMap id="my_order_vo" type="com.liangxunwang.unimanager.mvc.vo.OrderVO">
+        <id column="order_no" property="order_no"/>
+        <result column="emp_id" property="emp_id"/>
+        <result column="goods_count" property="goods_count"/>
+        <result column="payable_amount" property="payable_amount"/>
+        <result column="create_time" property="create_time"/>
+        <result column="pay_time" property="pay_time"/>
+        <result column="status" property="status"/>
+        <result column="pay_status" property="pay_status"/>
+        <result column="postscript" property="postscript"/>
+        <result column="trade_no" property="trade_no"/>
+        <result column="trade_type" property="trade_type"/>
+        <result column="invoice" property="invoice"/>
+        <result column="invoice_title" property="invoice_title"/>
+        <result column="taxes" property="taxes"/>
+
+        <result column="mm_emp_mobile" property="mm_emp_mobile"/>
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+    </resultMap>
+
+    <select id="listOrders" resultMap="my_order_vo">
+        SELECT pso.*, le.mm_emp_nickname as mm_emp_nickname,le.mm_emp_mobile as mm_emp_mobile FROM mm_order pso
+        LEFT JOIN mm_emp le ON pso.emp_id=le.mm_emp_id
+        WHERE '1'='1'
+        <if test="emp_id != null and emp_id != ''">
+            AND pso.emp_id=#{emp_id}
+        </if>
+        <if test="mm_emp_nickname != null and mm_emp_nickname != ''">
+            AND le.mm_emp_nickname like  CONCAT('%',#{mm_emp_nickname},'%')
+        </if>
+        <if test="mm_emp_mobile != null and mm_emp_mobile != ''">
+            AND le.mm_emp_mobile = #{mm_emp_mobile}
+        </if>
+        <if test="pay_status != null and pay_status != ''">
+            AND pso.pay_status = #{pay_status}
+        </if>
+     ORDER BY pso.create_time DESC
+      limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(pso.order_no) FROM mm_order pso
+        LEFT JOIN mm_emp le ON pso.emp_id=le.mm_emp_id
+        WHERE '1'='1'
+        <if test="emp_id != null and emp_id != ''">
+            AND pso.emp_id=#{emp_id}
+        </if>
+        <if test="mm_emp_nickname != null and mm_emp_nickname != ''">
+            AND le.mm_emp_nickname like  CONCAT('%',#{mm_emp_nickname},'%')
+        </if>
+        <if test="mm_emp_mobile != null and mm_emp_mobile != ''">
+            AND le.mm_emp_mobile = #{mm_emp_mobile}
+        </if>
+        <if test="pay_status != null and pay_status != ''">
+            AND pso.pay_status = #{pay_status}
+        </if>
+    </select>
+
+    <select id="findById" resultMap="my_order_vo" parameterType="String">
+       SELECT pso.*, le.mm_emp_nickname as mm_emp_nickname,le.mm_emp_mobile as mm_emp_mobile FROM mm_order pso
+        LEFT JOIN mm_emp le ON pso.emp_id=le.mm_emp_id
+        WHERE pso.order_no=#{order_no}
+    </select>
+
+
+    <!--<update id="updateOrderStatus" parameterType="String">-->
+        <!--UPDATE guiren_order SET status=#{status}-->
+        <!--WHERE #{time}-PAY_TIME &gt;#{period} AND pay_status='1' AND status = '6'-->
+    <!--</update>-->
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.AccessTokenDao">
+    <resultMap id="accessToken" type="com.liangxunwang.unimanager.model.AccessToken">
+        <id column="mm_access_token_id" property="mm_access_token_id"/>
+        <result column="access_token" property="access_token"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.AccessToken">
+        INSERT INTO mm_access_token(mm_access_token_id, access_token, mm_emp_id)
+        VALUES (#{mm_access_token_id}, #{access_token}, #{mm_emp_id})
+    </insert>
+
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM mm_access_token where mm_emp_id = #{mm_emp_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="accessToken">
+        SELECT * FROM mm_access_token where mm_emp_id=#{mm_emp_id}
+    </select>
+
+    <select id="findByToken" parameterType="String" resultMap="accessToken">
+        SELECT * FROM mm_access_token where access_token=#{access_token}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.AccessToken">
+        UPDATE mm_access_token SET access_token=#{access_token} WHERE mm_emp_id=#{mm_emp_id}
+    </update>
+</mapper>
