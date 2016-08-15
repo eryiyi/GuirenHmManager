@@ -32,11 +32,9 @@ public class AdminController extends ControllerConstants {
     @Qualifier("adminService")
     private ExecuteService adminExecuteService;
 
-
     @Autowired
     @Qualifier("adminService")
     private ListService adminListService;
-
 
     @Autowired
     @Qualifier("logoService")
