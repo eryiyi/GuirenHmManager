@@ -156,6 +156,8 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/getMoneyJiage\\.do$)"+
                         "|(^/getVersionCode\\.do$)"+
 
+
+
                         "|(^/memberLogin\\.do$)"
 
         ) || account != null) {

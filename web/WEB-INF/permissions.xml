@@ -76,5 +76,8 @@
     <group id="MAANGER_VERSION_CODE_MANAGER" name="版本管理">
         <permission id="UPDATE_VERSION_CODE_MAANGER_AD_LIST" name="版本管理"/>
     </group>
-
+    <group id="VIDEOS_MANAGER" name="视频上传">
+        <permission id="LIST_VIDEOS_LIST" name="视频列表"/>
+        <permission id="VIDEOS_ADD_LIST" name="添加视频"/>
+    </group>
 </permissions>

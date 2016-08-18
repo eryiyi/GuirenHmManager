@@ -330,6 +330,23 @@
 					</li>
 				</c:if>
 
+				<c:if test="${um:permission('LIST_VIDEOS_LIST', sessionScope.powers)|| um:permission('VIDEOS_ADD_LIST', sessionScope.powers)}">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle">
+							<i class="fa fa-picture-o"></i>
+							<span class="hidden-xs">视频上传</span>
+						</a>
+						<ul class="dropdown-menu">
+							<c:if test="${um:permission('LIST_VIDEOS_LIST', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('listVideos','1')">视频列表</a></li>
+							</c:if>
+							<c:if test="${um:permission('VIDEOS_ADD_LIST', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('toAddVideos','')">添加视频</a></li>
+							</c:if>
+						</ul>
+					</li>
+				</c:if>
+
 			</ul>
 		</div>
 		<!--Start Content-->
