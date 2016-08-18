@@ -32,9 +32,9 @@ public class AppVideosCommentController extends ControllerConstants {
     @Qualifier("appCommentService")
     private SaveService appCommentServiceSave;
 
-    @RequestMapping(value = "/listVideosCommentApp", produces = "text/plain;charset=UTF-8;")
+    @RequestMapping(value = "/listVideosComment", produces = "text/plain;charset=UTF-8;")
     @ResponseBody
-    public String listVideosCommentApp(CommentQuery query, Page page){
+    public String listVideosComment(CommentQuery query, Page page){
         query.setIndex(page.getPage() == 0 ? 1 : page.getPage());
         query.setSize(query.getSize() == 0 ? page.getDefaultSize() : query.getSize());
         try {

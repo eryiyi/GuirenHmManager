@@ -31,10 +31,10 @@
 
     <select id="list" resultMap="app_my_comment_vo">
 
-        SELECT src.*,le.emp_name as nick_name,le.emp_cover as cover,lp.emp_name as fnick_name FROM paopao_video_comment src
-        LEFT JOIN lx_emp le ON src.emp_id=le.emp_id
+        SELECT src.*,le.mm_emp_nickname as nick_name, le.mm_emp_cover as cover, lp.mm_emp_nickname as fnick_name FROM paopao_video_comment src
+        LEFT JOIN mm_emp le ON src.emp_id=le.mm_emp_id
         LEFT JOIN paopao_video_comment cr ON src.comment_fplid=cr.PAOPAO_VIDEO_COMMENT_ID
-        LEFT JOIN lx_emp lp ON cr.emp_id=lp.emp_id
+        LEFT JOIN mm_emp lp ON cr.emp_id=lp.mm_emp_id
         WHERE src.PAOPAO_VIDEO_ID=#{recordId}
         ORDER BY src.DATELINE ASC
         limit #{index},#{size}

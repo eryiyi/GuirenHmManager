@@ -134,7 +134,7 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         +"|(^/paopaogoods/delete\\.do$)"
                         +"|(^/viewNewsShare\\.do$)"
                         +"|(^/listVideosApp\\.do$)"
-                        +"|(^/listVideosCommentApp\\.do$)"
+                        +"|(^/listVideosComment\\.do$)"
                         +"|(^/appVideosSaveComment\\.do$)"
                         +"|(^/appVideosListZan\\.do$)"
                         +"|(^/appVideoZanSave\\.do$)"

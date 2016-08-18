@@ -36,8 +36,8 @@
         </c:forEach>
 
     </dl>
-    <a href="http://www.liangxunwang.com/paopao/index.html" class="share-link">
-        <img src="/img/share_download.png" alt="下载童心堂"></a>
+    <a href="http://www.shandongguiren.com/html/download.html" class="share-link">
+        <img src="/img/share_download.png" alt="点击安装贵人"></a>
 </div>
 </body>
 </html>
