@@ -2,7 +2,10 @@ package com.liangxunwang.unimanager.mvc.app;
 
 import com.liangxunwang.unimanager.model.Record;
 import com.liangxunwang.unimanager.model.tip.DataTip;
+import com.liangxunwang.unimanager.mvc.vo.CommentVO;
 import com.liangxunwang.unimanager.mvc.vo.RecordVO;
+import com.liangxunwang.unimanager.mvc.vo.ZanVO;
+import com.liangxunwang.unimanager.query.CommentQuery;
 import com.liangxunwang.unimanager.query.RecordQuery;
 import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.*;
@@ -242,11 +245,22 @@ public class AppRecordController extends ControllerConstants {
 //    }
 
 
+
+    @Autowired
+    @Qualifier("commentService")
+    private ListService listCommentService;
+
+    @Autowired
+    @Qualifier("zanService")
+    private ListService zanListService;
+
+
     @RequestMapping(value = "/viewRecord",  produces = "text/plain;charset=UTF-8;")
     public String viewRecord(String id, ModelMap map){
         try {
-//            Object[] params = new Object[]{id};
-            RecordVO record = (RecordVO) findRecordService.findById(id);
+//            Object[] params = new Object[]{recordId};
+            RecordVO record  = (RecordVO) findRecordService.findById(id);
+            map.put("record", record);
             if (!StringUtil.isNullOrEmpty(record.getMm_msg_picurl())){
                 String[] pics = record.getMm_msg_picurl().split(",");
                 List<String> list = new ArrayList<String>(pics.length);
@@ -255,9 +269,40 @@ public class AppRecordController extends ControllerConstants {
                 }
                 map.put("pics", pics);
             }
-            map.put("recordVO", record);
-            map.put("is_login", "0");
-            return "/webv/recordDetail";
+            //查询该动态的评论
+            CommentQuery query = new CommentQuery();
+            query.setIndex(1);
+            query.setSize(10);
+            query.setRecordId(id);
+            List<CommentVO> list = (List<CommentVO>) listCommentService.list(query);
+            map.put("list", list);
+
+            //查询该动态的赞
+            List<ZanVO> listZan = (List<ZanVO>) zanListService.list(id);
+            map.put("listZan", listZan);
+
+//            //查询精彩推荐
+//            RecordQuery query1 = new RecordQuery();
+//            query1.setIndex(1);
+//            query1.setSize(20);
+//            query1.setSchoolId(recordId);
+//            List<RecordVO> listRecord = new ArrayList<RecordVO>();
+//            List<RecordVO> listRecord1 = (List<RecordVO>) recordOneService.list(query1);
+//            if(listRecord1 != null){
+//                for (RecordVO recordVO:listRecord1){
+//                    //
+//                    if(recordVO.getRecordPicUrl() != null && !"".equals(recordVO.getRecordPicUrl())){
+//                        String[] str = recordVO.getRecordPicUrl().split(",");
+//                        if(str != null && str.length >0){
+//                            recordVO.setRecordPicUrl(str[0]);
+//                        }
+//                        listRecord.add(recordVO);
+//                    }
+//                }
+//            }
+//            map.put("listRecord", listRecord);
+            map.put("baseurl", Constants.URL);
+            return "/record/viewRecord";
         }catch (ServiceException e){
             return toJSONString(ERROR_1);
         }
