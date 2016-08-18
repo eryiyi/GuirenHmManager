@@ -75,13 +75,10 @@ public class EmpController extends ControllerConstants {
     }
 
     @RequestMapping("/detail")
-    public String updateType(ModelMap map, HttpSession session, String mm_emp_id) throws Exception {
-        Admin manager = (Admin) session.getAttribute(ACCOUNT_KEY);
+    public String updateType(ModelMap map, String mm_emp_id) throws Exception {
         //查看该会员信息
         EmpVO empVO = (EmpVO) empServiceExecute.execute(mm_emp_id);
-
-        //日志记录
-        logoService.save(new LogoObj("查看会员："+empVO.getMm_emp_nickname()+"的详情", manager.getMm_manager_id()));
+        map.put("empVO", empVO);
         return "/emp/detail";
     }
 

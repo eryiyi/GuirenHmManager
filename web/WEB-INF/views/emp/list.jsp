@@ -68,55 +68,55 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <select class="form-control w12" id="mm_emp_regtime">
-              <option value="">--注册时间--</option>
-              <option value="0" ${query.mm_emp_regtime=='0'?'selected':''}>不限</option>
-              <option value="1" ${query.mm_emp_regtime=='1'?'selected':''}>今日注册</option>
-            </select>
-          </div>
+          <%--<div class="form-group">--%>
+            <%--<select class="form-control w12" id="mm_emp_regtime">--%>
+              <%--<option value="">--注册时间--</option>--%>
+              <%--<option value="0" ${query.mm_emp_regtime=='0'?'selected':''}>不限</option>--%>
+              <%--<option value="1" ${query.mm_emp_regtime=='1'?'selected':''}>今日注册</option>--%>
+            <%--</select>--%>
+          <%--</div>--%>
 
           <div class="form-group">
             <button type="submit" onclick="searchOrder('1')" class="btn form-control btn-warning btn-sm btn-block">查找</button>
           </div>
           </form>
 
-            <form action="" class="form">
-            <div class="form-group">
-              <div class="col-md-2 col-lg-2">
-                <button type="button" onclick="Daochu_Select()" class="btn w12 form-control btn-block btn-danger btn-sm">批量导出Excel</button>
-              </div>
-              <div class="col-md-2 col-lg-2">
-                <button type="button" onclick="P_Weishen_Select('0')" class="btn w12 form-control btn-block btn-danger btn-sm">批量未审</button>
-              </div>
-              <div class="col-md-2 col-lg-2">
-                <button type="button" onclick="P_Weishen_Select('1')" class="btn w12 form-control btn-block btn-danger btn-sm">批量审核</button>
-              </div>
-              <div class="col-md-2 col-lg-2">
-                <button type="button" onclick="P_Weishen_Select('2')" class="btn w12 form-control btn-block btn-danger btn-sm">批量不通过</button>
-              </div>
-            </div>
-            </form>
-          <form action="" class="form">
-            <div class="form-group">
-              <div class="col-md-2 col-lg-2">
-                <button type="button" onclick="P_Login_Select('1')" class="btn w12 form-control btn-block btn-danger btn-sm">批量禁止登陆</button>
-              </div>
-              <div class="col-md-2 col-lg-2">
-                <button type="button" onclick="P_Login_Select('0')" class="btn w12 form-control btn-block btn-danger btn-sm">批量允许登陆</button>
-              </div>
-            </div>
-          </form>
+            <%--<form action="" class="form">--%>
+            <%--<div class="form-group">--%>
+              <%--<div class="col-md-2 col-lg-2">--%>
+                <%--<button type="button" onclick="Daochu_Select()" class="btn w12 form-control btn-block btn-danger btn-sm">批量导出Excel</button>--%>
+              <%--</div>--%>
+              <%--<div class="col-md-2 col-lg-2">--%>
+                <%--<button type="button" onclick="P_Weishen_Select('0')" class="btn w12 form-control btn-block btn-danger btn-sm">批量未审</button>--%>
+              <%--</div>--%>
+              <%--<div class="col-md-2 col-lg-2">--%>
+                <%--<button type="button" onclick="P_Weishen_Select('1')" class="btn w12 form-control btn-block btn-danger btn-sm">批量审核</button>--%>
+              <%--</div>--%>
+              <%--<div class="col-md-2 col-lg-2">--%>
+                <%--<button type="button" onclick="P_Weishen_Select('2')" class="btn w12 form-control btn-block btn-danger btn-sm">批量不通过</button>--%>
+              <%--</div>--%>
+            <%--</div>--%>
+            <%--</form>--%>
+          <%--<form action="" class="form">--%>
+            <%--<div class="form-group">--%>
+              <%--<div class="col-md-2 col-lg-2">--%>
+                <%--<button type="button" onclick="P_Login_Select('1')" class="btn w12 form-control btn-block btn-danger btn-sm">批量禁止登陆</button>--%>
+              <%--</div>--%>
+              <%--<div class="col-md-2 col-lg-2">--%>
+                <%--<button type="button" onclick="P_Login_Select('0')" class="btn w12 form-control btn-block btn-danger btn-sm">批量允许登陆</button>--%>
+              <%--</div>--%>
+            <%--</div>--%>
+          <%--</form>--%>
 
 
         <table class="table">
           <thead>
           <tr>
-            <th>全选<input type="checkbox" name="allmails" onclick="checkAll()"></th>
+            <%--<th>全选<input type="checkbox" name="allmails" onclick="checkAll()"></th>--%>
             <th>姓名</th>
             <th>电话</th>
-            <th>允许登陆</th>
-            <th>已完善资料</th>
+            <%--<th>允许登陆</th>--%>
+            <%--<th>已完善资料</th>--%>
             <th>审核状态</th>
             <th>操作</th>
             <th>操作</th>
@@ -125,17 +125,17 @@
           <tbody>
           <c:forEach items="${list}" var="e" varStatus="st">
             <tr>
-              <td><input type="checkbox" id="${e.mm_emp_id}" name="checkbox_one"></td>
+              <%--<td><input type="checkbox" id="${e.mm_emp_id}" name="checkbox_one"></td>--%>
               <td>${e.mm_emp_nickname}</td>
               <td>${e.mm_emp_mobile}</td>
-              <td>
-                <c:if test="${e.is_login=='0'}">是</c:if>
-                <c:if test="${e.is_login=='1'}">否</c:if>
-              </td>
-              <td>
-                <c:if test="${e.is_upate_profile=='0'}">否</c:if>
-                <c:if test="${e.is_upate_profile=='1'}">是</c:if>
-              </td>
+              <%--<td>--%>
+                <%--<c:if test="${e.is_login=='0'}">是</c:if>--%>
+                <%--<c:if test="${e.is_login=='1'}">否</c:if>--%>
+              <%--</td>--%>
+              <%--<td>--%>
+                <%--<c:if test="${e.is_upate_profile=='0'}">否</c:if>--%>
+                <%--<c:if test="${e.is_upate_profile=='1'}">是</c:if>--%>
+              <%--</td>--%>
               <td>
                 <c:if test="${e.ischeck=='0'}">未审核</c:if>
                 <c:if test="${e.ischeck=='1'}">已审核</c:if>
@@ -198,7 +198,7 @@
     var size = getCookie("contract_size");
     var keywords = $("#keywords").val();
     var ischeck = $("#ischeck").val();
-    var mm_emp_regtime = $("#mm_emp_regtime").val();
+//    var mm_emp_regtime = $("#mm_emp_regtime").val();
     if(_index <= ${page.pageCount} && _index >= 1){
       alert("searchIndex");
       window.location.href="#module=/emp/list&page="+_index+"&size="+size+"&keyword="+keywords

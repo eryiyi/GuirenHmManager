@@ -227,26 +227,7 @@
     </select>
 
     <update id="update" parameterType="com.liangxunwang.unimanager.model.Emp">
-        UPDATE mm_emp SET mm_emp_nickname=#{mm_emp_nickname},
-        mm_emp_mobile=#{mm_emp_mobile},
-        mm_emp_card=#{mm_emp_card},
-        mm_emp_company=#{mm_emp_company},
-        mm_emp_provinceId=#{mm_emp_provinceId},
-        mm_emp_cityId=#{mm_emp_cityId},
-        mm_emp_countryId=#{mm_emp_countryId},
-        mm_emp_regtime=#{mm_emp_regtime},
-        is_login=#{is_login},
-        is_use=#{is_use},
-        lat=#{lat},
-        lng=#{lng},
-        mm_emp_email=#{mm_emp_email},
-        mm_emp_sex=#{mm_emp_sex},
-        mm_emp_birthday=#{mm_emp_birthday},
-        mm_emp_techang=#{mm_emp_techang},
-        mm_emp_xingqu=#{mm_emp_xingqu},
-        mm_emp_detail=#{mm_emp_detail},
-        mm_emp_native=#{mm_emp_native},
-        mm_emp_motto=#{mm_emp_motto},
+        UPDATE mm_emp SET
         ischeck=#{ischeck}
         WHERE mm_emp_id=#{mm_emp_id}
     </update>

@@ -53,7 +53,9 @@ public class EmpService implements ListService , UpdateService , ExecuteService{
         if(!StringUtil.isNullOrEmpty(query.getMm_emp_countryId())){
             map.put("mm_emp_countryId", query.getMm_emp_countryId());
         }
-
+        if(!StringUtil.isNullOrEmpty(query.getIscheck())){
+            map.put("ischeck", query.getIscheck());
+        }
         //判断是否今日注册量
 //        if(!StringUtil.isNullOrEmpty(query.getMm_emp_regtime())){
 //            if("0".equals(query.getMm_emp_regtime())){

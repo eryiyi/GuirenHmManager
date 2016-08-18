@@ -258,19 +258,19 @@
 						</ul>
 					</li>
 				</c:if>
-				<c:if test="${um:permission('ABOUT_US_MANA', sessionScope.powers)}">
-					<li class="dropdown">
-						<a href="javascript:void (0);" class="dropdown-toggle">
-							<i class="fa fa-info"></i>
-							<span class="hidden-xs">关于我们</span>
-						</a>
-						<ul class="dropdown-menu">
-							<c:if test="${um:permission('ABOUT_US_MANA', sessionScope.powers)}">
-								<li><a href="javascript:void(0);" onclick="toPage('aboutUs/add','')">关于我们</a></li>
-							</c:if>
-						</ul>
-					</li>
-				</c:if>
+				<%--<c:if test="${um:permission('ABOUT_US_MANA', sessionScope.powers)}">--%>
+					<%--<li class="dropdown">--%>
+						<%--<a href="javascript:void (0);" class="dropdown-toggle">--%>
+							<%--<i class="fa fa-info"></i>--%>
+							<%--<span class="hidden-xs">关于我们</span>--%>
+						<%--</a>--%>
+						<%--<ul class="dropdown-menu">--%>
+							<%--<c:if test="${um:permission('ABOUT_US_MANA', sessionScope.powers)}">--%>
+								<%--<li><a href="javascript:void(0);" onclick="toPage('aboutUs/add','')">关于我们</a></li>--%>
+							<%--</c:if>--%>
+						<%--</ul>--%>
+					<%--</li>--%>
+				<%--</c:if>--%>
 
 				<c:if test="${um:permission('ADD_YAOQING_CARD_MANA', sessionScope.powers)||um:permission('LIST_YAOQING_CARD_MANA', sessionScope.powers)}">
 					<li class="dropdown">
@@ -288,19 +288,19 @@
 						</ul>
 					</li>
 				</c:if>
-				<c:if test="${um:permission('ORDER_LIST_MANA', sessionScope.powers)}">
-					<li class="dropdown">
-						<a href="javascript:void (0);" class="dropdown-toggle">
-							<i class="fa fa-info"></i>
-							<span class="hidden-xs">订单列表</span>
-						</a>
-						<ul class="dropdown-menu">
-							<c:if test="${um:permission('ORDER_LIST_MANA', sessionScope.powers)}">
-								<li><a href="javascript:void(0);" onclick="toPage('order/list','1')">订单列表</a></li>
-							</c:if>
-						</ul>
-					</li>
-				</c:if>
+				<%--<c:if test="${um:permission('ORDER_LIST_MANA', sessionScope.powers)}">--%>
+					<%--<li class="dropdown">--%>
+						<%--<a href="javascript:void (0);" class="dropdown-toggle">--%>
+							<%--<i class="fa fa-info"></i>--%>
+							<%--<span class="hidden-xs">订单列表</span>--%>
+						<%--</a>--%>
+						<%--<ul class="dropdown-menu">--%>
+							<%--<c:if test="${um:permission('ORDER_LIST_MANA', sessionScope.powers)}">--%>
+								<%--<li><a href="javascript:void(0);" onclick="toPage('order/list','1')">订单列表</a></li>--%>
+							<%--</c:if>--%>
+						<%--</ul>--%>
+					<%--</li>--%>
+				<%--</c:if>--%>
 
 				<c:if test="${um:permission('MONEY_JIAGE', sessionScope.powers)}">
 					<li class="dropdown">
