@@ -56,7 +56,8 @@ public class NoticeService implements ListService,SaveService, ExecuteService{
 
     @Override
     public Object execute(Object object) throws ServiceException {
-        return noticeDao.findById((String) object);
+        Notice notice = noticeDao.findById((String) object);
+        return notice;
     }
 
 }
