@@ -9,13 +9,15 @@ public class RecordVO extends Record {
     private String mm_emp_mobile;
     private String mm_emp_nickname;
     private String mm_emp_cover;
+
     private String deviceType;
     private String mm_emp_sex;
     private String mm_emp_birthday;
     private String mm_hangye_id;
     private String mm_emp_company;
-    private String mm_emp_motto;
 
+
+    private String mm_emp_motto;
     private String levelName;//会员等级
     private String zanNum;//赞数量
     private String plNum;//评论数量

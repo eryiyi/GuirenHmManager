@@ -9,6 +9,7 @@ public class Record {
     private String mm_msg_type;
     private String mm_msg_content;
     private String mm_msg_picurl;
+
     private String dateline;
     private String is_del;
     private String is_top;
