@@ -14,6 +14,15 @@ public class Relate {
     private String cont;
     private String dateline;
     private String orderId;
+    private String isread;
+
+    public String getIsread() {
+        return isread;
+    }
+
+    public void setIsread(String isread) {
+        this.isread = isread;
+    }
 
     public String getOrderId() {
         return orderId;

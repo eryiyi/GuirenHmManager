@@ -52,7 +52,4 @@
         VALUES ( #{guiren_xixun_id}, #{guiren_xixun_title}, #{mm_emp_id}, #{dateline})
     </insert>
 
-
-
-
 </mapper>

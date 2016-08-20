@@ -5,6 +5,7 @@ import com.liangxunwang.unimanager.mvc.vo.RelateVO;
 import com.liangxunwang.unimanager.query.RelateQuery;
 import com.liangxunwang.unimanager.service.ListService;
 import com.liangxunwang.unimanager.service.ServiceException;
+import com.liangxunwang.unimanager.service.UpdateService;
 import com.liangxunwang.unimanager.util.Constants;
 import com.liangxunwang.unimanager.util.RelativeDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.Map;
  * Created by zhl on 2015/2/8.
  */
 @Service("relateService")
-public class RelateService implements ListService {
+public class RelateService implements ListService ,UpdateService {
     @Autowired
     @Qualifier("relateDao")
     private RelateDao relateDao;
@@ -45,5 +46,11 @@ public class RelateService implements ListService {
             list.get(i).setDateline(RelativeDateFormat.format(Long.parseLong(list.get(i).getDateline())));
         }
         return list;
+    }
+
+    @Override
+    public Object update(Object object) {
+        relateDao.update((String) object);
+        return null;
     }
 }
