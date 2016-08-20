@@ -153,11 +153,11 @@
       alert("请选择图片文件");
       return;
     }
-
-    if(mm_ad_url.replace(/\s/g, '')==''){
-      alert("请输入链接");
-      return;
-    }
+//
+//    if(mm_ad_url.replace(/\s/g, '')==''){
+//      alert("请输入链接");
+//      return;
+//    }
 //    if(mm_ad_type.replace(/\s/g, '')==''){
 //      alert("请选择广告类型");
 //      return;

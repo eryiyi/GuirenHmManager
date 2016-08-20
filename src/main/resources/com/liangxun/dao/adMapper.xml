@@ -34,7 +34,7 @@
 
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.AdObj">
         INSERT INTO mm_ad(mm_ad_id, mm_ad_url, mm_ad_pic, mm_ad_type, mm_ad_num, mm_emp_provinceId, mm_emp_cityId, mm_emp_countryId)
-        VALUES (#{mm_ad_id}, #{mm_ad_url}, #{mm_ad_pic}, #{mm_ad_type,jdbcType=VARCHAR}, #{mm_ad_num,jdbcType=VARCHAR}, #{mm_emp_provinceId,jdbcType=VARCHAR}, #{mm_emp_cityId,jdbcType=VARCHAR}, #{mm_emp_countryId,jdbcType=VARCHAR})
+        VALUES (#{mm_ad_id}, #{mm_ad_url,jdbcType=VARCHAR}, #{mm_ad_pic}, #{mm_ad_type,jdbcType=VARCHAR}, #{mm_ad_num,jdbcType=VARCHAR}, #{mm_emp_provinceId,jdbcType=VARCHAR}, #{mm_emp_cityId,jdbcType=VARCHAR}, #{mm_emp_countryId,jdbcType=VARCHAR})
     </insert>
 
 
@@ -47,7 +47,7 @@
     </select>
 
     <update id="update" parameterType="com.liangxunwang.unimanager.model.AdObj">
-        UPDATE mm_ad SET mm_ad_url=#{mm_ad_url},
+        UPDATE mm_ad SET mm_ad_url=#{mm_ad_url,jdbcType=VARCHAR},
         mm_ad_pic=#{mm_ad_pic} ,
          mm_ad_num=#{mm_ad_num,jdbcType=VARCHAR},
          mm_ad_type=#{mm_ad_type,jdbcType=VARCHAR}

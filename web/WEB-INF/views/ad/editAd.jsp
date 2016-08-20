@@ -107,10 +107,10 @@
     var mm_ad_url = $("#mm_ad_url").val();
     var mm_ad_num = $("#mm_ad_num").val();
 
-    if(mm_ad_url.replace(/\s/g, '')==''){
-      alert("请输入链接");
-      return;
-    }
+//    if(mm_ad_url.replace(/\s/g, '')==''){
+//      alert("请输入链接");
+//      return;
+//    }
 
     var imagePath = $("img[name='imagePath']").attr("src");
 
