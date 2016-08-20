@@ -32,6 +32,9 @@ public interface EmpRelateDao {
     //根据两个人呢id查询是否已经存在关系
     EmpRelateObj find(EmpRelateObj empRelateObj);
 
+    //根据id查询
+    EmpRelateObj findById(String emp_relate_id);
+
     //查询是否有朋友---主动拜见
     List<EmpRelateObjVO> listsRelateOne(Map<String, Object> map);
     //查询是否有朋友---被拜见

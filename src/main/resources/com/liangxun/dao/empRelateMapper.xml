@@ -62,6 +62,12 @@
     </select>
 
 
+
+    <select id="findById" parameterType="String" resultMap="empRelate">
+        SELECT * from emp_relate
+        WHERE emp_relate_id = #{emp_relate_id}
+    </select>
+
     <select id="listsRelateOne" resultMap="empRelateVO">
         SELECT er.* from emp_relate er
         WHERE 1=1

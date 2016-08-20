@@ -77,7 +77,58 @@ public class AppEmpRelateService implements ListService,UpdateService,SaveServic
     //更新
     @Override
     public Object update(Object object) {
-        empRelateDao.update((EmpRelateObj) object);
+        EmpRelateObj empRelateObj =  (EmpRelateObj) object;
+        empRelateDao.update(empRelateObj);
+        EmpRelateObj empRelateObj1 = empRelateDao.findById(empRelateObj.getEmp_relate_id());//根据id查询存在该拜见关系
+        if(empRelateObj1 != null){
+                String mm_emp_id1 = empRelateObj1.getMm_emp_id1();
+                String mm_emp_id2 = empRelateObj1.getMm_emp_id2();
+
+                empRelateObj1.setEmp_relate_id(UUIDFactory.random());
+                empRelateObj1.setMm_emp_id1(mm_emp_id2);
+                empRelateObj1.setMm_emp_id2(mm_emp_id1);
+                empRelateObj1.setState("1");
+                EmpRelateObj empRelateObj2 =  empRelateDao.find(empRelateObj1);//根据两个人id查询是否存在关系
+            if(empRelateObj2 == null){
+                empRelateDao.save(empRelateObj1);
+
+                //与我相关
+                Relate relate1 = new Relate();
+                relate1.setId(UUIDFactory.random());
+                relate1.setEmpId(empRelateObj1.getMm_emp_id1());
+                relate1.setEmpTwoId(empRelateObj1.getMm_emp_id2());
+                relate1.setRecordId(empRelateObj1.getEmp_relate_id());
+                relate1.setTypeId("7");
+                relate1.setDateline(System.currentTimeMillis()+"");
+                relate1.setCont("我们已经结交，很高兴认识你");
+                relateDao.save(relate1);
+                Emp pushMember =  memberDao.findById(empRelateObj1.getMm_emp_id2());
+                String pushId =pushMember.getPushId();
+                String type = pushMember.getDeviceType();
+                if(!StringUtil.isNullOrEmpty(pushId) && !StringUtil.isNullOrEmpty(type)){
+                    pushRelate(pushId, type, "我们已经结交，很高兴认识你");
+                }
+            }else{
+                //说明已经存在了 需要跟新
+                empRelateDao.update(empRelateObj2);
+                //与我相关
+                Relate relate1 = new Relate();
+                relate1.setId(UUIDFactory.random());
+                relate1.setEmpId(empRelateObj2.getMm_emp_id1());
+                relate1.setEmpTwoId(empRelateObj2.getMm_emp_id2());
+                relate1.setRecordId(empRelateObj2.getEmp_relate_id());
+                relate1.setTypeId("7");
+                relate1.setDateline(System.currentTimeMillis()+"");
+                relate1.setCont("我们已经结交，很高兴认识你");
+                relateDao.save(relate1);
+                Emp pushMember =  memberDao.findById(empRelateObj2.getMm_emp_id2());
+                String pushId =pushMember.getPushId();
+                String type = pushMember.getDeviceType();
+                if(!StringUtil.isNullOrEmpty(pushId) && !StringUtil.isNullOrEmpty(type)){
+                    pushRelate(pushId, type, "我们已经结交，很高兴认识你");
+                }
+            }
+        }
         return null;
     }
 
