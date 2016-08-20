@@ -68,6 +68,24 @@ public class EmpService implements ListService , UpdateService , ExecuteService{
 
         List<EmpVO> lists = empDao.listMemberByName(map);
         long count = empDao.count(map);
+        if(lists != null){
+           for(EmpVO empVO2 : lists){
+               if (empVO2 !=null && !StringUtil.isNullOrEmpty(empVO2.getMm_emp_cover())) {
+                   if (empVO2.getMm_emp_cover().startsWith("upload")) {
+                       empVO2.setMm_emp_cover(Constants.URL + empVO2.getMm_emp_cover());
+                   }else {
+                       empVO2.setMm_emp_cover(Constants.QINIU_URL + empVO2.getMm_emp_cover());
+                   }
+               }
+               if (empVO2 !=null && !StringUtil.isNullOrEmpty(empVO2.getMm_emp_bg())) {
+                   if (empVO2.getMm_emp_bg().startsWith("upload")) {
+                       empVO2.setMm_emp_bg(Constants.URL + empVO2.getMm_emp_bg());
+                   }else {
+                       empVO2.setMm_emp_bg(Constants.QINIU_URL + empVO2.getMm_emp_bg());
+                   }
+               }
+           }
+        }
         return new Object[]{lists, count};
     }
 
@@ -97,6 +115,13 @@ public class EmpService implements ListService , UpdateService , ExecuteService{
                 empVO.setMm_emp_cover(Constants.URL + empVO.getMm_emp_cover());
             }else {
                 empVO.setMm_emp_cover(Constants.QINIU_URL + empVO.getMm_emp_cover());
+            }
+        }
+        if (empVO !=null && !StringUtil.isNullOrEmpty(empVO.getMm_emp_bg())) {
+            if (empVO.getMm_emp_bg().startsWith("upload")) {
+                empVO.setMm_emp_bg(Constants.URL + empVO.getMm_emp_bg());
+            }else {
+                empVO.setMm_emp_bg(Constants.QINIU_URL + empVO.getMm_emp_bg());
             }
         }
 

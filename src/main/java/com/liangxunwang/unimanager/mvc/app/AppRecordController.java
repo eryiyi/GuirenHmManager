@@ -308,4 +308,29 @@ public class AppRecordController extends ControllerConstants {
         }
     }
 
+    @Autowired
+    @Qualifier("appRecordPicsService")
+    private ListService appRecordPicsService;
+
+
+    //获取会员动态的图片
+    @RequestMapping(value = "/recordPics", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String recordPics(RecordQuery query, Page page){
+        query.setIndex(page.getPage() == 0 ? 1 : page.getPage());
+        query.setSize(query.getSize() == 0 ? page.getDefaultSize() : query.getSize());
+        try {
+            List<String> strPics = (List<String>) appRecordPicsService.list(query);
+            DataTip tip = new DataTip();
+            tip.setData(strPics);
+            return toJSONString(tip);
+        }catch (ServiceException e){
+            String msg = e.getMessage();
+            if (msg.equals("accessTokenNull")){
+                return toJSONString(ERROR_9);
+            }else{
+                return toJSONString(ERROR_1);
+            }
+        }
+    }
 }
