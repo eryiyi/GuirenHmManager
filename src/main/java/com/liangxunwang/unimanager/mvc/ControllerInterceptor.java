@@ -159,6 +159,7 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/updateRelateById\\.do$)"+
 
                         "|(^/getVideoTypes\\.do$)"+
+                        "|(^/getDianyingTypes\\.do$)"+
 
 
 

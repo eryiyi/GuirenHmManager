@@ -84,4 +84,8 @@
         <permission id="ADD_VIDEO_TYPE_MANAGER" name="添加类别"/>
         <permission id="LIST_VIDEO_TYPE_MANAGER" name="类别列表"/>
     </group>
+    <group id="VIDEOS_TYPE_MANAGER" name="电影类别">
+        <permission id="ADD_DIANYING_TYPE_MANAGER" name="添加电影类别"/>
+        <permission id="LIST_DIANYING_TYPE_MANAGER" name="电影类别列表"/>
+    </group>
 </permissions>
