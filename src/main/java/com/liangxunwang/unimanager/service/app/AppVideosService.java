@@ -7,6 +7,7 @@ import com.liangxunwang.unimanager.service.ListService;
 import com.liangxunwang.unimanager.service.ServiceException;
 import com.liangxunwang.unimanager.util.Constants;
 import com.liangxunwang.unimanager.util.RelativeDateFormat;
+import com.liangxunwang.unimanager.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -34,17 +35,25 @@ public class AppVideosService implements ListService {
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("index", index);
         map.put("size", size);
-        map.put("time_is", query.getTime_is());
-        map.put("favour_is", query.getFavour_is());
+        if(!StringUtil.isNullOrEmpty(query.getTime_is())){
+            map.put("time_is", query.getTime_is());
+        }
+        if(!StringUtil.isNullOrEmpty(query.getFavour_is())){
+            map.put("favour_is", query.getFavour_is());
+        }
+
         List<VideosVO> list = new ArrayList<VideosVO>();
-        if(query.getTime_is().equals("1")){
+
+        if("1".equals(query.getTime_is())){
             //按时间排序
             list = videosDao.lists(map);
-        }else if(query.getFavour_is().equals("1")){
+        }else if("1".equals(query.getFavour_is())){
             list = videosDao.lists2(map);
+        }else {
+            list = videosDao.lists(map);
         }
-        for (VideosVO vo : list){
 
+        for (VideosVO vo : list){
             if (vo.getPicUrl().startsWith("upload")) {
                 vo.setPicUrl(Constants.URL + vo.getPicUrl());
             }else {

@@ -11,6 +11,15 @@ public class Videos {
     private String videoUrl;
     private String isdel;
     private String dateline;
+    private String video_type_id;
+
+    public String getVideo_type_id() {
+        return video_type_id;
+    }
+
+    public void setVideo_type_id(String video_type_id) {
+        this.video_type_id = video_type_id;
+    }
 
     public String getId() {
         return id;

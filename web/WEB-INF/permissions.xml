@@ -80,4 +80,8 @@
         <permission id="LIST_VIDEOS_LIST" name="视频列表"/>
         <permission id="VIDEOS_ADD_LIST" name="添加视频"/>
     </group>
+    <group id="VIDEOS_TYPE_MANAGER" name="视频类别">
+        <permission id="ADD_VIDEO_TYPE_MANAGER" name="添加类别"/>
+        <permission id="LIST_VIDEO_TYPE_MANAGER" name="类别列表"/>
+    </group>
 </permissions>

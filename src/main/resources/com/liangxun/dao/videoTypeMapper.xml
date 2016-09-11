@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.VideoTypeDao">
+    <resultMap id="videoTypeObj" type="com.liangxunwang.unimanager.model.VideoTypeObj">
+        <id column="video_type_id" property="video_type_id"/>
+        <result column="video_type_name" property="video_type_name"/>
+        <result column="video_type_pic" property="video_type_pic"/>
+        <result column="is_use" property="is_use"/>
+        <result column="top_num" property="top_num"/>
+    </resultMap>
+
+    <select id="lists" resultMap="videoTypeObj">
+        SELECT * from video_type where 1 = 1 AND  is_use = '0'
+        ORDER BY top_num ASC
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.VideoTypeObj">
+        INSERT INTO video_type(video_type_id, video_type_name, video_type_pic, is_use, top_num)
+        VALUES (#{video_type_id}, #{video_type_name, jdbcType=VARCHAR}, #{video_type_pic}, #{is_use, jdbcType=VARCHAR}, #{top_num, jdbcType=VARCHAR})
+    </insert>
+
+
+    <select id="findById" parameterType="String" resultMap="videoTypeObj">
+        SELECT * FROM video_type where video_type_id=#{video_type_id}  AND  is_use = '0'
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.VideoTypeObj">
+        UPDATE video_type SET video_type_name=#{video_type_name,jdbcType=VARCHAR},
+        video_type_pic=#{video_type_pic} ,
+         is_use=#{is_use,jdbcType=VARCHAR},
+         top_num=#{top_num,jdbcType=VARCHAR}
+         WHERE video_type_id=#{video_type_id}
+    </update>
+</mapper>

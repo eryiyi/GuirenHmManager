@@ -30,6 +30,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="json-lib-2.4-jdk15" level="project" />
+    <orderEntry type="library" name="commons-codec-1.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-email:1.2" level="project" />
     <orderEntry type="library" name="Maven: javax.mail:mail:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
@@ -93,13 +94,12 @@
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-web:2.0.2" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:2.7" level="project" />
-    <orderEntry type="library" name="Maven: com.qiniu:qiniu-java-sdk:7.0.9" level="project" />
+    <orderEntry type="library" name="Maven: com.qiniu:qiniu-java-sdk:7.0.10" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okhttp:okhttp:2.7.1" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okio:okio:1.6.0" level="project" />
     <orderEntry type="library" name="Maven: com.qiniu:qiniu-android-sdk:7.0.10" level="project" />
     <orderEntry type="library" name="Maven: com.loopj.android:android-async-http:1.4.9" level="project" />
     <orderEntry type="library" name="Maven: cz.msebera.android:httpclient:4.3.6" level="project" />
     <orderEntry type="library" name="Maven: com.qiniu:happy-dns:0.2.5" level="project" />
-    <orderEntry type="library" name="commons-codec-1.6" level="project" />
   </component>
 </module>

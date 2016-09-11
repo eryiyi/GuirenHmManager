@@ -7,6 +7,8 @@ public class Constants {
 //        public static final String URL = "http://www.shandongguiren.com/";
         public static final String URL = "http://smilekyle.xicp.net:42765/";
 
+//          public static final String URL = "http://192.168.0.224/";
+
         public static final String DOWNLOAD_URL = URL + "html/GuirenApp.apk";
 
         public static final String QINIU_URL = "http://7xt74j.com1.z0.glb.clouddn.com/";

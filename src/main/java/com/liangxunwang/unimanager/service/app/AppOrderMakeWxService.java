@@ -64,7 +64,7 @@ public class AppOrderMakeWxService implements SaveService {
         StringBuffer xml = new StringBuffer();
         try {
             final String ip_str = "127.0.0.1";
-            final String body = "hmtvip";
+            final String body = "guiren_yaoqingma";
             final String trade_type = "APP";
             String  nonceStr = UUIDFactory.random();
 

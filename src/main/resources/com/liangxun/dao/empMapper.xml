@@ -199,7 +199,7 @@
         <if test="keywords != null and keywords != ''">
             AND  (sn.mm_emp_mobile = #{keywords} OR sn.mm_emp_nickname like CONCAT('%',#{keywords},'%') OR  sn.mm_emp_company like CONCAT('%',#{keywords},'%') OR  sn.mm_emp_techang like CONCAT('%',#{keywords},'%') OR  sn.mm_emp_xingqu like CONCAT('%',#{keywords},'%') OR  sn.mm_emp_motto like CONCAT('%',#{keywords},'%'))
         </if>
-        limit #{index},#{size}
+
     </select>
 
     <select id="count" resultType="Long">

@@ -68,7 +68,15 @@ public class AppRecordPicsService implements ListService {
                 }
             }
         }
-        return strPics;
+        List<MinePicObj> strPics2 = new ArrayList<MinePicObj>();
+       if(strPics.size() > 3){
+           for(int i=0;i<3;i++){
+               strPics2.add(strPics.get(i));
+           }
+       }else {
+           strPics2.addAll(strPics);
+       }
+        return strPics2;
     }
 
 }

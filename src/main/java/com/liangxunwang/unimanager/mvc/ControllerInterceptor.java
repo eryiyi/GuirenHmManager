@@ -158,6 +158,8 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/recordPics\\.do$)"+
                         "|(^/updateRelateById\\.do$)"+
 
+                        "|(^/getVideoTypes\\.do$)"+
+
 
 
                         "|(^/memberLogin\\.do$)"

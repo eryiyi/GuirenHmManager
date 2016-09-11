@@ -8,6 +8,15 @@ import com.liangxunwang.unimanager.model.Videos;
 public class VideosVO extends Videos {
     private String zanNum;//赞数量
     private String plNum;//评论数量
+    private String video_type_name;//
+
+    public String getVideo_type_name() {
+        return video_type_name;
+    }
+
+    public void setVideo_type_name(String video_type_name) {
+        this.video_type_name = video_type_name;
+    }
 
     public String getZanNum() {
         return zanNum;

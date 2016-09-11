@@ -402,7 +402,7 @@
 <%--</div>--%>
 
 
-<a href="http://www.shandongguiren.com/html/download.html">
+<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.Lbins.GuirenApp">
     <img class="download-button" src="/img/share_download.png" alt="下载贵人手机客户端">
 </a>
 

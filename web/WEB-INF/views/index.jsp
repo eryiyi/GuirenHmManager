@@ -198,6 +198,23 @@
 					</li>
 				</c:if>
 
+				<c:if test="${um:permission('ADD_VIDEO_TYPE_MANAGER', sessionScope.powers)||um:permission('LIST_VIDEO_TYPE_MANAGER', sessionScope.powers)}">
+					<li class="dropdown">
+						<a href="javascript:void (0);" class="dropdown-toggle">
+							<i class="fa fa-credit-card"></i>
+							<span class="hidden-xs">视频类别</span>
+						</a>
+						<ul class="dropdown-menu">
+							<c:if test="${um:permission('ADD_VIDEO_TYPE_MANAGER', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('/videoTypeController/toAdd','')">添加类别</a></li>
+							</c:if>
+							<c:if test="${um:permission('LIST_VIDEO_TYPE_MANAGER', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('/videoTypeController/list','')">类别列表</a></li>
+							</c:if>
+						</ul>
+					</li>
+				</c:if>
+
 				<c:if test="${um:permission('REPORT_LIST', sessionScope.powers)}">
 					<li class="dropdown">
 						<a href="javascript:void (0);" class="dropdown-toggle">
