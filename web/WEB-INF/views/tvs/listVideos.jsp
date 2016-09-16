@@ -8,8 +8,8 @@
         </a>
         <ol class="breadcrumb pull-left">
             <li><a href="javaScript:void(0)">主页</a></li>
-            <li><a href="javascript:void (0);">电影上传</a></li>
-            <li><a href="javascript:void (0);">电影列表</a></li>
+            <li><a href="javascript:void (0);">tv上传</a></li>
+            <li><a href="javascript:void (0);">tv列表</a></li>
         </ol>
         <div id="social" class="pull-right">
             <a href="#"><i class="fa fa-google-plus"></i></a>
@@ -27,7 +27,7 @@
             <div class="box-header">
                 <div class="box-name ui-draggable-handle">
                     <i class="fa fa-table"></i>
-                    <span>电影列表</span>
+                    <span>tv列表</span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -47,7 +47,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>电影标题</th>
+                        <th>tv标题</th>
                         <th>是否禁用</th>
                         <th>发布时间</th>
                         <th>操作</th>
@@ -124,7 +124,7 @@
         var size = $("#size").val();
         addCookie("contract_size", size, 36);
         if ((page <= ${page.pageCount} && page >= 1)) {
-            window.location.href = "#module=listVideos&page=" + page + "&size=" + size+ "&_t="+ new Date().getTime();
+            window.location.href = "#module=listVideosTv&page=" + page + "&size=" + size+ "&_t="+ new Date().getTime();
         } else {
             alert("请输入1-${page.pageCount}的页码数");
         }
@@ -135,7 +135,7 @@
         var _index = $("#index").val();
         var size = getCookie("contract_size");
         if (_index <= ${page.pageCount} && _index >= 1) {
-            window.location.href = "#module=listVideos&page=" + _index + "&size=" + size + "&_t="+ new Date().getTime();
+            window.location.href = "#module=listVideosTv&page=" + _index + "&size=" + size + "&_t="+ new Date().getTime();
         } else {
             alert("请输入1-${page.pageCount}的页码数");
         }
@@ -153,7 +153,7 @@
                 var data = $.parseJSON(_data);
                 if (data.success) {
                     alert("删除成功");
-                    window.location.href = "#module=listVideos&_t=" + new Date().getTime();
+                    window.location.href = "#module=listVideosTv&_t=" + new Date().getTime();
                 } else {
                     var _case = {1: "删除失败"};
                     alert(_case[data.code])

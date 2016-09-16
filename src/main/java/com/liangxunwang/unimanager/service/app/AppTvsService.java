@@ -1,5 +1,6 @@
 package com.liangxunwang.unimanager.service.app;
 
+import com.liangxunwang.unimanager.dao.TvsDao;
 import com.liangxunwang.unimanager.dao.VideosDao;
 import com.liangxunwang.unimanager.mvc.vo.VideosVO;
 import com.liangxunwang.unimanager.query.VideosQuery;
@@ -20,11 +21,11 @@ import java.util.Map;
 /**
  * Created by zhl on 2015/2/3.
  */
-@Service("appVideosService")
-public class AppVideosService implements ListService {
+@Service("appTvsService")
+public class AppTvsService implements ListService {
     @Autowired
-    @Qualifier("videosDao")
-    private VideosDao videosDao;
+    @Qualifier("tvsDao")
+    private TvsDao tvsDao;
 
     @Override
     public Object list(Object object) throws ServiceException {
@@ -41,19 +42,16 @@ public class AppVideosService implements ListService {
         if(!StringUtil.isNullOrEmpty(query.getFavour_is())){
             map.put("favour_is", query.getFavour_is());
         }
-        if(!StringUtil.isNullOrEmpty(query.getVideo_type_id())){
-            map.put("video_type_id", query.getVideo_type_id());
-        }
 
         List<VideosVO> list = new ArrayList<VideosVO>();
 
         if("1".equals(query.getTime_is())){
             //按时间排序
-            list = videosDao.lists(map);
+            list = tvsDao.lists(map);
         }else if("1".equals(query.getFavour_is())){
-            list = videosDao.lists2(map);
+            list = tvsDao.lists2(map);
         }else {
-            list = videosDao.lists(map);
+            list = tvsDao.lists(map);
         }
 
         for (VideosVO vo : list){

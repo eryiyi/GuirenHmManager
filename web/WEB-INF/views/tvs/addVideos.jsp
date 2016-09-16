@@ -204,30 +204,30 @@
     function save() {
         var title = $("#paopao_title").val();
         if (title.replace(/\s/g, '') == '') {
-            alert("电影标题不能为空");
+            alert("tv标题不能为空");
             return;
         }
         var content = $("#paopao_content").val();
         if (content.replace(/\s/g, '') == '') {
-            alert("电影内容不能为空");
+            alert("tv内容不能为空");
             return;
         }
 
         var imagePath = $("img[name='imagePath']").attr("src");
         if (imagePath == "") {
-            alert("请上传电影图片");
+            alert("请上传tv图片");
             return;
         }
 
         var paopao_videourl = $("#paopao_videourl").val();
         if (paopao_videourl.replace(/\s/g, '') == '') {
-            alert("电影路径不能为空");
+            alert("tv路径不能为空");
             return;
         }
 
         var video_type_id = $("#video_type_id").val();
         if (video_type_id.replace(/\s/g, '') == '') {
-            alert("电影类别不能为空");
+            alert("tv类别不能为空");
             return;
         }
 //        var videoPath = $("#videoPath").val();
@@ -239,16 +239,16 @@
         $.ajax({
             cache: true,
             type: "POST",
-            url: "/saveVideos.do",
+            url: "/saveVideosTv.do",
             data: {"title": title, "content": content, "picUrl": imagePath, "videoUrl": paopao_videourl, "video_type_id": video_type_id},// 你的formid
             async: false,
             success: function (_data) {
                 var data = $.parseJSON(_data);
                 if (data.success) {
                     alert("添加成功");
-                    window.location.href = "#module=listVideos&page=1"  + "&size=10"  + "&_t="+ new Date().getTime();
+                    window.location.href = "#module=listVideosTv&page=1"  + "&size=10"  + "&_t="+ new Date().getTime();
                 } else {
-                    var _case = {1: "电影标题不能为空", 2: "电影内容不能为空", 3: "请重新上传电影图片", 4: "请输入电影路径"};
+                    var _case = {1: "tv标题不能为空", 2: "tv内容不能为空", 3: "请重新上传tv图片", 4: "请输入tv路径"};
                     alert(_case[data.code])
                 }
             }

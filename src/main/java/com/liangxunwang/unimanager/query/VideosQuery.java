@@ -7,8 +7,17 @@ public class VideosQuery {
     private int index;
     private int size;
     private String isdel;
+    private String video_type_id;
     private String time_is;//0时间倒叙   1时间正序
     private String favour_is;//0默认排行  1最热排行
+
+    public String getVideo_type_id() {
+        return video_type_id;
+    }
+
+    public void setVideo_type_id(String video_type_id) {
+        this.video_type_id = video_type_id;
+    }
 
     public String getTime_is() {
         return time_is;

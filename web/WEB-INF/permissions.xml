@@ -76,9 +76,13 @@
     <group id="MAANGER_VERSION_CODE_MANAGER" name="版本管理">
         <permission id="UPDATE_VERSION_CODE_MAANGER_AD_LIST" name="版本管理"/>
     </group>
-    <group id="VIDEOS_MANAGER" name="视频上传">
-        <permission id="LIST_VIDEOS_LIST" name="视频列表"/>
-        <permission id="VIDEOS_ADD_LIST" name="添加视频"/>
+    <group id="VIDEOS_MANAGER" name="电影上传">
+        <permission id="LIST_VIDEOS_LIST" name="电影列表"/>
+        <permission id="VIDEOS_ADD_LIST" name="添加电影"/>
+    </group>
+    <group id="VIDEOS_MANAGER_TV" name="TV上传">
+        <permission id="LIST_VIDEOS_LIST_TV" name="TV列表"/>
+        <permission id="VIDEOS_ADD_LIST_TV" name="添加TV"/>
     </group>
     <group id="VIDEOS_TYPE_MANAGER" name="视频类别">
         <permission id="ADD_VIDEO_TYPE_MANAGER" name="添加类别"/>

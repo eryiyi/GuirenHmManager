@@ -198,39 +198,6 @@
 					</li>
 				</c:if>
 
-				<c:if test="${um:permission('ADD_VIDEO_TYPE_MANAGER', sessionScope.powers)||um:permission('LIST_VIDEO_TYPE_MANAGER', sessionScope.powers)}">
-					<li class="dropdown">
-						<a href="javascript:void (0);" class="dropdown-toggle">
-							<i class="fa fa-credit-card"></i>
-							<span class="hidden-xs">视频类别</span>
-						</a>
-						<ul class="dropdown-menu">
-							<c:if test="${um:permission('ADD_VIDEO_TYPE_MANAGER', sessionScope.powers)}">
-								<li><a href="javascript:void(0);" onclick="toPage('/videoTypeController/toAdd','')">添加类别</a></li>
-							</c:if>
-							<c:if test="${um:permission('LIST_VIDEO_TYPE_MANAGER', sessionScope.powers)}">
-								<li><a href="javascript:void(0);" onclick="toPage('/videoTypeController/list','')">类别列表</a></li>
-							</c:if>
-						</ul>
-					</li>
-				</c:if>
-
-				<c:if test="${um:permission('ADD_DIANYING_TYPE_MANAGER', sessionScope.powers)||um:permission('LIST_DIANYING_TYPE_MANAGER', sessionScope.powers)}">
-					<li class="dropdown">
-						<a href="javascript:void (0);" class="dropdown-toggle">
-							<i class="fa fa-credit-card"></i>
-							<span class="hidden-xs">电影类别</span>
-						</a>
-						<ul class="dropdown-menu">
-							<c:if test="${um:permission('ADD_DIANYING_TYPE_MANAGER', sessionScope.powers)}">
-								<li><a href="javascript:void(0);" onclick="toPage('/dianyingTypeController/toAdd','')">添加电影类别</a></li>
-							</c:if>
-							<c:if test="${um:permission('LIST_DIANYING_TYPE_MANAGER', sessionScope.powers)}">
-								<li><a href="javascript:void(0);" onclick="toPage('/dianyingTypeController/list','')">电影类别列表</a></li>
-							</c:if>
-						</ul>
-					</li>
-				</c:if>
 
 				<c:if test="${um:permission('REPORT_LIST', sessionScope.powers)}">
 					<li class="dropdown">
@@ -364,22 +331,74 @@
 					</li>
 				</c:if>
 
-				<c:if test="${um:permission('LIST_VIDEOS_LIST', sessionScope.powers)|| um:permission('VIDEOS_ADD_LIST', sessionScope.powers)}">
+				<c:if test="${um:permission('ADD_DIANYING_TYPE_MANAGER', sessionScope.powers)||um:permission('LIST_DIANYING_TYPE_MANAGER', sessionScope.powers)}">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle">
-							<i class="fa fa-picture-o"></i>
-							<span class="hidden-xs">视频上传</span>
+						<a href="javascript:void (0);" class="dropdown-toggle">
+							<i class="fa fa-credit-card"></i>
+							<span class="hidden-xs">电影类别</span>
 						</a>
 						<ul class="dropdown-menu">
-							<c:if test="${um:permission('LIST_VIDEOS_LIST', sessionScope.powers)}">
-								<li><a href="javascript:void(0);" onclick="toPage('listVideos','1')">视频列表</a></li>
+							<c:if test="${um:permission('ADD_DIANYING_TYPE_MANAGER', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('/dianyingTypeController/toAdd','')">添加电影类别</a></li>
 							</c:if>
-							<c:if test="${um:permission('VIDEOS_ADD_LIST', sessionScope.powers)}">
-								<li><a href="javascript:void(0);" onclick="toPage('toAddVideos','')">添加视频</a></li>
+							<c:if test="${um:permission('LIST_DIANYING_TYPE_MANAGER', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('/dianyingTypeController/list','')">电影类别列表</a></li>
 							</c:if>
 						</ul>
 					</li>
 				</c:if>
+
+				<c:if test="${um:permission('ADD_VIDEO_TYPE_MANAGER', sessionScope.powers)||um:permission('LIST_VIDEO_TYPE_MANAGER', sessionScope.powers)}">
+					<li class="dropdown">
+						<a href="javascript:void (0);" class="dropdown-toggle">
+							<i class="fa fa-credit-card"></i>
+							<span class="hidden-xs">视频类别</span>
+						</a>
+						<ul class="dropdown-menu">
+							<c:if test="${um:permission('ADD_VIDEO_TYPE_MANAGER', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('/videoTypeController/toAdd','')">添加类别</a></li>
+							</c:if>
+							<c:if test="${um:permission('LIST_VIDEO_TYPE_MANAGER', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('/videoTypeController/list','')">类别列表</a></li>
+							</c:if>
+						</ul>
+					</li>
+				</c:if>
+
+				<c:if test="${um:permission('LIST_VIDEOS_LIST_TV', sessionScope.powers)|| um:permission('VIDEOS_ADD_LIST_TV', sessionScope.powers)}">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle">
+							<i class="fa fa-picture-o"></i>
+							<span class="hidden-xs">TV上传</span>
+						</a>
+						<ul class="dropdown-menu">
+							<c:if test="${um:permission('LIST_VIDEOS_LIST_TV', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('listVideosTv','1')">TV列表</a></li>
+							</c:if>
+							<c:if test="${um:permission('VIDEOS_ADD_LIST_TV', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('toAddVideosTv','')">添加TV</a></li>
+							</c:if>
+						</ul>
+					</li>
+				</c:if>
+
+				<c:if test="${um:permission('LIST_VIDEOS_LIST', sessionScope.powers)|| um:permission('VIDEOS_ADD_LIST', sessionScope.powers)}">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle">
+							<i class="fa fa-picture-o"></i>
+							<span class="hidden-xs">电影上传</span>
+						</a>
+						<ul class="dropdown-menu">
+							<c:if test="${um:permission('LIST_VIDEOS_LIST', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('listVideos','1')">电影列表</a></li>
+							</c:if>
+							<c:if test="${um:permission('VIDEOS_ADD_LIST', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('toAddVideos','')">添加电影</a></li>
+							</c:if>
+						</ul>
+					</li>
+				</c:if>
+
 
 			</ul>
 		</div>

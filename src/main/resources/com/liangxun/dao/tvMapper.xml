@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC
         "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.liangxunwang.unimanager.dao.VideosDao">
+<mapper namespace="com.liangxunwang.unimanager.dao.TvsDao">
     <resultMap id="videos" type="com.liangxunwang.unimanager.model.Videos">
         <id column="paopao_video_id" property="id"/>
         <result column="paopao_title" property="title"/>
@@ -28,26 +28,20 @@
         <result column="video_type_name" property="video_type_name"/>
     </resultMap>
 
-
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.Videos">
-        INSERT INTO paopao_video (paopao_video_id, paopao_title, paopao_content, paopao_videopic, paopao_videourl, paopao_isdel, dateline, video_type_id)
+        INSERT INTO paopao_tv (paopao_video_id, paopao_title, paopao_content, paopao_videopic, paopao_videourl, paopao_isdel, dateline, video_type_id)
         VALUES (#{id}, #{title}, #{content}, #{picUrl}, #{videoUrl}, #{isdel}, #{dateline} ,#{video_type_id})
     </insert>
 
-
     <select id="lists" resultMap="videos_vo">
-
           SELECT sr.*, ltype.video_type_name as video_type_name,
             (select count(paopao_video_id) from paopao_video_favour zan where  zan.paopao_video_id = sr.paopao_video_id) as zan_num,
             (select count(paopao_video_id) from paopao_video_comment pl where  pl.paopao_video_id = sr.paopao_video_id) as pl_num
-            FROM paopao_video sr
+            FROM paopao_tv sr
             LEFT  JOIN  video_type ltype ON ltype.video_type_id = sr.video_type_id
             WHERE 1='1'
             <if test="isdel != null and isdel != ''">
                 AND sr.paopao_isdel=#{isdel}
-            </if>
-            <if test="video_type_id != null and video_type_id != ''">
-                AND sr.video_type_id=#{video_type_id}
             </if>
 
         ORDER BY sr.dateline DESC
@@ -55,44 +49,36 @@
         limit #{index},#{size}
     </select>
 
-
     <select id="lists2" resultMap="videos_vo">
-
         SELECT sr.*, ltype.video_type_name as video_type_name,
         (select count(paopao_video_id) from paopao_video_favour zan where  zan.paopao_video_id = sr.paopao_video_id) as zan_num,
         (select count(paopao_video_id) from paopao_video_comment pl where  pl.paopao_video_id = sr.paopao_video_id) as pl_num
-        FROM paopao_video sr
-        LEFT  JOIN  dianying_type ltype ON ltype.video_type_id = sr.video_type_id
+        FROM paopao_tv sr
+        LEFT  JOIN  video_type ltype ON ltype.video_type_id = sr.video_type_id
         WHERE 1='1'
         <if test="isdel != null and isdel != ''">
             AND paopao_isdel=#{isdel}
         </if>
-        <if test="video_type_id != null and video_type_id != ''">
-            AND sr.video_type_id=#{video_type_id}
-        </if>
         ORDER BY sr.zan_num DESC
-
         limit #{index},#{size}
     </select>
 
     <select id="count" resultType="long">
-        SELECT count(paopao_video_id) FROM paopao_video WHERE 1=1
+        SELECT count(paopao_video_id) FROM paopao_tv WHERE 1=1
         <if test="isdel != null and isdel != ''">
             AND paopao_isdel=#{isdel}
         </if>
     </select>
 
     <delete id="delete" parameterType="String">
-        DELETE FROM paopao_video WHERE paopao_video_id=#{id}
+        DELETE FROM paopao_tv WHERE paopao_video_id=#{id}
     </delete>
 
     <select id="findById" resultMap="videos">
         SELECT sn.*,ltype.video_type_name as video_type_name
-         from paopao_video sn
-        LEFT  JOIN  dianying_type ltype ON ltype.video_type_id = sn.video_type_id
+         from paopao_tv sn
+        LEFT  JOIN  video_type ltype ON ltype.video_type_id = sn.video_type_id
         WHERE sn.paopao_video_id = #{id}
     </select>
-
-
 
 </mapper>

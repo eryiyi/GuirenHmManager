@@ -25,28 +25,28 @@ import java.util.List;
  * Created by zhl on 2015/2/3.
  */
 @Controller
-public class VideosController extends ControllerConstants {
+public class TvsController extends ControllerConstants {
     @Autowired
-    @Qualifier("videosService")
+    @Qualifier("tvService")
     private SaveService videosService;
 
     @Autowired
-    @Qualifier("videosService")
+    @Qualifier("tvService")
     private ListService videosServiceList;
 
     @Autowired
-    @Qualifier("videosService")
+    @Qualifier("tvService")
     private DeleteService videosServiceDelete;
 
     @Autowired
-    @Qualifier("videosService")
+    @Qualifier("tvService")
     private FindService videosServiceFind;
 
     @Autowired
-    @Qualifier("appVideosService")
+    @Qualifier("appTvsService")
     private ListService appVideosServiceList;
 
-    @RequestMapping("/listVideos")
+    @RequestMapping("/listVideosTv")
     public String newsList(VideosQuery query,Page page, ModelMap map){
         query.setIndex(page.getPage()==0?1:page.getPage());
         query.setSize(query.getSize()==0?page.getDefaultSize():query.getSize());
@@ -61,11 +61,11 @@ public class VideosController extends ControllerConstants {
         }catch (ServiceException e){
             return toJSONString(ERROR_1);
         }
-        return "/videos/listVideos";
+        return "/tvs/listVideos";
     }
 
 
-    @RequestMapping(value = "/listVideosApp", produces = "text/plain;charset=UTF-8;")
+    @RequestMapping(value = "/listVideosAppTv", produces = "text/plain;charset=UTF-8;")
     @ResponseBody
         public String newsListApp(VideosQuery query,Page page){
         query.setIndex(page.getPage()==0?1:page.getPage());
@@ -85,7 +85,7 @@ public class VideosController extends ControllerConstants {
      * 发布视频
      * @return
      */
-    @RequestMapping("/saveVideos")
+    @RequestMapping("/saveVideosTv")
     @ResponseBody
     public String saveNews(Videos videos, HttpSession session){
         if (StringUtil.isNullOrEmpty(videos.getTitle())){
@@ -105,22 +105,23 @@ public class VideosController extends ControllerConstants {
     }
 
     @Autowired
-    @Qualifier("dianyingTypeObjService")
-    private ListService dianyingTypeObjService;
+    @Qualifier("videoTypeObjService")
+    private ListService videoTypeObjService;
 
-    @RequestMapping("/toAddVideos")
+
+    @RequestMapping("/toAddVideosTv")
     public String toAddNews(ModelMap map){
         VideoTypeQuery query = new VideoTypeQuery();
-        List<VideoTypeObj> list = (List<VideoTypeObj>) dianyingTypeObjService.list(query);
+        List<VideoTypeObj> list = (List<VideoTypeObj>) videoTypeObjService.list(query);
         map.put("listDianyingType", list);
-        return "/videos/addVideos";
+        return "/tvs/addVideos";
     }
 
     @Autowired
     @Qualifier("appCommentService")
     private ListService appCommentService;
 
-    @RequestMapping("/viewVideos")
+    @RequestMapping("/viewVideosTv")
     public String viewNews(String id,  ModelMap map){
         Videos vo = (Videos) videosServiceFind.findById(id);
         map.put("videos", vo);
@@ -132,10 +133,10 @@ public class VideosController extends ControllerConstants {
         List<CommentVO> list = (List<CommentVO>) appCommentService.list(query);
         map.put("list", list);
 
-        return "/videos/viewVideos_share";
+        return "/tvs/viewVideos_share";
     }
 
-    @RequestMapping("/deleteVideos")
+    @RequestMapping("/deleteVideosTv")
     @ResponseBody
     public String deleteNews(String newsId){
         try {

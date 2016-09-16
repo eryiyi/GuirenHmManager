@@ -160,6 +160,7 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
 
                         "|(^/getVideoTypes\\.do$)"+
                         "|(^/getDianyingTypes\\.do$)"+
+                        "|(^/listVideosAppTv\\.do$)"+
 
 
 
