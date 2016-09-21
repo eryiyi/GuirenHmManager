@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by zhl on 2015/2/3.
  */
 @Service("videosService")
-public class VideosService implements SaveService,ListService, DeleteService,FindService {
+public class VideosService implements SaveService,ListService, DeleteService,FindService,UpdateService {
     @Autowired
     @Qualifier("videosDao")
     private VideosDao videosDao;
@@ -38,7 +38,6 @@ public class VideosService implements SaveService,ListService, DeleteService,Fin
 
     @Override
     public Object list(Object object) throws ServiceException {
-
         VideosQuery query = (VideosQuery) object;
         int index = (query.getIndex() - 1) * query.getSize();
         int size = query.getIndex()*query.getSize();
@@ -51,6 +50,27 @@ public class VideosService implements SaveService,ListService, DeleteService,Fin
         }
         List<VideosVO> list = videosDao.lists(map);
         for (VideosVO vo : list){
+            if(!StringUtil.isNullOrEmpty(vo.getVideoUrl())){
+                StringBuffer buffer = new StringBuffer();
+                String[] pics = new String[]{};
+                if(vo!=null && vo.getVideoUrl()!=null){
+                    pics = vo.getVideoUrl().split(",");
+                }
+                for (int i=0; i<pics.length; i++){
+                    if (pics[i].startsWith("upload")) {
+                        buffer.append(Constants.URL + pics[i]);
+                        if (i < pics.length - 1) {
+                            buffer.append(",");
+                        }
+                    }else {
+                        buffer.append(Constants.QINIU_URL + pics[i]);
+                        if (i < pics.length - 1) {
+                            buffer.append(",");
+                        }
+                    }
+                }
+                vo.setVideoUrl(buffer.toString());
+            }
             vo.setDateline(RelativeDateFormat.format(Long.parseLong(vo.getDateline())));
         }
         long count = videosDao.count(map);
@@ -81,5 +101,11 @@ public class VideosService implements SaveService,ListService, DeleteService,Fin
             }
         }
         return vo;
+    }
+
+    @Override
+    public Object update(Object object) {
+        videosDao.update((Videos) object);
+        return null;
     }
 }

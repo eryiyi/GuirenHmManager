@@ -46,6 +46,10 @@ public class VideosController extends ControllerConstants {
     @Qualifier("appVideosService")
     private ListService appVideosServiceList;
 
+    @Autowired
+    @Qualifier("videosService")
+    private UpdateService videosServiceUpdate;
+
     @RequestMapping("/listVideos")
     public String newsList(VideosQuery query,Page page, ModelMap map){
         query.setIndex(page.getPage()==0?1:page.getPage());
@@ -145,4 +149,36 @@ public class VideosController extends ControllerConstants {
             return toJSONString(ERROR_1);
         }
     }
+
+    @Autowired
+    @Qualifier("videosFindService")
+    private FindService videosFindServiceFind;
+
+    @RequestMapping("/toEditVideos")
+    public String toEditVideos(String id,  ModelMap map){
+        Videos vo = (Videos) videosFindServiceFind.findById(id);
+        map.put("videos", vo);
+        VideoTypeQuery query = new VideoTypeQuery();
+        List<VideoTypeObj> list = (List<VideoTypeObj>) dianyingTypeObjService.list(query);
+        map.put("listDianyingType", list);
+        return "/videos/editVideos";
+    }
+
+    @RequestMapping("/editVideos")
+    @ResponseBody
+    public String editVideos(Videos videos){
+        if (StringUtil.isNullOrEmpty(videos.getTitle())){
+            return toJSONString(ERROR_1);
+        }
+        if (StringUtil.isNullOrEmpty(videos.getContent())){
+            return toJSONString(ERROR_2);
+        }
+        if (StringUtil.isNullOrEmpty(videos.getVideoUrl())){
+            return toJSONString(ERROR_4);
+        }
+        videosServiceUpdate.update(videos);
+        return toJSONString(SUCCESS);
+    }
+
+
 }

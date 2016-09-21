@@ -1,5 +1,6 @@
 package com.liangxunwang.unimanager.dao;
 
+import com.liangxunwang.unimanager.model.AdObj;
 import com.liangxunwang.unimanager.model.Videos;
 import com.liangxunwang.unimanager.mvc.vo.VideosVO;
 import org.springframework.stereotype.Repository;
@@ -28,4 +29,10 @@ public interface VideosDao {
     public long count(Map<String, Object> map);
 
     public Videos findById(String id);
+    /**
+     * 更新
+     * @param videos
+     */
+    public void update(Videos videos);
+
 }

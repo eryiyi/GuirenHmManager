@@ -148,7 +148,7 @@
         $.ajax({
             type: "post",
             data: {"newsId": _newsId},
-            url: "/deleteVideos.do",
+            url: "/deleteVideosTv.do",
             success: function (_data) {
                 var data = $.parseJSON(_data);
                 if (data.success) {

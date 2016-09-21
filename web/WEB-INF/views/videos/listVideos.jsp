@@ -51,6 +51,7 @@
                         <th>是否禁用</th>
                         <th>发布时间</th>
                         <th>操作</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -66,7 +67,9 @@
                             <td>
                                 <button class="btn btn-primary" type="button" onclick="deleteNews('${e.id}')">删除
                                 </button>
-                                    <%--<a href="/viewNews.do?newsId=${e.id}" target="_blank">查看</a>--%>
+
+                                <button class="btn btn-primary" type="button" onclick="editNews('${e.id}')">编辑
+                                </button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -160,5 +163,9 @@
                 }
             }
         });
+    }
+
+    function editNews(_id) {
+        window.location.href = "#module=toEditVideos&id="+_id+"&_t=" + new Date().getTime();
     }
 </script>

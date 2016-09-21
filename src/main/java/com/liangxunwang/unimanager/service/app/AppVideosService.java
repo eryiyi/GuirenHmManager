@@ -62,11 +62,36 @@ public class AppVideosService implements ListService {
             }else {
                 vo.setVideoUrl(Constants.QINIU_URL + vo.getVideoUrl());
             }
-            if (vo.getVideoUrl().startsWith("upload")) {
-                vo.setVideoUrl(Constants.URL + vo.getVideoUrl());
-            }else {
-                vo.setVideoUrl(Constants.QINIU_URL + vo.getVideoUrl());
+
+
+//            if (vo.getVideoUrl().startsWith("upload")) {
+//                vo.setVideoUrl(Constants.URL + vo.getVideoUrl());
+//            }else {
+//                vo.setVideoUrl(Constants.QINIU_URL + vo.getVideoUrl());
+//            }
+            if(!StringUtil.isNullOrEmpty(vo.getVideoUrl())){
+                StringBuffer buffer = new StringBuffer();
+                String[] pics = new String[]{};
+                if(vo!=null && vo.getVideoUrl()!=null){
+                    pics = vo.getVideoUrl().split(",");
+                }
+                for (int i=0; i<pics.length; i++){
+                    if (pics[i].startsWith("upload")) {
+                        buffer.append(Constants.URL + pics[i]);
+                        if (i < pics.length - 1) {
+                            buffer.append(",");
+                        }
+                    }else {
+                        buffer.append(Constants.QINIU_URL + pics[i]);
+                        if (i < pics.length - 1) {
+                            buffer.append(",");
+                        }
+                    }
+                }
+                vo.setVideoUrl(buffer.toString());
             }
+
+
             vo.setDateline(RelativeDateFormat.format(Long.parseLong(vo.getDateline())));
         }
         return new Object[]{list, 0};

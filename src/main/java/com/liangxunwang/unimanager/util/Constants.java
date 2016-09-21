@@ -5,9 +5,8 @@ package com.liangxunwang.unimanager.util;
  */
 public class Constants {
 //        public static final String URL = "http://www.shandongguiren.com/";
-        public static final String URL = "http://smilekyle.xicp.net:42765/";
 
-//          public static final String URL = "http://192.168.0.224/";
+          public static final String URL = "http://192.168.0.224:8080/";
 
         public static final String DOWNLOAD_URL = URL + "html/GuirenApp.apk";
 

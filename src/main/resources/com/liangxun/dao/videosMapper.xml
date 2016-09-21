@@ -94,5 +94,12 @@
     </select>
 
 
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.Videos">
+        UPDATE paopao_video SET paopao_title=#{title},
+        paopao_content=#{content} ,
+        paopao_videourl=#{videoUrl},
+        video_type_id=#{video_type_id}
+        WHERE paopao_video_id=#{id}
+    </update>
 
 </mapper>
