@@ -60,7 +60,7 @@ public class AppVideosService implements ListService {
             if (vo.getPicUrl().startsWith("upload")) {
                 vo.setPicUrl(Constants.URL + vo.getPicUrl());
             }else {
-                vo.setVideoUrl(Constants.QINIU_URL + vo.getVideoUrl());
+                vo.setPicUrl(Constants.QINIU_URL + vo.getPicUrl());
             }
 
 

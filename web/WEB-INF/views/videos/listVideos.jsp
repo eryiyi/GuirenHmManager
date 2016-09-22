@@ -156,7 +156,9 @@
                 var data = $.parseJSON(_data);
                 if (data.success) {
                     alert("删除成功");
-                    window.location.href = "#module=listVideos&_t=" + new Date().getTime();
+                    var _index = $("#index").val();
+                    var size = getCookie("contract_size");
+                    window.location.href = "#module=listVideos&page=" + _index + "&size=" + size + "&_t="+ new Date().getTime();
                 } else {
                     var _case = {1: "删除失败"};
                     alert(_case[data.code])
