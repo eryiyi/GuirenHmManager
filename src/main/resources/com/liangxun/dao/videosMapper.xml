@@ -65,7 +65,7 @@
         LEFT  JOIN  dianying_type ltype ON ltype.video_type_id = sr.video_type_id
         WHERE 1='1'
         <if test="isdel != null and isdel != ''">
-            AND paopao_isdel=#{isdel}
+            AND sr.paopao_isdel=#{isdel}
         </if>
         <if test="video_type_id != null and video_type_id != ''">
             AND sr.video_type_id=#{video_type_id}

@@ -42,6 +42,9 @@ public class AppTvsService implements ListService {
         if(!StringUtil.isNullOrEmpty(query.getFavour_is())){
             map.put("favour_is", query.getFavour_is());
         }
+        if(!StringUtil.isNullOrEmpty(query.getVideo_type_id())){
+            map.put("video_type_id", query.getVideo_type_id());
+        }
 
         List<VideosVO> list = new ArrayList<VideosVO>();
 
