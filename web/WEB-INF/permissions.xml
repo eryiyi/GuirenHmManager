@@ -92,4 +92,8 @@
         <permission id="ADD_DIANYING_TYPE_MANAGER" name="添加电影类别"/>
         <permission id="LIST_DIANYING_TYPE_MANAGER" name="电影类别列表"/>
     </group>
+    <group id="ZIMEITI_TYPE_MANAGER" name="自媒体类别管理">
+        <permission id="ZIMEITI_TYPE_LIST" name="自媒体类别列表"/>
+        <permission id="ZIMEITI_TYPE_ADD" name="自媒体类别添加"/>
+    </group>
 </permissions>

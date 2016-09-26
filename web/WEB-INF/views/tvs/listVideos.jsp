@@ -50,6 +50,7 @@
                         <th>tv标题</th>
                         <th>是否禁用</th>
                         <th>发布时间</th>
+                        <th>编辑</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -64,6 +65,8 @@
                             </td>
                             <td>${e.dateline}</td>
                             <td>
+                                <button class="btn btn-primary" type="button" onclick="editNews('${e.id}')">编辑
+                                </button>
                                 <button class="btn btn-primary" type="button" onclick="deleteNews('${e.id}')">删除
                                 </button>
                                     <%--<a href="/viewNews.do?newsId=${e.id}" target="_blank">查看</a>--%>
@@ -141,13 +144,13 @@
         }
     }
 
-    function deleteNews(_newsId) {
+    function deleteNews(_id) {
         if (!confirm("确定要删除该视频么？")) {
             return;
         }
         $.ajax({
             type: "post",
-            data: {"newsId": _newsId},
+            data: {"id": _id},
             url: "/deleteVideosTv.do",
             success: function (_data) {
                 var data = $.parseJSON(_data);
@@ -160,5 +163,11 @@
                 }
             }
         });
+    }
+    function editNews(_id) {
+        if (!confirm("确定要编辑该视频么？")) {
+            return;
+        }
+        window.location.href = "#module=toEditVideosTv&id="+_id+"&_t=" + new Date().getTime();
     }
 </script>

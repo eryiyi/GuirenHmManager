@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.GdTypeDao">
+    <resultMap id="gdTypeObj" type="com.liangxunwang.unimanager.model.GdTypeObj">
+        <id column="gd_type_id" property="gd_type_id"/>
+        <result column="gd_type_name" property="gd_type_name"/>
+        <result column="top_num" property="top_num"/>
+    </resultMap>
+
+    <select id="lists" resultMap="gdTypeObj">
+        SELECT * from lx_gd_type
+        ORDER BY top_num asc
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.GdTypeObj">
+        INSERT INTO lx_gd_type(gd_type_id, gd_type_name, top_num)
+        VALUES (#{gd_type_id}, #{gd_type_name}, #{top_num})
+    </insert>
+
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM lx_gd_type where gd_type_id = #{gd_type_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="gdTypeObj">
+        SELECT * FROM lx_gd_type where gd_type_id=#{gd_type_id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.GdTypeObj">
+        UPDATE lx_gd_type SET gd_type_name=#{gd_type_name},top_num=#{top_num}
+         WHERE gd_type_id=#{gd_type_id}
+    </update>
+</mapper>

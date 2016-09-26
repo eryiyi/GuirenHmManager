@@ -43,8 +43,17 @@ public class TvsController extends ControllerConstants {
     private FindService videosServiceFind;
 
     @Autowired
+    @Qualifier("tvFindService")
+    private FindService tvFindServiceFind;
+
+    @Autowired
     @Qualifier("appTvsService")
     private ListService appVideosServiceList;
+
+    @Autowired
+    @Qualifier("tvService")
+    private UpdateService videosServiceUpdate;
+
 
     @RequestMapping("/listVideosTv")
     public String newsList(VideosQuery query,Page page, ModelMap map){
@@ -138,12 +147,45 @@ public class TvsController extends ControllerConstants {
 
     @RequestMapping("/deleteVideosTv")
     @ResponseBody
-    public String deleteNews(String newsId){
+    public String deleteNews(String id){
         try {
-            videosServiceDelete.delete(newsId);
+            videosServiceDelete.delete(id);
             return toJSONString(SUCCESS);
         }catch (ServiceException e){
             return toJSONString(ERROR_1);
         }
+    }
+
+    @RequestMapping("/toEditVideosTv")
+    public String toEdit(String id,  ModelMap map){
+        Videos vo = (Videos) tvFindServiceFind.findById(id);
+        map.put("tv", vo);
+        VideoTypeQuery query = new VideoTypeQuery();
+        List<VideoTypeObj> list = (List<VideoTypeObj>) videoTypeObjService.list(query);
+        map.put("listDianyingType", list);
+
+        return "/tvs/editVideos";
+    }
+
+    @RequestMapping("/editVideosTv")
+    @ResponseBody
+    public String editVideosTv(Videos videos){
+        if (StringUtil.isNullOrEmpty(videos.getId())){
+            return toJSONString(ERROR_5);
+        }
+        if (StringUtil.isNullOrEmpty(videos.getTitle())){
+            return toJSONString(ERROR_1);
+        }
+        if (StringUtil.isNullOrEmpty(videos.getContent())){
+            return toJSONString(ERROR_2);
+        }
+        if (StringUtil.isNullOrEmpty(videos.getPicUrl())){
+            return toJSONString(ERROR_3);
+        }
+        if (StringUtil.isNullOrEmpty(videos.getVideoUrl())){
+            return toJSONString(ERROR_4);
+        }
+        videosServiceUpdate.update(videos);
+        return toJSONString(SUCCESS);
     }
 }

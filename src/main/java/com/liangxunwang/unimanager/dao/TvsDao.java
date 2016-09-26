@@ -28,4 +28,6 @@ public interface TvsDao {
     public long count(Map<String, Object> map);
 
     public Videos findById(String id);
+
+    void update(Videos videos);
 }

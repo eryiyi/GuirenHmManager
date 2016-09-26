@@ -43,12 +43,10 @@
             <if test="isdel != null and isdel != ''">
                 AND sr.paopao_isdel=#{isdel}
             </if>
-        <if test="video_type_id != null and video_type_id != ''">
+            <if test="video_type_id != null and video_type_id != ''">
                 AND sr.video_type_id=#{video_type_id}
             </if>
-
         ORDER BY sr.dateline DESC
-
         limit #{index},#{size}
     </select>
 
@@ -86,5 +84,16 @@
         LEFT  JOIN  video_type ltype ON ltype.video_type_id = sn.video_type_id
         WHERE sn.paopao_video_id = #{id}
     </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.Videos">
+        UPDATE paopao_tv SET
+         paopao_title=#{title},
+         paopao_content=#{content},
+         paopao_videopic=#{picUrl},
+         paopao_videourl=#{videoUrl},
+         paopao_isdel=#{isdel},
+         video_type_id=#{video_type_id}
+         WHERE paopao_video_id=#{id}
+    </update>
 
 </mapper>

@@ -11,7 +11,7 @@
         <ol class="breadcrumb pull-left">
             <li><a href="javaScript:void(0)">主页</a></li>
             <li><a href="javaScript:void(0)">TV上传</a></li>
-            <li><a href="javaScript:void(0)">添加电影</a></li>
+            <li><a href="javaScript:void(0)">修改TV</a></li>
         </ol>
         <div id="social" class="pull-right">
             <a href="#"><i class="fa fa-google-plus"></i></a>
@@ -29,7 +29,7 @@
             <div class="box-header">
                 <div class="box-name">
                     <i class="fa fa-search"></i>
-                    <span>添加TV</span>
+                    <span>修改TV</span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -45,18 +45,17 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <h4 class="page-header">TV信息</h4>
+                <h4 class="page-header">修改TV</h4>
 
                 <form id="save_form" class="form-horizontal" method="post" role="form">
-                    <input id="token" name="token" hidden="true" value="">
-                    <input id="key" name="key" hidden="true" value="">
+                    <input id="id" name="id" hidden="true" value="${tv.id}">
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">TV标题</label>
 
                         <div class="col-sm-4">
                             <input type="text" id="paopao_title" class="form-control" placeholder="TV标题"
-                                   data-toggle="tooltip" data-placement="bottom" title="Tooltip for name">
+                                   data-toggle="tooltip" data-placement="bottom" title="Tooltip for name" value="${tv.title}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -64,7 +63,7 @@
 
                         <div class="col-sm-8">
                             <textarea id="paopao_content" class="form-control" placeholder="TV内容" data-toggle="tooltip"
-                                      data-placement="bottom" title="Tooltip for name"/>
+                                      data-placement="bottom" title="Tooltip for name" value="${tv.content}">${tv.content}</textarea>
                         </div>
                     </div>
 
@@ -73,22 +72,27 @@
 
                         <div class="col-sm-8">
                             <textarea id="paopao_videourl" class="form-control" placeholder="TV路径" data-toggle="tooltip"
-                                      data-placement="bottom" title="Tooltip for name"/>
+                                      data-placement="bottom" title="Tooltip for name" value="${tv.videoUrl}">${tv.videoUrl}</textarea>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">TV图片</label>
-
                         <div class="col-sm-10">
                             <input type="file" name="file" id="fileUpload" style="float: left;"/>
-                            <input type="button" value="上传" onclick="uploadImage()" style="float: left;"/>
-                            <br/><br/>
+                            <input type="button" value="上传" onclick="uploadImage('fileUpload','imageDiv','imagePath')" style="float: left;"/><br/><br/>
 
-                            <div id="imageDiv" style="padding: 10px"></div>
+                            <div id="imageDiv" style="padding: 10px">
+                                <script type="text/javascript">
+                                    var imagePath = '${tv.picUrl}';
+                                    if (imagePath != null && imagePath != "") {
+                                        var html = '<img style="cursor: pointer" onmousedown="deleteImage(event, this)" src="' + imagePath + '" width="150" height="150" name="imagePath" title="点击右键删除"/>';
+                                        $("#imageDiv").html(html);
+                                    }
+                                </script>
+                            </div>
                         </div>
                     </div>
-
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">TV分类</label>
@@ -97,21 +101,23 @@
                             <select class="form-control" id="video_type_id">
                                 <option value="">--选择TV分类--</option>
                                 <c:forEach items="${listDianyingType}" var="e" varStatus="st">
-                                    <option value="${e.video_type_id}">${e.video_type_name}</option>
+                                    <option value="${e.video_type_id}"  ${e.video_type_id==tv.video_type_id?'selected':''}>${e.video_type_name}</option>
                                 </c:forEach>
                             </select>
                         </div>
                     </div>
-                    <%--<div class="form-group">--%>
-                        <%--<label class="col-sm-2 control-label">视频文件</label>--%>
 
-                        <%--<div class="col-sm-10">--%>
-                            <%--<input type="file" name="fileVideo" id="fileVideoUpload" style="float: left;"/>--%>
-                            <%--<input type="button" value="上传" onclick="uploadVideo()" style="float: left;"/><br/><br/>--%>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">是否禁用</label>
 
-                            <%--<div id="videoDiv" style="padding: 10px"></div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="isdel">
+                                <option value="">--选择是否禁用--</option>
+                                <option value="0" ${tv.isdel=='0'?'selected':''}>否</option>
+                                <option value="1" ${tv.isdel=='1'?'selected':''}>是</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <div class="col-sm-2 col-sm-offset-2">
@@ -119,6 +125,7 @@
                                 <span><i class="fa fa-clock-o"></i></span>
                                 提交
                             </button>
+                            <button type="button" class="btn btn-primary" onclick="javascript :history.back(-1)">返回</button>
                         </div>
                     </div>
 
@@ -135,19 +142,18 @@
         $('#theme_end_date').datepicker({setDate: new Date()});
         WinMove();
     });
-    function uploadImage() {
+    function uploadImage(_fileUpload,_imageDiv,_imagePath) {
         $.ajaxFileUpload(
                 {
                     url: "/uploadUnCompressImage.do?_t=" + new Date().getTime(),            //需要链接到服务器地址
                     secureuri: false,//是否启用安全提交，默认为false
-                    fileElementId: 'fileUpload',                        //文件选择框的id属性
+                    fileElementId: _fileUpload,                        //文件选择框的id属性
                     dataType: 'json',                                     //服务器返回的格式，可以是json, xml
                     success: function (data, status)  //服务器成功响应处理函数
                     {
                         if (data.success) {
-                            var html = '<img style="cursor: pointer" onmousedown="deleteImage(event, this)" src="' + data.data + '" width="150" height="150" name="imagePath" title="点击右键删除"/>';
-//                  var imageDivHtml = $("#imageDiv").html() + html;
-                            $("#imageDiv").html(html);
+                            var html = '<img style="cursor: pointer" onmousedown="deleteImage(event, this)" src="' + data.data + '" width="150" height="150" name="'+_imagePath+'" title="点击右键删除"/>';
+                            $("#"+_imageDiv).html(html);
                         } else {
                             if (data.code == 1) {
                                 alert("上传图片失败");
@@ -174,6 +180,8 @@
     ;
 
     function save() {
+        var id = $("#id").val();
+        var isdel = $("#isdel").val();
         var title = $("#paopao_title").val();
         if (title.replace(/\s/g, '') == '') {
             alert("tv标题不能为空");
@@ -206,16 +214,16 @@
         $.ajax({
             cache: true,
             type: "POST",
-            url: "/saveVideosTv.do",
-            data: {"title": title, "content": content, "picUrl": imagePath, "videoUrl": paopao_videourl, "video_type_id": video_type_id},// 你的formid
+            url: "/editVideosTv.do",
+            data: {"id": id,"title": title, "content": content, "picUrl": imagePath, "videoUrl": paopao_videourl, "video_type_id": video_type_id, "isdel": isdel},// 你的formid
             async: false,
             success: function (_data) {
                 var data = $.parseJSON(_data);
                 if (data.success) {
-                    alert("添加成功");
+                    alert("修改成功");
                     window.location.href = "#module=listVideosTv&page=1"  + "&size=10"  + "&_t="+ new Date().getTime();
                 } else {
-                    var _case = {1: "tv标题不能为空", 2: "tv内容不能为空", 3: "请重新上传tv图片", 4: "请输入tv路径"};
+                    var _case = {1: "tv标题不能为空", 2: "tv内容不能为空", 3: "请重新上传tv图片", 4: "请输入tv路径", 5: "tv不存在，请稍后重试！"};
                     alert(_case[data.code])
                 }
             }
@@ -231,5 +239,70 @@
     }
     ;
 
+
+    //  $(document).ready(function() {
+    //    var Qiniu_UploadUrl = "http://up.qiniu.com";
+    //    var progressbar = $("#progressbar"),
+    //            progressLabel = $(".progress-label");
+    //    progressbar.progressbar({
+    //      value: false,
+    //      change: function() {
+    //        progressLabel.text(progressbar.progressbar("value") + "%");
+    //      },
+    //      complete: function() {
+    //        progressLabel.text("Complete!");
+    //      }
+    //    });
+    //    $("#btn_upload").click(function() {
+    //      //普通上传
+    //      var Qiniu_upload = function(f, token, key) {
+    //        var xhr = new XMLHttpRequest();
+    //        xhr.open('POST', Qiniu_UploadUrl, true);
+    //        var formData, startDate;
+    //        formData = new FormData();
+    //        if (key !== null && key !== undefined) formData.append('key', key);
+    //        formData.append('token', token);
+    //        formData.append('file', f);
+    //        var taking;
+    //        xhr.upload.addEventListener("progress", function(evt) {
+    //          if (evt.lengthComputable) {
+    //            var nowDate = new Date().getTime();
+    //            taking = nowDate - startDate;
+    //            var x = (evt.loaded) / 1024;
+    //            var y = taking / 1000;
+    //            var uploadSpeed = (x / y);
+    //            var formatSpeed;
+    //            if (uploadSpeed > 1024) {
+    //              formatSpeed = (uploadSpeed / 1024).toFixed(2) + "Mb\/s";
+    //            } else {
+    //              formatSpeed = uploadSpeed.toFixed(2) + "Kb\/s";
+    //            }
+    //            var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+    //            progressbar.progressbar("value", percentComplete);
+    //            // console && console.log(percentComplete, ",", formatSpeed);
+    //          }
+    //        }, false);
+    //
+    //        xhr.onreadystatechange = function(response) {
+    //          if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText != "") {
+    //            var blkRet = JSON.parse(xhr.responseText);
+    //            console && console.log(blkRet);
+    //            $("#dialog").html(xhr.responseText).dialog();
+    //          } else if (xhr.status != 200 && xhr.responseText) {
+    //
+    //          }
+    //        };
+    //        startDate = new Date().getTime();
+    //        $("#progressbar").show();
+    //        xhr.send(formData);
+    //      };
+    //      var token = $("#token").val();
+    //      if ($("#file")[0].files.length > 0 && token != "") {
+    //        Qiniu_upload($("#file")[0].files[0], token, $("#key").val());
+    //      } else {
+    //        console && console.log("form input error");
+    //      }
+    //    })
+    //  })
 </script>
 

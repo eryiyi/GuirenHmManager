@@ -22,7 +22,7 @@ import java.util.Map;
  * Created by zhl on 2015/2/3.
  */
 @Service("tvService")
-public class TvService implements SaveService,ListService, DeleteService,FindService {
+public class TvService implements SaveService,ListService, DeleteService,FindService ,UpdateService{
     @Autowired
     @Qualifier("tvsDao")
     private TvsDao tvsDao;
@@ -82,5 +82,11 @@ public class TvService implements SaveService,ListService, DeleteService,FindSer
             }
         }
         return vo;
+    }
+
+    @Override
+    public Object update(Object object) {
+        tvsDao.update((Videos) object);
+        return null;
     }
 }
