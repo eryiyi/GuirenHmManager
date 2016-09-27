@@ -28,6 +28,24 @@ public class ManagerInfo {
     private String shouhui;
     private String company_pic;
     private String emp_id;
+    private String gd_type_id;
+    private String gd_type_name;
+
+    public String getGd_type_name() {
+        return gd_type_name;
+    }
+
+    public void setGd_type_name(String gd_type_name) {
+        this.gd_type_name = gd_type_name;
+    }
+
+    public String getGd_type_id() {
+        return gd_type_id;
+    }
+
+    public void setGd_type_id(String gd_type_id) {
+        this.gd_type_id = gd_type_id;
+    }
 
     public String getEmp_id() {
         return emp_id;

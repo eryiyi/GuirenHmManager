@@ -30,6 +30,8 @@
         <result column="yingye_time_end" property="yingye_time_end"/>
         <result column="shouhui" property="shouhui"/>
         <result column="company_pic" property="company_pic"/>
+        <result column="gd_type_id" property="gd_type_id"/>
+        <result column="gd_type_name" property="gd_type_name"/>
     </resultMap>
 
     <resultMap id="my_manager_info_vo" type="com.liangxunwang.unimanager.mvc.vo.ManagerInfoVo">
@@ -61,15 +63,19 @@
         <result column="company_pic" property="company_pic"/>
 
         <result column="emp_cover" property="emp_cover"/>
+        <result column="gd_type_id" property="gd_type_id"/>
+        <result column="gd_type_name" property="gd_type_name"/>
     </resultMap>
 
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.ManagerInfo">
-        INSERT INTO MANAGER_INFO (INFO_ID, MANAGER_ID,emp_id, REAL_NAME, IDCARD, IDCARD_URL, lat_company, lng_company, company_address, company_person, company_tel, company_detail, company_name, yingye_time_start, yingye_time_end, shouhui, company_pic)
-        VALUES (#{id}, #{managerId, jdbcType=VARCHAR}, #{emp_id}, #{realName, jdbcType=VARCHAR}, #{idcard, jdbcType=VARCHAR}, #{idcardUrl, jdbcType=VARCHAR}, #{lat_company, jdbcType=VARCHAR}, #{lng_company, jdbcType=VARCHAR}, #{company_address, jdbcType=VARCHAR}, #{company_person, jdbcType=VARCHAR}, #{company_tel, jdbcType=VARCHAR}, #{company_detail, jdbcType=VARCHAR}, #{company_name, jdbcType=VARCHAR}, #{yingye_time_start, jdbcType=VARCHAR}, #{yingye_time_end, jdbcType=VARCHAR}, #{shouhui, jdbcType=VARCHAR}, #{company_pic, jdbcType=VARCHAR})
+        INSERT INTO MANAGER_INFO (INFO_ID, MANAGER_ID,emp_id, REAL_NAME, IDCARD, IDCARD_URL, lat_company, lng_company, company_address, company_person, company_tel, company_detail, company_name, yingye_time_start, yingye_time_end, shouhui, company_pic, gd_type_id)
+        VALUES (#{id}, #{managerId, jdbcType=VARCHAR}, #{emp_id}, #{realName, jdbcType=VARCHAR}, #{idcard, jdbcType=VARCHAR}, #{idcardUrl, jdbcType=VARCHAR}, #{lat_company, jdbcType=VARCHAR}, #{lng_company, jdbcType=VARCHAR}, #{company_address, jdbcType=VARCHAR}, #{company_person, jdbcType=VARCHAR}, #{company_tel, jdbcType=VARCHAR}, #{company_detail, jdbcType=VARCHAR}, #{company_name, jdbcType=VARCHAR}, #{yingye_time_start, jdbcType=VARCHAR}, #{yingye_time_end, jdbcType=VARCHAR}, #{shouhui, jdbcType=VARCHAR}, #{company_pic, jdbcType=VARCHAR}, #{gd_type_id, jdbcType=VARCHAR})
     </insert>
 
     <select id="findById" parameterType="String" resultMap="my_manager_info">
-        SELECT * FROM MANAGER_INFO WHERE MANAGER_ID=#{id}
+         SELECT sn.*,ltype.gd_type_name as gd_type_name FROM MANAGER_INFO sn
+        LEFT JOIN lx_gd_type ltype ON ltype.gd_type_id = sn.gd_type_id
+         WHERE sn.MANAGER_ID=#{id}
     </select>
 
     <update id="update" parameterType="com.liangxunwang.unimanager.model.ManagerInfo">
@@ -77,7 +83,7 @@
         company_person=#{company_person}, company_tel=#{company_tel},
         company_detail=#{company_detail},company_name=#{company_name},
         yingye_time_start=#{yingye_time_start, jdbcType=VARCHAR},yingye_time_end=#{yingye_time_end, jdbcType=VARCHAR},
-        shouhui=#{shouhui, jdbcType=VARCHAR},company_pic=#{company_pic, jdbcType=VARCHAR}
+        shouhui=#{shouhui, jdbcType=VARCHAR},company_pic=#{company_pic, jdbcType=VARCHAR},gd_type_id=#{gd_type_id, jdbcType=VARCHAR}
          WHERE INFO_ID=#{id}
     </update>
 
@@ -88,6 +94,8 @@
     </select>
 
     <select id="findByEmpId" parameterType="String" resultMap="my_manager_info">
-        SELECT * FROM MANAGER_INFO WHERE emp_id=#{emp_id}
+        SELECT sn.*,ltype.gd_type_name as gd_type_name FROM MANAGER_INFO sn
+        LEFT JOIN lx_gd_type ltype ON ltype.gd_type_id = sn.gd_type_id
+        WHERE sn.emp_id=#{emp_id}
     </select>
 </mapper>
