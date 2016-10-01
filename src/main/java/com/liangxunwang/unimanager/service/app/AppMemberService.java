@@ -39,6 +39,9 @@ public class AppMemberService implements ListService,UpdateService {
         if (!StringUtil.isNullOrEmpty(query.getEmp_id())) {
             map.put("emp_id", query.getEmp_id());
         }
+        if (!StringUtil.isNullOrEmpty(query.getGd_type_id())) {
+            map.put("gd_type_id", query.getGd_type_id());
+        }
 
         List<EmpDianpu> list = memberDao.listDianPu(map);
         for(EmpDianpu empDianpu : list){

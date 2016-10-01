@@ -66,6 +66,7 @@
         <table class="table">
           <thead>
           <tr>
+            <th>#</th>
             <th>县区ID</th>
             <th>县区</th>
             <th>所属城市</th>
@@ -77,6 +78,7 @@
           <tbody>
           <c:forEach items="${list}" var="e" varStatus="st">
             <tr>
+              <td>${st.index+1}</td>
               <td>${e.id}</td>
               <td>${e.area}</td>
               <td>${e.cityName}</td>

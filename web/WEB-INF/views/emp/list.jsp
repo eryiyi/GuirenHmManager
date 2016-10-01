@@ -113,10 +113,17 @@
           <thead>
           <tr>
             <%--<th>全选<input type="checkbox" name="allmails" onclick="checkAll()"></th>--%>
+              <th>#</th>
             <th>姓名</th>
             <th>电话</th>
-            <%--<th>允许登陆</th>--%>
-            <%--<th>已完善资料</th>--%>
+            <th>头像</th>
+            <th>公司</th>
+            <th>省</th>
+            <th>市</th>
+            <th>县</th>
+            <th>邮箱</th>
+            <th>行业</th>
+            <th>注册时间</th>
             <th>审核状态</th>
             <th>操作</th>
             <th>操作</th>
@@ -126,16 +133,17 @@
           <c:forEach items="${list}" var="e" varStatus="st">
             <tr>
               <%--<td><input type="checkbox" id="${e.mm_emp_id}" name="checkbox_one"></td>--%>
+                <td>${st.index+1}</td>
               <td>${e.mm_emp_nickname}</td>
               <td>${e.mm_emp_mobile}</td>
-              <%--<td>--%>
-                <%--<c:if test="${e.is_login=='0'}">是</c:if>--%>
-                <%--<c:if test="${e.is_login=='1'}">否</c:if>--%>
-              <%--</td>--%>
-              <%--<td>--%>
-                <%--<c:if test="${e.is_upate_profile=='0'}">否</c:if>--%>
-                <%--<c:if test="${e.is_upate_profile=='1'}">是</c:if>--%>
-              <%--</td>--%>
+              <td><img src="${e.mm_emp_cover}" style="width: 60px;height: 60px;"></td>
+                <td>${e.mm_emp_company}</td>
+                <td>${e.provinceName}</td>
+                <td>${e.cityName}</td>
+                <td>${e.areaName}</td>
+                <td>${e.mm_emp_email}</td>
+                <td>${e.mm_hangye_name}</td>
+                <td>${e.mm_emp_regtime}</td>
               <td>
                 <c:if test="${e.ischeck=='0'}">未审核</c:if>
                 <c:if test="${e.ischeck=='1'}">已审核</c:if>

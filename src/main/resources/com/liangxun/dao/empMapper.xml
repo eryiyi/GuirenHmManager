@@ -166,10 +166,11 @@
     </select>
 
     <select id="listMemberByName" resultMap="emp_vo">
-        SELECT sn.* ,hatp.province as provinceName, hatc.city as cityName, hata.area as areaName  from mm_emp sn
+        SELECT sn.* ,hatp.province as provinceName, hatc.city as cityName, hata.area as areaName, lhangye.mm_hangye_name as mm_hangye_name  from mm_emp sn
         LEFT JOIN hat_province hatp ON sn.mm_emp_provinceId=hatp.provinceID
         LEFT JOIN hat_city hatc ON sn.mm_emp_cityId=hatc.cityID
         LEFT JOIN hat_area hata ON sn.mm_emp_countryId=hata.areaID
+        LEFT JOIN guiren_hangye lhangye ON lhangye.mm_hangye_id=sn.mm_hangye_id
         WHERE 1=1
         <if test="ischeck != null and ischeck != ''">
             AND sn.ischeck = #{ischeck}
@@ -450,6 +451,9 @@
         <!--</if>-->
         <if test="emp_id != null and emp_id != ''">
             and le.mm_emp_id=#{emp_id}
+        </if>
+        <if test="gd_type_id != null and gd_type_id != ''">
+            and lmanager.gd_type_id=#{gd_type_id}
         </if>
         <if test="keyWords != null and keyWords != ''">
             AND le.mm_emp_nickname like CONCAT('%',#{keyWords},'%')

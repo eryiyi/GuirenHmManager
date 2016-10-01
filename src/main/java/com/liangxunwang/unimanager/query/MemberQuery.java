@@ -8,6 +8,15 @@ public class MemberQuery  extends BaseAreaQuery{
     private int size;
     private String name;
     private String emp_id;
+    private String gd_type_id;
+
+    public String getGd_type_id() {
+        return gd_type_id;
+    }
+
+    public void setGd_type_id(String gd_type_id) {
+        this.gd_type_id = gd_type_id;
+    }
 
     public String getEmp_id() {
         return emp_id;

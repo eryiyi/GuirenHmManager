@@ -47,19 +47,58 @@
             </div>
           </div>
 
-            <%--<div class="form-group">--%>
-                <%--<label class="col-sm-2 control-label" >头像</label>--%>
-                <%--<div class="col-sm-10 col-md-2">--%>
-                     <%--<img class="img-thumbnail" name="imagePath" id="imageDiv"   style="cursor: pointer"  src="${empVO.mm_emp_cover}"/>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-            <%--<div class="form-group">--%>
-                <%--<label class="col-sm-2 control-label" ></label>--%>
-                <%--<div class="col-sm-10">--%>
-                    <%--<input type="file" name="file" id="fileUpload" style="float: left;" />--%>
-                    <%--<input type="button" value="上传" onclick="uploadImage()" style="float: left;"/><br/><br/>--%>
-                <%--</div>--%>
-            <%--</div>--%>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" >头像</label>
+                <div class="col-sm-10 col-md-2">
+                     <img class="img-thumbnail" name="imagePath" id="imageDiv"   style="cursor: pointer"  src="${empVO.mm_emp_cover}"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">邮箱</label>
+                <div class="col-sm-4">
+                    <input type="text" id="mm_emp_email" readonly="true" class="form-control" value="${empVO.mm_emp_email}" data-toggle="tooltip" data-placement="bottom" title="Tooltip for name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">公司</label>
+                <div class="col-sm-4">
+                    <input type="text" id="mm_emp_company" readonly="true" class="form-control" value="${empVO.mm_emp_company}" data-toggle="tooltip" data-placement="bottom" title="Tooltip for name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">行业</label>
+                <div class="col-sm-4">
+                    <input type="text" id="mm_hangye_name" readonly="true" class="form-control" value="${empVO.mm_hangye_name}" data-toggle="tooltip" data-placement="bottom" title="Tooltip for name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">注册时间</label>
+                <div class="col-sm-4">
+                    <input type="text" id="mm_emp_regtime" readonly="true" class="form-control" value="${empVO.mm_emp_regtime}" data-toggle="tooltip" data-placement="bottom" title="Tooltip for name">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">省</label>
+                <div class="col-sm-4">
+                    <input type="text" id="provinceName" readonly="true" class="form-control" value="${empVO.provinceName}" data-toggle="tooltip" data-placement="bottom" title="Tooltip for name">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">市</label>
+                <div class="col-sm-4">
+                    <input type="text" id="cityName" readonly="true" class="form-control" value="${empVO.cityName}" data-toggle="tooltip" data-placement="bottom" title="Tooltip for name">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">县</label>
+                <div class="col-sm-4">
+                    <input type="text" id="areaName" readonly="true" class="form-control" value="${empVO.areaName}" data-toggle="tooltip" data-placement="bottom" title="Tooltip for name">
+                </div>
+            </div>
 
           <div class="form-group">
             <label class="col-sm-2 control-label">是否审核</label>
