@@ -263,7 +263,7 @@
 
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.Emp">
         INSERT INTO mm_emp(mm_emp_motto,mm_emp_native,mm_hangye_id,mm_emp_email,mm_emp_sex,mm_emp_birthday,mm_emp_techang, mm_emp_cover,mm_emp_id, mm_emp_mobile, mm_emp_nickname,mm_emp_card, mm_emp_password, mm_emp_company, mm_emp_provinceId, mm_emp_cityId, mm_emp_countryId, mm_emp_regtime, is_login, lat, lng, ischeck,is_upate_profile,top_number,mm_emp_weixin,mm_emp_qq,mm_emp_age,hxusername)
-        VALUES (#{mm_emp_motto,jdbcType=VARCHAR},#{mm_emp_native,jdbcType=VARCHAR},#{mm_hangye_id,jdbcType=VARCHAR},#{mm_emp_email,jdbcType=VARCHAR},#{mm_emp_sex,jdbcType=VARCHAR},#{mm_emp_birthday,jdbcType=VARCHAR},#{mm_emp_techang,jdbcType=VARCHAR},#{mm_emp_cover,jdbcType=VARCHAR},#{mm_emp_id}, #{mm_emp_mobile},#{mm_emp_nickname,jdbcType=VARCHAR}, #{mm_emp_card,jdbcType=VARCHAR}, #{mm_emp_password},#{mm_emp_company,jdbcType=VARCHAR},#{mm_emp_provinceId,jdbcType=VARCHAR},#{mm_emp_cityId,jdbcType=VARCHAR},#{mm_emp_countryId,jdbcType=VARCHAR},#{mm_emp_regtime},#{is_login},#{lat,jdbcType=VARCHAR},#{lng,jdbcType=VARCHAR},#{ischeck},#{is_upate_profile},#{top_number},#{mm_emp_weixin,jdbcType=VARCHAR},#{mm_emp_qq,jdbcType=VARCHAR},#{mm_emp_age,jdbcType=VARCHAR},#{hxusername})
+        VALUES (#{mm_emp_motto,jdbcType=VARCHAR},#{mm_emp_native,jdbcType=VARCHAR},#{mm_hangye_id,jdbcType=VARCHAR},#{mm_emp_email,jdbcType=VARCHAR},#{mm_emp_sex,jdbcType=VARCHAR},#{mm_emp_birthday,jdbcType=VARCHAR},#{mm_emp_techang,jdbcType=VARCHAR},#{mm_emp_cover,jdbcType=VARCHAR},#{mm_emp_id}, #{mm_emp_mobile},#{mm_emp_nickname,jdbcType=VARCHAR}, #{mm_emp_card,jdbcType=VARCHAR}, #{mm_emp_password},#{mm_emp_company,jdbcType=VARCHAR},#{mm_emp_provinceId,jdbcType=VARCHAR},#{mm_emp_cityId,jdbcType=VARCHAR},#{mm_emp_countryId,jdbcType=VARCHAR},#{mm_emp_regtime},#{is_login},#{lat,jdbcType=VARCHAR},#{lng,jdbcType=VARCHAR},#{ischeck},'0',#{top_number},#{mm_emp_weixin,jdbcType=VARCHAR},#{mm_emp_qq,jdbcType=VARCHAR},#{mm_emp_age,jdbcType=VARCHAR},#{hxusername})
     </insert>
 
     <update id="updateLoacation" parameterType="com.liangxunwang.unimanager.model.Emp">
@@ -312,7 +312,6 @@
         </if>
     </select>
 
-
     <update id="updateCheck">
         UPDATE mm_emp SET
         ischeck=#{ischeck}
@@ -324,7 +323,6 @@
         is_login=#{is_login}
         WHERE mm_emp_id=#{mm_emp_id}
     </update>
-
 
     <update id="updateProfileMember">
         UPDATE mm_emp SET
@@ -362,12 +360,10 @@
         order by  sn.top_number  desc
     </select>
 
-
     <select id="findByNumber" resultMap="emp_vo" parameterType="String">
         SELECT sn.*  from mm_emp sn
         WHERE sn.top_number=#{top_number}
     </select>
-
 
     <!--查询顶级会员-->
     <select id="listtopnumber2" resultMap="emp_vo">
@@ -384,7 +380,6 @@
             AND sn.top_number like CONCAT(#{top_number},'%')
         </if>
     </select>
-
 
     <update id="editEmpById" parameterType="com.liangxunwang.unimanager.model.Emp">
         UPDATE mm_emp SET mm_emp_nickname=#{mm_emp_nickname},
@@ -406,7 +401,6 @@
         WHERE mm_emp_id=#{mm_emp_id}
     </update>
 
-
     <update id="updateEmpCheck" parameterType="com.liangxunwang.unimanager.model.Emp">
         UPDATE mm_emp SET ischeck=#{ischeck}
         WHERE mm_emp_id=#{mm_emp_id}
@@ -415,7 +409,6 @@
     <update id="changeBusiness">
         update mm_emp set mm_emp_type=#{flag} where mm_emp_id=#{empId}
     </update>
-
 
     <select id="listDianPu" resultMap="my_member_dianpu">
         SELECT le.* ,
@@ -466,12 +459,10 @@
         limit #{index},#{size}
     </select>
 
-
     <update id="updateBgMine" parameterType="com.liangxunwang.unimanager.model.Emp">
         UPDATE mm_emp SET
         mm_emp_bg=#{mm_emp_bg}
         WHERE mm_emp_id=#{mm_emp_id}
     </update>
-
 
 </mapper>
