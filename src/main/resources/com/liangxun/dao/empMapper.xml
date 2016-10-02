@@ -472,4 +472,6 @@
         mm_emp_bg=#{mm_emp_bg}
         WHERE mm_emp_id=#{mm_emp_id}
     </update>
+
+
 </mapper>

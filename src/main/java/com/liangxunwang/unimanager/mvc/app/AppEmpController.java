@@ -316,7 +316,6 @@ public class AppEmpController extends ControllerConstants {
         }
     }
 
-
     @Autowired
     @Qualifier("appEmpBgService")
     private UpdateService appEmpBgService;
