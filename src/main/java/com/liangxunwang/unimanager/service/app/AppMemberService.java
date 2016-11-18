@@ -35,7 +35,6 @@ public class AppMemberService implements ListService,UpdateService {
         map.put("index", index);
         map.put("size", size);
 
-
         if (!StringUtil.isNullOrEmpty(query.getEmp_id())) {
             map.put("emp_id", query.getEmp_id());
         }

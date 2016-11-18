@@ -66,7 +66,6 @@ public class AppEmpController extends ControllerConstants {
         }
     }
 
-
     @Autowired
     @Qualifier("appEmpIndexService")
     private ExecuteService appEmpIndexServiceExe;
@@ -85,7 +84,6 @@ public class AppEmpController extends ControllerConstants {
         }
     }
 
-
     @Autowired
     @Qualifier("appEmpMobielService")
     private ExecuteService appEmpMobielServiceExe;
@@ -102,8 +100,6 @@ public class AppEmpController extends ControllerConstants {
             return toJSONString(ERROR_1);
         }
     }
-
-
 
     @Autowired
     @Qualifier("appEmpService")
@@ -148,8 +144,6 @@ public class AppEmpController extends ControllerConstants {
             return toJSONString(ERROR_1);
         }
     }
-
-
 
     @Autowired
     @Qualifier("appEmpMobielService")

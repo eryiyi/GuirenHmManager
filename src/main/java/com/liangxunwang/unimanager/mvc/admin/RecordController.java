@@ -136,14 +136,5 @@ public class RecordController extends ControllerConstants {
 
     }
 
-    @RequestMapping("/deleteRecordById")
-    @ResponseBody
-    public String deleteRecordById(String recordId){
-        try {
-            recordServiceDele.delete(recordId);
-            return toJSONString(SUCCESS);
-        }catch (ServiceException e){
-            return toJSONString(ERROR_1);
-        }
-    }
+
 }

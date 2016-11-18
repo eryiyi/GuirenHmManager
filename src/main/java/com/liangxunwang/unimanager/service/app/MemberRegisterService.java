@@ -59,6 +59,10 @@ public class MemberRegisterService implements SaveService,UpdateService{
     @Qualifier("relateDao")
     private RelateDao relateDao;
 
+    @Autowired
+    @Qualifier("empRelateDao")
+    private EmpRelateDao empRelateDao;
+
     @Override
     public Object save(Object object) {
         Emp member = (Emp) object;
@@ -82,15 +86,15 @@ public class MemberRegisterService implements SaveService,UpdateService{
             Map<String, Object> mapTopNumber = new HashMap<String, Object>();
             if(empVO != null && !StringUtil.isNullOrEmpty(empVO.getTop_number())){
                 mapTopNumber.put("top_number", empVO.getTop_number());
-                List<EmpVO> lists = memberDao.listtopnumber(mapTopNumber);
+                List<EmpVO> lists = memberDao.listtopnumber(mapTopNumber);//查询出邀请人的子会员到了哪层了
                 if(lists != null && lists.size() >0){
                     EmpVO empVO1 = lists.get(0);//最大的值top_number
-                    if(empVO.getTop_number().length() == empVO1.getTop_number().length()){
-                        //说明需要增加 ‘0001’
-                        member.setTop_number(empVO1.getTop_number() + "0001");
-                    }else{
+//                    if(empVO.getTop_number().length() == empVO1.getTop_number().length()){
+//                        //说明需要增加 ‘0001’
+//                        member.setTop_number(empVO1.getTop_number() + "0001");
+//                    }else{
                         member.setTop_number((new BigInteger(empVO1.getTop_number()).add(new BigInteger("1")).toString()));
-                    }
+//                    }
 
                 }
             }else {
@@ -113,11 +117,12 @@ public class MemberRegisterService implements SaveService,UpdateService{
         }
         member.setMm_emp_id(UUIDFactory.random());//设置ID
         member.setMm_emp_regtime(DateUtil.getDateAndTime());//时间戳
-        if(!StringUtil.isNullOrEmpty(member.getMm_emp_cover())){
-            //
-        }else{
-            member.setMm_emp_cover(Constants.COVER_DEFAULT);//头像
-        }
+//        if(!StringUtil.isNullOrEmpty(member.getMm_emp_cover())){
+//            //
+//        }else{
+////            member.setMm_emp_cover(Constants.COVER_DEFAULT);//头像
+//        }
+        member.setMm_emp_cover(Constants.PHOTOURLS[new Random().nextInt(61)]);//头像
         member.setMm_emp_password(new MD5Util().getMD5ofStr(member.getMm_emp_password()));//密码加密
         member.setIs_login("0");//允许登陆 默认0允许
         member.setIs_use("0");//是否禁用 0默认否
@@ -189,6 +194,20 @@ public class MemberRegisterService implements SaveService,UpdateService{
                         pushBaiDuYun(pushId,type, "贵人，您好，您邀请的好友"+ member.getMm_emp_nickname() + "以注册成功，期待您的审核。");
                     }
                 }
+                //添加双方好友关系
+                EmpRelateObj empRelateObj1 = new EmpRelateObj();
+                empRelateObj1.setMm_emp_id1(yaoqingCard.getMm_emp_id());
+                empRelateObj1.setMm_emp_id2(member.getMm_emp_id());
+                empRelateObj1.setEmp_relate_id(UUIDFactory.random());
+                empRelateObj1.setState("1");
+                empRelateDao.save(empRelateObj1);
+                //反方向插入一条数据
+                EmpRelateObj empRelateObj2 = new EmpRelateObj();
+                empRelateObj2.setMm_emp_id1(member.getMm_emp_id());
+                empRelateObj2.setMm_emp_id2(yaoqingCard.getMm_emp_id());
+                empRelateObj2.setEmp_relate_id(UUIDFactory.random());
+                empRelateObj2.setState("1");
+                empRelateDao.save(empRelateObj2);
             }
 
         }catch (Exception e){

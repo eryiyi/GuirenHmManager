@@ -65,7 +65,7 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/getNotices\\.do$)"+
                         "|(^/getNoticesDetail\\.do$)"+
                         "|(^/updateCover\\.do$)"+
-                        "|(^/record/deleteRecordById\\.do$)"+
+                        "|(^/deleteRecordById\\.do$)"+
                         "|(^/zanRecord\\.do$)"+
                         "|(^/listZan\\.do$)"+
                         "|(^/saveComment\\.do$)"+

@@ -200,7 +200,9 @@
         <if test="keywords != null and keywords != ''">
             AND  (sn.mm_emp_mobile = #{keywords} OR sn.mm_emp_nickname like CONCAT('%',#{keywords},'%') OR  sn.mm_emp_company like CONCAT('%',#{keywords},'%') OR  sn.mm_emp_techang like CONCAT('%',#{keywords},'%') OR  sn.mm_emp_xingqu like CONCAT('%',#{keywords},'%') OR  sn.mm_emp_motto like CONCAT('%',#{keywords},'%'))
         </if>
+        ORDER  by sn.mm_emp_regtime DESC
 
+        limit #{index},#{size}
     </select>
 
     <select id="count" resultType="Long">
@@ -355,7 +357,7 @@
         select sn.top_number from mm_emp sn
         WHERE 1=1
         <if test="top_number != null and top_number != ''">
-            AND sn.top_number like CONCAT(#{top_number},'%')
+            AND sn.top_number like CONCAT(#{top_number},'%') and LENGTH(sn.top_number) = (LENGTH(#{top_number})+4)
         </if>
         order by  sn.top_number  desc
     </select>
@@ -452,9 +454,9 @@
             AND le.mm_emp_nickname like CONCAT('%',#{keyWords},'%')
         </if>
 
-        <if test="lat != null and lat != '' and lng != null and lng != ''">
-            order by ACOS(SIN((#{lat} * 3.1415) / 180 ) *SIN((lat_company * 3.1415) / 180 ) +COS((#{lat} * 3.1415) / 180 ) * COS((lat_company * 3.1415) / 180 ) *COS((#{lng}* 3.1415) / 180 - (lng_company * 3.1415) / 180 ) ) * 6380 asc
-        </if>
+        <!--<if test="lat != null and lat != '' and lng != null and lng != ''">-->
+            <!--order by ACOS(SIN((#{lat} * 3.1415) / 180 ) *SIN((lat_company * 3.1415) / 180 ) +COS((#{lat} * 3.1415) / 180 ) * COS((lat_company * 3.1415) / 180 ) *COS((#{lng}* 3.1415) / 180 - (lng_company * 3.1415) / 180 ) ) * 6380 asc-->
+        <!--</if>-->
 
         limit #{index},#{size}
     </select>

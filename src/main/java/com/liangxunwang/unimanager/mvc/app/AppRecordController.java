@@ -41,6 +41,10 @@ public class AppRecordController extends ControllerConstants {
     private SaveService recordSaveService;
 
     @Autowired
+    @Qualifier("recordService")
+    private DeleteService deleteRecordService;
+
+    @Autowired
     @Qualifier("appRecordService")
     private FindService findRecordService;
 
@@ -233,16 +237,17 @@ public class AppRecordController extends ControllerConstants {
             return false;
         }
     }
-//    @RequestMapping("/deleteRecordById")
-//    @ResponseBody
-//    public String deleteRecordById(String recordId){
-//        try {
-//            deleteRecordService.delete(recordId);
-//            return toJSONString(SUCCESS);
-//        }catch (ServiceException e){
-//            return toJSONString(ERROR_1);
-//        }
-//    }
+
+    @RequestMapping("/deleteRecordById")
+    @ResponseBody
+    public String deleteRecordById(String recordId){
+        try {
+            deleteRecordService.delete(recordId);
+            return toJSONString(SUCCESS);
+        }catch (ServiceException e){
+            return toJSONString(ERROR_1);
+        }
+    }
 
 
 
