@@ -45,6 +45,11 @@ public class MemberLoginService implements ExecuteService {
             }else {
                 member.setMm_emp_cover(Constants.QINIU_URL + member.getMm_emp_cover());
             }
+            if (member.getMm_emp_bg().startsWith("upload")) {
+                member.setMm_emp_bg(Constants.URL + member.getMm_emp_bg());
+            }else {
+                member.setMm_emp_bg(Constants.QINIU_URL + member.getMm_emp_bg());
+            }
         }
 
         return member;

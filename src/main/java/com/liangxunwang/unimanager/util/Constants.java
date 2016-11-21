@@ -4,8 +4,8 @@ package com.liangxunwang.unimanager.util;
  * Created by zhl on 2015/1/29.
  */
 public class Constants {
-//        public static final String URL = "http://www.shandongguiren.com/";
-          public static final String URL = "http://192.168.0.224:8080/";
+        public static final String URL = "http://www.shandongguiren.com/";
+//          public static final String URL = "http://192.168.0.224:8080/";
 
         public static final String DOWNLOAD_URL = URL + "html/GuirenApp.apk";
 
