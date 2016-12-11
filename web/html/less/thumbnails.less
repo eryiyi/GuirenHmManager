@@ -1,0 +1,52 @@
+//
+// Thumbnails
+// --------------------------------------------------
+.bxsh(@x:1px,@y:2px,@b:5px,@c:0.1){
+  -webkit-box-shadow:  @x @y @b  rgba(0,0,0,@c);
+  -moz-box-shadow: @x  @y  @b  rgba(0,0,0,@c);
+  box-shadow:  @x  @y  @b  rgba(0,0,0,@c);
+}
+
+// Mixin and adjust the regular image class
+.thumbnail {
+  transition: all .3s;
+  display: block;
+  padding: @thumbnail-padding;
+  margin-bottom: @line-height-computed;
+  line-height: @line-height-base;
+  background-color: @thumbnail-bg;
+  border: 1px solid @thumbnail-border;
+  border-radius: @thumbnail-border-radius;
+  .transition(border .2s ease-in-out);
+  &>a:hover{
+    text-decoration: none;
+  }
+  &:hover{
+  .bxsh(1px,2px,8px,.1);
+    transition: all .3s;
+    border-color: #ddd;
+  }
+  > img,
+  a > img {
+    &:extend(.img-responsive);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  // Add a hover state for linked versions only
+  a&:hover,
+  a&:focus,
+  a&.active {
+    border-color: @link-color;
+  }
+
+  // Image captions
+  .caption {
+    padding: @thumbnail-caption-padding;
+    color: @thumbnail-caption-color;
+    p{
+      margin-bottom: 0;
+      margin-top: 5px;
+    }
+  }
+}
