@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.HelpTypeDao">
+    <resultMap id="helpType" type="com.liangxunwang.unimanager.model.HelpType">
+        <id column="help_type_id" property="help_type_id"/>
+        <result column="help_type_name" property="help_type_name"/>
+        <result column="help_type_f_id" property="help_type_f_id"/>
+        <result column="top_number" property="top_number"/>
+    </resultMap>
+
+    <select id="lists" resultMap="helpType">
+        SELECT * from help_type
+        WHERE 1=1
+        <if test="help_type_id != null and help_type_id != ''">
+            AND help_type_id = #{help_type_id}
+        </if>
+        <if test="help_type_f_id != null and help_type_f_id != ''">
+            AND help_type_f_id = #{help_type_f_id}
+        </if>
+
+        ORDER BY top_number asc
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.HelpType">
+        INSERT INTO help_type(help_type_id, help_type_name, help_type_f_id, top_number)
+        VALUES (#{help_type_id}, #{help_type_name}, #{help_type_f_id}, #{top_number})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM help_type where help_type_id = #{help_type_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="helpType">
+        SELECT * FROM help_type where help_type_id=#{help_type_id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.HelpType">
+        UPDATE help_type
+        SET
+        help_type_name=#{help_type_name},
+        help_type_f_id=#{help_type_f_id} ,
+        top_number=#{top_number}
+        WHERE help_type_id=#{help_type_id}
+    </update>
+</mapper>

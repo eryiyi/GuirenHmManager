@@ -417,6 +417,20 @@
 					</li>
 				</c:if>
 
+				<c:if test="${um:permission('FUWU_TYPE_HELP', sessionScope.powers)}">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle">
+							<i class="fa fa-picture-o"></i>
+							<span class="hidden-xs">服务类型</span>
+						</a>
+						<ul class="dropdown-menu">
+							<c:if test="${um:permission('FUWU_TYPE_HELP', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('/helpTypeController/list','1')">服务类型</a></li>
+							</c:if>
+						</ul>
+					</li>
+				</c:if>
+
 
 			</ul>
 		</div>
