@@ -55,8 +55,15 @@ public class HelpTypeController extends ControllerConstants {
     }
 
     @RequestMapping("toAdd")
-    public String add(ModelMap map, LevelQuery query){
-
+    public String add(ModelMap map, HelpTypeQuery query) throws Exception{
+//        if(!StringUtil.isNullOrEmpty(query.getHelp_type_f_id()) && !"0".equals(query.getHelp_type_f_id())){
+//            //顶级类型
+//            HelpType helpType = (HelpType) levelServiceSaveExe.execute(query.getHelp_type_f_id());
+//            map.put("helpType", helpType);
+//        }
+        query.setHelp_type_f_id("0");
+        List<HelpType> list = (List<HelpType>) levelService.list(query);
+        map.put("list", list);
         return "/helpType/add";
     }
 
@@ -81,7 +88,14 @@ public class HelpTypeController extends ControllerConstants {
         Admin manager = (Admin) session.getAttribute(ACCOUNT_KEY);
         HelpType helpType = (HelpType) levelServiceSaveExe.execute(help_type_id);
         map.put("helpType", helpType);
-        return "/helpType/editAd";
+
+        HelpTypeQuery query = new HelpTypeQuery();
+        if(StringUtil.isNullOrEmpty(query.getHelp_type_f_id())){
+            query.setHelp_type_f_id("0");
+        }
+        List<HelpType> list = (List<HelpType>) levelService.list(query);
+        map.put("list", list);
+        return "/helpType/edit";
     }
 
     /**

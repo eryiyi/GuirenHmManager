@@ -43,7 +43,13 @@
         <div class="no-move"></div>
       </div>
       <div class="box-content">
-        <%--<p>For basic styling add the base class <code>.table</code> to any <code>&lt;table&gt;</code>.</p>--%>
+        <form class="form-inline">
+
+          <div class="form-group">
+            <button type="submit" onclick="add()" class="btn form-control btn-warning btn-sm btn-block">添加</button>
+          </div>
+        </form>
+
         <table class="table">
           <thead>
           <tr>
@@ -60,7 +66,7 @@
                 <a class="btn btn-default btn-sm" href="javascript:void (0)" onclick="editRole('${e.help_type_id}')" role="button">编辑</a>
               </td>
               <td>
-                <%--<a class="btn btn-default btn-sm" href="javascript:void (0)" onclick="deleteRole('${e.mm_ad_id}')" role="button">删除</a>--%>
+                <a class="btn btn-default btn-sm" href="javascript:void (0)" onclick="smallType('${e.help_type_id}')" role="button">小分类</a>
               </td>
             </tr>
           </c:forEach>
@@ -95,7 +101,7 @@
           var data = $.parseJSON(_data);
           if(data.success){
             alert("删除成功");
-            window.location.href = "#module=adObj/list";
+            window.location.href = "#module=helpTypeController/list" + "&_t=" + new Date().getTime();
           }else{
             var _case = {1:"删除失败"};
             alert(_case[data.code])
@@ -104,6 +110,15 @@
       });
     }
   }
+
+  function add(){
+    window.location.href = "#module=helpTypeController/toAdd" + "&_t=" + new Date().getTime();
+  }
+
+  function smallType(_id){
+    window.location.href = "#module=helpTypeController/list&help_type_f_id=" + _id + "&_t=" + new Date().getTime();
+  }
+
 </script>
 
 
