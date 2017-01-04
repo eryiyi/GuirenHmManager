@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.HelpObjDao">
+    <resultMap id="helpObj" type="com.liangxunwang.unimanager.model.HelpObj">
+        <id column="help_id" property="help_id"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="help_title" property="help_title"/>
+        <result column="help_content" property="help_content"/>
+        <result column="help_pic" property="help_pic"/>
+        <result column="help_type" property="help_type"/>
+        <result column="lat" property="lat"/>
+        <result column="lng" property="lng"/>
+        <result column="address" property="address"/>
+        <result column="help_money" property="help_money"/>
+        <result column="help_danwei_id" property="help_danwei_id"/>
+        <result column="help_type_id" property="help_type_id"/>
+        <result column="is_use" property="is_use"/>
+        <result column="is_del" property="is_del"/>
+        <result column="dateline" property="dateline"/>
+
+        <result column="provinceID" property="provinceID"/>
+        <result column="cityID" property="cityID"/>
+        <result column="areaID" property="areaID"/>
+
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+        <result column="mm_emp_cover" property="mm_emp_cover"/>
+        <result column="help_danwei_name" property="help_danwei_name"/>
+        <result column="help_type_name" property="help_type_name"/>
+        <result column="hxusername" property="hxusername"/>
+
+        <result column="province" property="province"/>
+        <result column="city" property="city"/>
+        <result column="area" property="area"/>
+
+    </resultMap>
+
+    <select id="lists" resultMap="helpObj">
+        SELECT sn.*,
+        lemp.mm_emp_nickname as mm_emp_nickname,
+        lemp.mm_emp_cover as mm_emp_cover,
+        lemp.hxusername as hxusername,
+        grhdw.help_danwei_name as help_danwei_name,
+        grhtype.help_type_name as help_type_name,
+
+        hatp.province as province,
+        hatc.city as city,
+        hata.area as area
+
+        from gr_help1 sn
+        LEFT JOIN help_danwei1 grhdw ON  grhdw.help_danwei_id = sn.help_danwei_id
+        LEFT JOIN help_type1 grhtype ON  grhtype.help_type_id = sn.help_type_id
+        LEFT JOIN mm_emp lemp ON  lemp.mm_emp_id = sn.mm_emp_id
+
+        LEFT JOIN hat_province hatp ON  hatp.provinceID = sn.provinceID
+        LEFT JOIN hat_city hatc ON  hatc.cityID = sn.cityID
+        LEFT JOIN hat_area hata ON  hata.areaID = sn.areaID
+        WHERE 1=1
+        <if test="help_danwei_id != null and help_danwei_id != ''">
+            AND sn.help_danwei_id = #{help_danwei_id}
+        </if>
+
+        <if test="schoolIds != null and schoolIds != ''">
+            AND sn.help_type_id IN
+            <foreach collection="schoolIds" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        <if test="is_use != null and is_use != ''">
+            AND sn.is_use = #{is_use}
+        </if>
+        <if test="is_del != null and is_del != ''">
+            AND sn.is_del = #{is_del}
+        </if>
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+        <if test="help_type != null and help_type != ''">
+            AND sn.help_type = #{help_type}
+        </if>
+        <if test="cityID != null and cityID != ''">
+            AND sn.cityID = #{cityID}
+        </if>
+        <if test="keywords != null and keywords != ''">
+            AND (sn.help_title like CONCAT('%',#{keywords},'%') OR sn.help_content like CONCAT('%',#{keywords},'%') OR lemp.mm_emp_nickname like CONCAT('%',#{keywords},'%')OR grhtype.help_type_name like CONCAT('%',#{keywords},'%'))
+        </if>
+        ORDER BY dateline DESC limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.help_id) FROM gr_help1 sn
+        LEFT JOIN help_danwei1 grhdw ON  grhdw.help_danwei_id = sn.help_danwei_id
+        LEFT JOIN help_type1 grhtype ON  grhtype.help_type_id = sn.help_type_id
+        LEFT JOIN mm_emp lemp ON  lemp.mm_emp_id = sn.mm_emp_id
+        WHERE 1=1
+        <if test="help_danwei_id != null and help_danwei_id != ''">
+            AND sn.help_danwei_id = #{help_danwei_id}
+        </if>
+        <if test="schoolIds != null and schoolIds != ''">
+            AND sn.help_type_id IN
+            <foreach collection="schoolIds" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="is_use != null and is_use != ''">
+            AND sn.is_use = #{is_use}
+        </if>
+        <if test="is_del != null and is_del != ''">
+            AND sn.is_del = #{is_del}
+        </if>
+        <if test="mm_emp_id != null and mm_emp_id != ''">
+            AND sn.mm_emp_id = #{mm_emp_id}
+        </if>
+        <if test="help_type != null and help_type != ''">
+            AND sn.help_type = #{help_type}
+        </if>
+        <if test="cityID != null and cityID != ''">
+            AND sn.cityID = #{cityID}
+        </if>
+        <if test="keywords != null and keywords != ''">
+            AND (sn.help_title like CONCAT('%',#{keywords},'%') OR sn.help_content like CONCAT('%',#{keywords},'%') OR lemp.mm_emp_nickname like CONCAT('%',#{keywords},'%')OR grhtype.help_type_name like CONCAT('%',#{keywords},'%'))
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.HelpObj">
+        INSERT INTO gr_help1(help_id, mm_emp_id, help_title, help_content,
+        help_pic, help_type, lat, lng, address, help_money,
+        help_danwei_id, help_type_id, dateline, provinceID, cityID, areaID)
+        VALUES (#{help_id}, #{mm_emp_id}, #{help_title}, #{help_content},
+        #{help_pic,jdbcType=VARCHAR}, #{help_type}, #{lat,jdbcType=VARCHAR},
+         #{lng,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{help_money}
+         , #{help_danwei_id}, #{help_type_id}
+         , #{dateline,jdbcType=VARCHAR} , #{provinceID,jdbcType=VARCHAR}
+         , #{cityID,jdbcType=VARCHAR} , #{areaID,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM gr_help1 where help_id = #{help_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="helpObj">
+        SELECT * FROM gr_help1 where help_id=#{help_id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.HelpObj">
+        UPDATE gr_help1 SET help_title=#{help_title},
+        help_content=#{help_content} ,
+         help_pic=#{help_pic,jdbcType=VARCHAR},
+         help_type=#{help_type,jdbcType=VARCHAR},
+         lat=#{lat,jdbcType=VARCHAR},
+         lng=#{lng,jdbcType=VARCHAR},
+         address=#{address,jdbcType=VARCHAR},
+         help_money=#{help_money,jdbcType=VARCHAR},
+         help_danwei_id=#{help_danwei_id,jdbcType=VARCHAR},
+         help_type_id=#{help_type_id,jdbcType=VARCHAR}
+         WHERE help_id=#{help_id}
+    </update>
+
+    <update id="updateUse" parameterType="com.liangxunwang.unimanager.model.HelpObj">
+        UPDATE gr_help1 SET is_use=#{is_use}
+        WHERE help_id=#{help_id}
+    </update>
+
+    <update id="updateDel" parameterType="com.liangxunwang.unimanager.model.HelpObj">
+        UPDATE gr_help1 SET is_del=#{is_del}
+        WHERE help_id=#{help_id}
+    </update>
+</mapper>

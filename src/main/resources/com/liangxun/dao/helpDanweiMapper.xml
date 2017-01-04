@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.HelpDanweiDao">
+    <resultMap id="helpDanwei" type="com.liangxunwang.unimanager.model.HelpDanwei">
+        <id column="help_danwei_id" property="help_danwei_id"/>
+        <result column="help_danwei_name" property="help_danwei_name"/>
+        <result column="top_number" property="top_number"/>
+    </resultMap>
+
+    <select id="lists" resultMap="helpDanwei">
+        SELECT * from help_danwei1
+        WHERE 1=1
+        <if test="help_danwei_id != null and help_danwei_id != ''">
+            AND help_danwei_id = #{help_danwei_id}
+        </if>
+        ORDER BY top_number DESC
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.HelpDanwei">
+        INSERT INTO help_danwei1(help_danwei_id, help_danwei_name, top_number)
+        VALUES (#{help_danwei_id}, #{help_danwei_name}, #{top_number})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM help_danwei1 where help_danwei_id = #{help_danwei_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="helpDanwei">
+        SELECT * FROM help_danwei1 where help_danwei_id=#{help_danwei_id}
+    </select>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.HelpDanwei">
+        UPDATE help_danwei1
+        SET
+        help_danwei_name=#{help_danwei_name}
+        WHERE help_danwei_id=#{help_danwei_id}
+    </update>
+</mapper>

@@ -1,9 +1,9 @@
 package com.liangxunwang.unimanager.service.account;
 
+import com.liangxunwang.unimanager.dao.HelpDanweiDao;
 import com.liangxunwang.unimanager.dao.HelpTypeDao;
-import com.liangxunwang.unimanager.model.GoodsType;
+import com.liangxunwang.unimanager.model.HelpDanwei;
 import com.liangxunwang.unimanager.model.HelpType;
-import com.liangxunwang.unimanager.query.AdQuery;
 import com.liangxunwang.unimanager.query.HelpTypeQuery;
 import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.StringUtil;
@@ -19,56 +19,46 @@ import java.util.Map;
 /**
  * Created by zhl on 2015/3/3.
  */
-@Service("helpTypeService")
-public class HelpTypeService implements ListService,SaveService ,DeleteService,ExecuteService, UpdateService{
+@Service("helpDanweiService")
+public class HelpDanweiService implements ListService,SaveService ,DeleteService,ExecuteService, UpdateService{
     @Autowired
-    @Qualifier("helpTypeDao")
-    private HelpTypeDao helpTypeDao;
+    @Qualifier("helpDanweiDao")
+    private HelpDanweiDao helpDanweiDao;
 
     @Override
     public Object list(Object object) throws ServiceException {
-        HelpTypeQuery query = (HelpTypeQuery) object;
         Map<String, Object> map = new HashMap<String, Object>();
-        if(!StringUtil.isNullOrEmpty(query.getHelp_type_id())){
-            map.put("help_type_id", query.getHelp_type_id());
-        }
-        if(!StringUtil.isNullOrEmpty(query.getHelp_type_f_id())){
-            map.put("help_type_f_id", query.getHelp_type_f_id());
-        }
-        if(!StringUtil.isNullOrEmpty(query.getIs_type())){
-            map.put("is_type", query.getIs_type());
-        }
-        List<HelpType> lists = helpTypeDao.lists(map);
+        List<HelpDanwei> lists = helpDanweiDao.lists(map);
         return lists;
     }
 
     @Override
     public Object save(Object object) throws ServiceException {
-        HelpType helpType = (HelpType) object;
-        helpType.setHelp_type_id(UUIDFactory.random());
+        HelpDanwei helpType = (HelpDanwei) object;
+        helpType.setHelp_danwei_id(UUIDFactory.random());
         if(StringUtil.isNullOrEmpty(helpType.getTop_number())){
             helpType.setTop_number("0");
         }
-        helpTypeDao.save(helpType);
+        helpDanweiDao.save(helpType);
         return null;
     }
 
     @Override
     public Object delete(Object object) throws ServiceException {
-        String help_type_id = (String) object;
-        helpTypeDao.delete(help_type_id);
+        String help_danwei_id = (String) object;
+        helpDanweiDao.delete(help_danwei_id);
         return null;
     }
 
     @Override
     public Object execute(Object object) throws ServiceException {
-        return helpTypeDao.findById((String) object);
+        return helpDanweiDao.findById((String) object);
     }
 
     @Override
     public Object update(Object object) {
-        HelpType helpType = (HelpType) object;
-        helpTypeDao.update(helpType);
+        HelpDanwei helpType = (HelpDanwei) object;
+        helpDanweiDao.update(helpType);
         return null;
     }
 

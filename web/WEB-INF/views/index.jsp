@@ -417,15 +417,31 @@
 					</li>
 				</c:if>
 
-				<c:if test="${um:permission('FUWU_TYPE_HELP', sessionScope.powers)}">
+				<c:if test="${um:permission('FUWU_TYPE_FUWU', sessionScope.powers) || um:permission('FUWU_TYPE_HELP', sessionScope.powers) }">
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle">
 							<i class="fa fa-picture-o"></i>
-							<span class="hidden-xs">服务类型</span>
+							<span class="hidden-xs">帮助类型</span>
 						</a>
 						<ul class="dropdown-menu">
+							<c:if test="${um:permission('FUWU_TYPE_FUWU', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPageHelpType('/helpTypeController/list','1','0')">服务类型</a></li>
+							</c:if>
 							<c:if test="${um:permission('FUWU_TYPE_HELP', sessionScope.powers)}">
-								<li><a href="javascript:void(0);" onclick="toPage('/helpTypeController/list','1')">服务类型</a></li>
+								<li><a href="javascript:void(0);" onclick="toPageHelpType('/helpTypeController/list','1','1')">求助类型</a></li>
+							</c:if>
+						</ul>
+					</li>
+				</c:if>
+				<c:if test="${um:permission('HELP_MANAGER_FUWU', sessionScope.powers)}">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle">
+							<i class="fa fa-picture-o"></i>
+							<span class="hidden-xs">帮忙管理</span>
+						</a>
+						<ul class="dropdown-menu">
+							<c:if test="${um:permission('HELP_MANAGER_FUWU', sessionScope.powers)}">
+								<li><a href="javascript:void(0);" onclick="toPage('/helpObjController/list','1')">帮忙管理</a></li>
 							</c:if>
 						</ul>
 					</li>
@@ -510,6 +526,14 @@
 	function toPageEmp(_url, _page, mm_emp_type){
 		if(_page != ''){
 			window.location.href="#module="+_url+"&page="+_page +"&mm_emp_type="+mm_emp_type + "&_t=" + new Date().getTime();
+		}else{
+			window.location.href="#module="+_url + "&_t=" + new Date().getTime();
+		}
+	}
+
+	function toPageHelpType(_url, _page, is_type){
+		if(_page != ''){
+			window.location.href="#module="+_url+"&page="+_page +"&is_type="+is_type + "&_t=" + new Date().getTime();
 		}else{
 			window.location.href="#module="+_url + "&_t=" + new Date().getTime();
 		}

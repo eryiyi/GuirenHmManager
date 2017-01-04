@@ -167,8 +167,10 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/appVideosSaveCommentTv\\.do$)"+
                         "|(^/viewVideosTv\\.do$)"+
                         "|(^/getGdTypes\\.do$)"+
-
-
+                        "|(^/appGetHelps\\.do$)"+
+                        "|(^/appSaveHelp\\.do$)"+
+                        "|(^/getHelpTypes\\.do$)"+
+                        "|(^/getHelpDanwei\\.do$)"+
 
                         "|(^/memberLogin\\.do$)"
 

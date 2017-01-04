@@ -6,6 +6,15 @@ package com.liangxunwang.unimanager.query;
 public class HelpTypeQuery {
     private String help_type_id;
     private String help_type_f_id;
+    private String is_type;
+
+    public String getIs_type() {
+        return is_type;
+    }
+
+    public void setIs_type(String is_type) {
+        this.is_type = is_type;
+    }
 
     public String getHelp_type_id() {
         return help_type_id;

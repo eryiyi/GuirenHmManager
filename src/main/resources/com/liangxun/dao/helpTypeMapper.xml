@@ -7,11 +7,12 @@
         <id column="help_type_id" property="help_type_id"/>
         <result column="help_type_name" property="help_type_name"/>
         <result column="help_type_f_id" property="help_type_f_id"/>
+        <result column="is_type" property="is_type"/>
         <result column="top_number" property="top_number"/>
     </resultMap>
 
     <select id="lists" resultMap="helpType">
-        SELECT * from help_type
+        SELECT * from help_type1
         WHERE 1=1
         <if test="help_type_id != null and help_type_id != ''">
             AND help_type_id = #{help_type_id}
@@ -19,25 +20,27 @@
         <if test="help_type_f_id != null and help_type_f_id != ''">
             AND help_type_f_id = #{help_type_f_id}
         </if>
-
-        ORDER BY top_number asc
+        <if test="is_type != null and is_type != ''">
+            AND is_type = #{is_type}
+        </if>
+        ORDER BY top_number DESC
     </select>
 
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.HelpType">
-        INSERT INTO help_type(help_type_id, help_type_name, help_type_f_id, top_number)
-        VALUES (#{help_type_id}, #{help_type_name}, #{help_type_f_id}, #{top_number})
+        INSERT INTO help_type1(help_type_id, help_type_name, help_type_f_id, top_number,is_type)
+        VALUES (#{help_type_id}, #{help_type_name}, #{help_type_f_id}, #{top_number}, #{is_type})
     </insert>
 
     <delete id="delete" parameterType="String">
-        DELETE FROM help_type where help_type_id = #{help_type_id}
+        DELETE FROM help_type1 where help_type_id = #{help_type_id}
     </delete>
 
     <select id="findById" parameterType="String" resultMap="helpType">
-        SELECT * FROM help_type where help_type_id=#{help_type_id}
+        SELECT * FROM help_type1 where help_type_id=#{help_type_id}
     </select>
 
     <update id="update" parameterType="com.liangxunwang.unimanager.model.HelpType">
-        UPDATE help_type
+        UPDATE help_type1
         SET
         help_type_name=#{help_type_name},
         help_type_f_id=#{help_type_f_id} ,

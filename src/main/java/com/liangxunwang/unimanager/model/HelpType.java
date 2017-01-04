@@ -8,7 +8,15 @@ public class HelpType {
     private String help_type_name;
     private String help_type_f_id;
     private String top_number;
+    private String is_type;
 
+    public String getIs_type() {
+        return is_type;
+    }
+
+    public void setIs_type(String is_type) {
+        this.is_type = is_type;
+    }
 
     public String getTop_number() {
         return top_number;

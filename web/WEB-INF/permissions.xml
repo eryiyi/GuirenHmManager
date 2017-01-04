@@ -96,7 +96,11 @@
         <permission id="ZIMEITI_TYPE_LIST" name="自媒体类别列表"/>
         <permission id="ZIMEITI_TYPE_ADD" name="自媒体类别添加"/>
     </group>
-    <group id="FUWU_HELP_MANAG" name="服务类型">
-        <permission id="FUWU_TYPE_HELP" name="服务类型"/>
+    <group id="FUWU_HELP_MANAG" name="帮助类型">
+        <permission id="FUWU_TYPE_FUWU" name="服务类型"/>
+        <permission id="FUWU_TYPE_HELP" name="求助类型"/>
+    </group>
+    <group id="HELP_MANAGAE_FUWU" name="帮忙管理">
+        <permission id="HELP_MANAGER_FUWU" name="帮忙管理"/>
     </group>
 </permissions>

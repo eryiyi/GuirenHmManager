@@ -8,8 +8,8 @@
     </a>
     <ol class="breadcrumb pull-left">
       <li><a href="javascript:void(0)"  onclick="toPage('mainPage','')">主页</a></li>
-      <li><a href="javascript:void(0)">帮助类型</a></li>
-      <li><a href="javascript:void(0)">帮助类型</a></li>
+      <li><a href="javascript:void(0)">帮助单位管理</a></li>
+      <li><a href="javascript:void(0)">帮助单位列表</a></li>
     </ol>
     <div id="social" class="pull-right">
       <a href="javascript:void(0)"><i class="fa fa-google-plus"></i></a>
@@ -27,7 +27,7 @@
       <div class="box-header">
         <div class="box-name ui-draggable-handle">
           <i class="fa fa-table"></i>
-          <span>帮助类型</span>
+          <span>帮助单位列表</span>
         </div>
         <div class="box-icons">
           <a class="collapse-link">
@@ -43,31 +43,17 @@
         <div class="no-move"></div>
       </div>
       <div class="box-content">
-        <form class="form-inline">
-
-          <div class="form-group">
-            <button type="submit" onclick="add()" class="btn form-control btn-warning btn-sm btn-block">添加</button>
-          </div>
-        </form>
 
         <table class="table">
           <thead>
           <tr>
-            <th>类型</th>
-            <%--<th>操作</th>--%>
-            <th>操作</th>
+            <th>名称</th>
           </tr>
           </thead>
           <tbody>
           <c:forEach items="${list}" var="e" varStatus="st">
             <tr>
-              <td>${e.help_type_name}</td>
-              <td>
-                <a class="btn btn-default btn-sm" href="javascript:void (0)" onclick="editRole('${e.help_type_id}')" role="button">编辑</a>
-              </td>
-              <td>
-                <a class="btn btn-default btn-sm" href="javascript:void (0)" onclick="smallType('${e.help_type_id}')" role="button">小分类</a>
-              </td>
+              <td>${e.help_danwei_name}</td>
             </tr>
           </c:forEach>
           </tbody>
@@ -77,13 +63,19 @@
   </div>
 </div>
 <script type="text/javascript">
+  function searchOrder(){
+    var keywords = $("#keywords").val();
+//    var mm_hangye_fid = $("#mm_hangye_fid").val();
+    var is_top = $("#is_top").val();
+      window.location.href="#module=/hangYeTypeController/list&keywords="+keywords;
+  }
 
   function editRole(_id){
-    if(confirm("确定要编辑该帮助类型么？")){
+    if(confirm("确定要编辑该行业么？")){
       $.ajax({
         type: "GET",
-        data:{"help_type_id":_id},
-        url: "/helpTypeController/toEdit.do",
+        data:{"mm_hangye_id":_id},
+        url: "/hangYeTypeController/edit.do",
         success: function(response){
           $("#content").html(response);
         }
@@ -92,16 +84,16 @@
   }
 
   function deleteRole(_id){
-    if(confirm("确定要删除该帮助类型么？")){
+    if(confirm("确定要删除该行业么？")){
       $.ajax({
-        url:"/helpTypeController/delete.do",
-        data:{"mm_ad_id":_id},
+        url:"/hangYeTypeController/delete.do",
+        data:{"mm_hangye_id":_id},
         type:"POST",
         success:function(_data){
           var data = $.parseJSON(_data);
           if(data.success){
             alert("删除成功");
-            window.location.href = "#module=helpTypeController/list" + "&_t=" + new Date().getTime();
+            window.location.href = "#module=hangYeTypeController/list";
           }else{
             var _case = {1:"删除失败"};
             alert(_case[data.code])
@@ -110,15 +102,6 @@
       });
     }
   }
-
-  function add(){
-    window.location.href = "#module=helpTypeController/toAdd" + "&_t=" + new Date().getTime();
-  }
-
-  function smallType(_id){
-    window.location.href = "#module=helpTypeController/list&help_type_f_id=" + _id + "&_t=" + new Date().getTime();
-  }
-
 </script>
 
 

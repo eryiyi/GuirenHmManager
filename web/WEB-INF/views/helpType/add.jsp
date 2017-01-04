@@ -73,6 +73,16 @@
           </div>
 
           <div class="form-group">
+            <label class="col-sm-2 control-label">选择类型</label>
+            <div class="col-sm-4">
+              <select class="form-control" id="is_type">
+                <option value="0" selected="selected" >服务类型</option>
+                <option value="1" >求助类型</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
               <button type="button" class="btn btn-primary" onclick="saveP()">添加</button>
               <button type="button" class="btn btn-primary" onclick="javascript :history.back(-1)">返回</button>
@@ -90,6 +100,7 @@
     var help_type_name = $("#help_type_name").val();
     var top_number = $("#top_number").val();
     var help_type_f_id = $("#help_type_f_id").val();
+    var is_type = $("#is_type").val();
 
     if(help_type_f_id.replace(/\s/g, '') == ''){
       help_type_f_id = '0';
@@ -105,12 +116,18 @@
       return;
     }
 
+    if(is_type.replace(/\s/g, '') == ''){
+      alert("请选择帮助类型");
+      return;
+    }
+
     $.ajax({
       cache: true,
       type: "POST",
       url:"/helpTypeController/add.do",
       data:{"help_type_name":help_type_name,
         "top_number":top_number,
+        "is_type":is_type,
         "help_type_f_id":help_type_f_id
       },
       async: false,
