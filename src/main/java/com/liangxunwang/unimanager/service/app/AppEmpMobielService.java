@@ -37,16 +37,16 @@ public class AppEmpMobielService implements  UpdateService ,ExecuteService {
     @Override
     public Object execute(Object object) throws ServiceException {
             Object[] params = (Object[]) object;
-            String hxUsername = (String) params[0];
+            String hxusername = (String) params[0];
             Map<String, Object> map = new HashMap<String, Object>();
             List<EmpVO> list = new ArrayList<EmpVO>();
-            if(hxUsername!=null){
-                String[] strs = hxUsername.split(",");
-                List<String> phones = new ArrayList<String>();
-                for (int i = 0; i < strs.length; i++) {
-                    phones.add(strs[i]);
-                }
-                map.put("hxUsername", strs);
+            if(hxusername!=null){
+//                String[] strs = hxUsername.split(",");
+//                List<String> phones = new ArrayList<String>();
+//                for (int i = 0; i < strs.length; i++) {
+//                    phones.add(strs[i]);
+//                }
+                map.put("hxusername", hxusername);
                 list = empDao.listMemberInfoByUsername(map);
             }
             if(list != null && list.size()>0){

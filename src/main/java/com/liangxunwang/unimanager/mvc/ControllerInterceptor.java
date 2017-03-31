@@ -172,6 +172,8 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/getHelpTypes\\.do$)"+
                         "|(^/getHelpDanwei\\.do$)"+
 
+                        "|(^/payWxNotifyAction\\.do$)"+
+
                         "|(^/memberLogin\\.do$)"
 
         ) || account != null) {

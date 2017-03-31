@@ -5,7 +5,7 @@ package com.liangxunwang.unimanager.util;
  */
 public class Constants {
         public static final String URL = "http://www.shandongguiren.com/";
-//          public static final String URL = "http://192.168.0.224:8080/";
+//          public static final String URL = "http://157j1274e3.iask.in/";
 
         public static final String DOWNLOAD_URL = URL + "html/GuirenApp.apk";
 
@@ -70,7 +70,7 @@ public class Constants {
 
 
         //微信统一下单notify_url
-        public static final String WEIXIN_NOTIFY_URL = URL + "pay/notify_url_wxpay.jsp";
+        public static final String WEIXIN_NOTIFY_URL = URL + "payWxNotifyAction.do";
 
         //支付宝回调页面
         public static final String ZFB_NOTIFY_URL = URL + "pay/notify_url_alipay.jsp";

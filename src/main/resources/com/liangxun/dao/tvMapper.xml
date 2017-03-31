@@ -35,8 +35,8 @@
 
     <select id="lists" resultMap="videos_vo">
           SELECT sr.*, ltype.video_type_name as video_type_name,
-            (select count(paopao_video_id) from paopao_video_favour zan where  zan.paopao_video_id = sr.paopao_video_id) as zan_num,
-            (select count(paopao_video_id) from paopao_video_comment pl where  pl.paopao_video_id = sr.paopao_video_id) as pl_num
+            (select count(paopao_video_id) from paopao_tv_favour zan where  zan.paopao_video_id = sr.paopao_video_id) as zan_num,
+            (select count(paopao_video_id) from paopao_tv_comment pl where  pl.paopao_video_id = sr.paopao_video_id) as pl_num
             FROM paopao_tv sr
             LEFT  JOIN  video_type ltype ON ltype.video_type_id = sr.video_type_id
             WHERE 1='1'

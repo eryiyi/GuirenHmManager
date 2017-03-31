@@ -159,10 +159,7 @@
 
 
     <select id="listMemberInfoByUsername" resultMap="emp_vo" parameterType="String">
-        SELECT * from mm_emp WHERE hxusername IN
-        <foreach collection="hxUsername" item="username" open="(" separator="," close=")">
-            #{username}
-        </foreach>
+        SELECT * from mm_emp WHERE hxusername = #{hxusername} or mm_emp_id = #{hxusername}
     </select>
 
     <select id="listMemberByName" resultMap="emp_vo">

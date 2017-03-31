@@ -48,14 +48,10 @@ public class AppTvsService implements ListService {
 
         List<VideosVO> list = new ArrayList<VideosVO>();
 
-        if("1".equals(query.getTime_is())){
-            //按时间排序
+
+
             list = tvsDao.lists(map);
-        }else if("1".equals(query.getFavour_is())){
-            list = tvsDao.lists2(map);
-        }else {
-            list = tvsDao.lists(map);
-        }
+
 
         for (VideosVO vo : list){
             if (vo.getPicUrl().startsWith("upload")) {
